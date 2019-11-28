@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/light_purple</item>
+    </style>
+
+    <!-- InputLayout text color -->
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/purple</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
+
+    <!-- InputLayout / Spinner -->
+    <style name="InputLabel" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:paddingBottom">@dimen/input_label_vertical_spacing</item>
+        <item name="android:paddingLeft">@dimen/input_label_horizontal_spacing</item>
+        <item name="android:paddingRight">@dimen/input_label_horizontal_spacing</item>
+    </style>
+
+    <!-- Toolbar back arrow color -->
+    <style name="ToolbarColoredArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+</resources>
