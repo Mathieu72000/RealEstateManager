@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+    <variable
+        name="viewmodel"
+        type="com.example.real_estate_manager.viewmodel.NewHouseViewModel" />
+    </data>
+
+<ScrollView
     android:id="@+id/form_scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,27 +24,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/light_purple"
-            app:titleTextColor="@color/white"
             android:theme="@style/ToolbarColoredArrow"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white" />
 
-        <!-- ADDRESS -->
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/form_autocompleteTextView"
-            android:layout_width="match_parent"
+        <!-- LOCATION -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/form_autocomplete_layout"
+            style="@style/InputLabel"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/border_textview"
-            android:hint="Location"
-            android:padding="15dp"
-            android:textColorHint="@color/grey"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:labelFor="@id/form_real_estate_spinner"
+            android:textAlignment="textStart"
+            android:textColor="@color/light_black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/form_toolbar" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/form_toolbar">
+
+            <fragment
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:id="@+id/form_autocomplete_fragment"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="@color/grey"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- AREA -->
 
@@ -51,13 +69,14 @@
             android:layout_marginEnd="5dp"
             app:layout_constraintEnd_toStartOf="@id/form_number_of_room_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/form_autocompleteTextView">
+            app:layout_constraintTop_toBottomOf="@id/form_autocomplete_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/form_surface_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Surface"
+                android:text="@={viewmodel.surfaceContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +93,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/form_surface_layout"
-            app:layout_constraintTop_toBottomOf="@id/form_autocompleteTextView">
+            app:layout_constraintTop_toBottomOf="@id/form_autocomplete_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/form_number_of_room_editText"
@@ -82,14 +101,15 @@
                 android:layout_height="match_parent"
                 android:hint="Number of rooms"
                 android:inputType="number"
+                android:text="@={viewmodel.roomContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- TYPE OF PROPERTY -->
+        <!-- INTEREST POINTS -->
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/form_type_layout"
+            android:id="@+id/form_interest_points"
             style="@style/LoginTextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,7 +124,8 @@
                 android:id="@+id/form_type_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Type of property"
+                android:hint="Interest points"
+                android:text="@={viewmodel.interestContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +140,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            app:layout_constraintEnd_toStartOf="@id/form_type_layout"
+            app:layout_constraintEnd_toStartOf="@id/form_interest_points"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/form_surface_layout">
 
@@ -128,67 +149,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Price"
-                android:inputType="numberDecimal"
+                android:inputType="number"
+                android:text="@={viewmodel.priceContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- POINT OF INTEREST -->
+        <!-- TYPE OF PROPERTY -->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/form_interest_points_layout"
-            style="@style/LoginTextInputLayoutStyle"
-            android:layout_width="match_parent"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/form_chipGroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/form_price_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/form_price_layout">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/form_interest_points_editText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Interest points"
-                android:inputType="textMultiLine"
-                android:textSize="16sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <!-- REAL ESTATE AGENT -->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textview_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             style="@style/InputLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/border_textview"
             android:labelFor="@id/form_real_estate_spinner"
             android:textAlignment="textStart"
-            android:background="@drawable/border_textview"
             android:textColor="@color/light_black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/form_interest_points_layout">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/form_chipGroup">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Real estate agent :"
-                android:textSize="16sp"
-                android:textColor="@color/grey"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                android:text="Real estate agent :"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/form_real_estate_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:gravity="bottom"/>
+                android:gravity="bottom" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -212,6 +226,7 @@
                 android:layout_height="match_parent"
                 android:hint="Description"
                 android:inputType="textMultiLine"
+                android:text="@={viewmodel.descriptionContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -236,6 +251,7 @@
                 android:layout_height="match_parent"
                 android:hint="Entry date"
                 android:inputType="date"
+                android:text="@={viewmodel.entryDateContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -260,6 +276,7 @@
                 android:layout_height="match_parent"
                 android:hint="Sold date"
                 android:inputType="date"
+                android:text="@={viewmodel.soldDateContent}"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -336,5 +353,5 @@
             app:layout_constraintTop_toBottomOf="@id/separator" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
+</layout>

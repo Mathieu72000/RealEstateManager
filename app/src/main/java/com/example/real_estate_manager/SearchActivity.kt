@@ -17,7 +17,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun configureToolbar(){
         setSupportActionBar(search_toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     // -------- Back arrow --------

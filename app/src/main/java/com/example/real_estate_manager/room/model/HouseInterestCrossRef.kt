@@ -1,4 +1,4 @@
-package com.example.real_estate_manager.Room.Model
+package com.example.real_estate_manager.room.model
 
 import androidx.room.Embedded
 import androidx.room.Junction
