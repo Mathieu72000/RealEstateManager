@@ -8,11 +8,11 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_Toolbar"
+        android:id="@+id/main_activity_Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@color/secondary_light_purple"
-        android:background="@color/light_purple"/>
+        app:titleTextColor="@color/white"
+        android:background="@color/purple"/>
 
     <FrameLayout
         android:id="@+id/fragment_placeHolder"

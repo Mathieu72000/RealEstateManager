@@ -15,14 +15,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Toolbar
-        setSupportActionBar(main_Toolbar)
+        setSupportActionBar(main_activity_Toolbar)
 
-        val mainFragment = MainFragment().newInstance()
+        val mainFragment = MainFragment.newInstance()
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_placeHolder, mainFragment)
             .commitAllowingStateLoss()
-        }
+    }
 
     // ---------------- MENU --------------------
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -31,16 +31,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.add -> {
-                val intent = Intent(applicationContext, FormActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.search -> {
-                val intent = Intent(applicationContext, SearchActivity::class.java)
-                startActivity(intent)
-            }
+        when (item.itemId) {
+            R.id.add -> FormActivity::class.java
+            R.id.search -> SearchActivity::class.java
+            else -> null
+        }?.let {
+            startActivity(Intent(this@MainActivity, it))
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 
     @Entity
     data class RealEstateAgent(
-        @PrimaryKey(autoGenerate = true) val agentId: Int,
-        @ColumnInfo val realEstateAgent: String)
+        @PrimaryKey(autoGenerate = true) val agentId: Long,
+        @ColumnInfo val realEstateAgent: String?)

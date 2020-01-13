@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Real_Estate_Manager</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
 </resources>

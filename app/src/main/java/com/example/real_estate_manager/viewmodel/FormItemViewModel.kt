@@ -7,30 +7,28 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.real_estate_manager.itemAdapter.HouseItem
 import com.example.real_estate_manager.room.database.HouseDatabase
-import com.example.real_estate_manager.room.model.House
+import com.example.real_estate_manager.room.model.HouseTypeAgent
 import com.example.real_estate_manager.room.model.InterestPoints
-import com.example.real_estate_manager.room.model.RealEstateAgent
-import com.example.real_estate_manager.room.model.Type
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 // The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Repository and the UI)
-class HouseViewModel(application: Application) : AndroidViewModel(application) {
+class FormItemViewModel(application: Application) : AndroidViewModel(application) {
 
     // Get the database instance
     private val getHouseDatabase = HouseDatabase.getInstance(application)
 
     // -----------------------------------------------------------------
 
-    // House
-    private val houseList = MutableLiveData<List<House>>()
+    // HouseTypeAgent
+    private val houseTypeAgentList = MutableLiveData<List<HouseTypeAgent>>()
 
-    val itemList = Transformations.map(houseList) { house -> house.map { HouseItem(it) } }
+    val itemList = Transformations.map(houseTypeAgentList) { house -> house.map { HouseItem(it) } }
 
-    fun getHouses() {
+    fun getHouseTypeAgent() {
         viewModelScope.launch(Dispatchers.IO)
         {
-            houseList.postValue(getHouseDatabase?.getAllHouses())
+            houseTypeAgentList.postValue(getHouseDatabase?.getHouseTypeAgents())
         }
     }
     // -----------------------------------------------------------------
@@ -43,24 +41,17 @@ class HouseViewModel(application: Application) : AndroidViewModel(application) {
             interestPointsList.postValue(getHouseDatabase?.getAllInterestPoints())
         }
     }
+
     // -----------------------------------------------------------------
 
-    // RealEstateAgent
-    private val estateAgentsList = MutableLiveData<List<RealEstateAgent>>()
-
-    fun getEstateAgents() {
-        viewModelScope.launch(Dispatchers.IO) {
-            estateAgentsList.postValue(getHouseDatabase?.getAllAgents())
-        }
-    }
-    // -----------------------------------------------------------------
-
-    // Type
-    private val type = MutableLiveData<Type>()
-
-    fun getType() {
-        viewModelScope.launch(Dispatchers.IO) {
-            type.postValue(getHouseDatabase?.getType())
-        }
-    }
+    val displayPriceContent = MutableLiveData<String>()
+    val displayLocationContent = MutableLiveData<String>()
+    val displayTypeContent = MutableLiveData<String>()
+    val displaySurfaceContent = MutableLiveData<String>()
+    val displayStateContent = MutableLiveData<String>()
+    val displayDescriptionContent = MutableLiveData<String>()
+    val displayRoomNumberContent = MutableLiveData<String>()
+    val displayInterestPointsContent = MutableLiveData<String>()
+    val displayEntryDateContent = MutableLiveData<String>()
+    val displayAgentContent = MutableLiveData<String>()
 }

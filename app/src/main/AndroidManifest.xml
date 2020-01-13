@@ -27,6 +27,7 @@
             android:label="Real Estate Manager" />
         <activity android:name=".SearchActivity"
             android:label="Search"/>
+        <activity android:name=".FormDetailsActivity"/>
     </application>
 
 </manifest>

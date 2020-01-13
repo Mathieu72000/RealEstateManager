@@ -1,16 +1,28 @@
 package com.example.real_estate_manager.itemAdapter
 
-import com.example.real_estate_manager.R
-import com.example.real_estate_manager.databinding.ActivityMainItemBinding
-import com.example.real_estate_manager.room.model.House
+import android.content.Intent
+import com.example.real_estate_manager.*
+import com.example.real_estate_manager.databinding.FragmentMainItemBinding
+import com.example.real_estate_manager.room.model.HouseTypeAgent
 import com.xwray.groupie.databinding.BindableItem
 
-class HouseItem(private val item: House): BindableItem<ActivityMainItemBinding>(item.houseId.toLong()) {
+class HouseItem(private val item: HouseTypeAgent) :
+    BindableItem<FragmentMainItemBinding>(item.house.houseId) {
 
-    override fun getLayout() = R.layout.activity_main_item
+    override fun getLayout() = R.layout.fragment_main_item
 
-    override fun bind(viewBinding: ActivityMainItemBinding, position: Int) {
+    override fun bind(viewBinding: FragmentMainItemBinding, position: Int) {
         viewBinding.item = item
-        viewBinding.root.setOnClickListener {}
+        viewBinding.root.context?.let { ctx ->
+            viewBinding.root.setOnClickListener {
+                val intent = Intent(ctx, FormDetailsActivity::class.java).apply {
+                    putExtra(
+                        Constants.HOUSE_ID,
+                        item.house.houseId
+                    )
+                }
+                ctx.startActivity(intent)
+            }
+        }
     }
 }

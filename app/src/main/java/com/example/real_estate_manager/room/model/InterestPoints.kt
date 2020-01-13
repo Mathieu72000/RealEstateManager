@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 
     @Entity
     data class InterestPoints(
-        @PrimaryKey(autoGenerate = true) val interestId: Int,
-        @ColumnInfo val interestPoints: String)
+        @PrimaryKey(autoGenerate = true) val interestId: Long,
+        @ColumnInfo val interestPoints: String?)

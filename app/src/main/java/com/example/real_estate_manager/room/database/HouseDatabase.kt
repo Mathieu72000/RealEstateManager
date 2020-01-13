@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.real_estate_manager.room.dao.*
 import com.example.real_estate_manager.room.model.*
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 
 @Database(
     entities = [House::class, InterestPoints::class, Pictures::class, RealEstateAgent::class, Type::class],
-    version = 1
+    version = 2
 )
 abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     abstract fun houseDao(): HouseDao
@@ -32,10 +34,24 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                         context.applicationContext,
                         HouseDatabase::class.java,
                         "houseDatabase"
-                    ).build()
+                    ).addMigrations(getMigrations())
+                        .build()
                 }
             }
             return INSTANCE
+        }
+
+        private fun getMigrations(): Migration? {
+            return object : Migration(1, 2) {
+                override fun migrate(database: SupportSQLiteDatabase) {                  //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
+                    database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick'), ('Ludovic'), ('Mathieu'), ('Benoît')")
+                    database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('High school'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
+                    database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
+                    database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('100.000$', 3, '80 sqm', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
+                    database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('250.000$', 8, '150 sqm', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
+                    database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId, soldDate) VALUES ('800.000$', 10, '300 sqm', 'Énorme appartement comprenant une terrasse', '30, rue des bourges', 3, 3, '21/08/2019') ")
+                }
+            }
         }
     }
 
@@ -43,7 +59,8 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
         get() = Dispatchers.Main
 
     // ----------------------------------------------------------
-    suspend fun getAllHouses(): List<House>? = this.houseDao().getAllHouses()
+    suspend fun getAllHousesTypeAgent(): List<HouseTypeAgent>? =
+        this.houseDao().getAllHouseAndTypeAndAgent()
 
     fun insertHouse(house: House) {
         launch { insertNewHouse(house) }
@@ -87,9 +104,13 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     // ---------------------------------------------------------
     suspend fun getPictures(): List<Pictures> = this.picturesDao().getAllPictures()
 
-    fun insertPictures(pictures: Pictures){
+    fun insertPictures(pictures: Pictures) {
         launch { newPictures(pictures) }
     }
 
-    suspend fun newPictures(pictures: Pictures) = picturesDao().insertPictures(pictures)
+    private suspend fun newPictures(pictures: Pictures) = picturesDao().insertPictures(pictures)
+    // ---------------------------------------------------------
+
+    suspend fun getHouseTypeAgents(): List<HouseTypeAgent> =
+        this.houseDao().getAllHouseAndTypeAndAgent()
 }
