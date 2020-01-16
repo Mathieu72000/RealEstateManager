@@ -24,10 +24,11 @@
         </activity>
         <activity
             android:name=".FormActivity"
-            android:label="Real Estate Manager" />
+            android:label="New form" />
         <activity android:name=".SearchActivity"
             android:label="Search"/>
-        <activity android:name=".FormDetailsActivity"/>
+        <activity android:name=".FormDetailsActivity"
+            android:label="Description"/>
     </application>
 
 </manifest>

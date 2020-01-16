@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/purple</item>
-        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorPrimaryDark">@color/light_purple</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/light_purple</item>
     </style>

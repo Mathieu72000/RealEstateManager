@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.activity_form_details.*
 
 class FormDetailsActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_details)
 
         this.configureToolbar()
@@ -22,7 +22,6 @@ class FormDetailsActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.details_fragment_placeHolder, detailsFragment)
             .commitAllowingStateLoss()
-
     }
 
     // ------------ Configuration ---------------

@@ -16,4 +16,8 @@ interface HouseDao {
     @Transaction
     @Query("SELECT * FROM House")
     suspend fun getAllHouseAndTypeAndAgent(): List<HouseTypeAgent>
+
+    @Transaction
+    @Query("SELECT * FROM House WHERE houseId = :houseId")
+    suspend fun getHouseAndTypeAndAgent(houseId: Long): HouseTypeAgent
 }

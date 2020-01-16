@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.real_estate_manager.room.dao.*
 import com.example.real_estate_manager.room.model.*
@@ -34,24 +33,20 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                         context.applicationContext,
                         HouseDatabase::class.java,
                         "houseDatabase"
-                    ).addMigrations(getMigrations())
-                        .build()
+                    ).addCallback(object : Callback() {
+                        override fun onCreate(database: SupportSQLiteDatabase) {
+                            super.onCreate(database)                                            //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
+                            database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick'), ('Ludovic'), ('Mathieu'), ('Benoît')")
+                            database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('High school'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
+                            database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
+                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('100.000$', 3, '80 sqm', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
+                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('250.000$', 8, '150 sqm', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
+                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId, soldDate) VALUES ('800.000$', 10, '300 sqm', 'Énorme appartement comprenant une terrasse', '30, rue des bourges', 3, 3, '21/08/2019') ")
+                        }
+                    }).build()
                 }
             }
             return INSTANCE
-        }
-
-        private fun getMigrations(): Migration? {
-            return object : Migration(1, 2) {
-                override fun migrate(database: SupportSQLiteDatabase) {                  //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
-                    database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick'), ('Ludovic'), ('Mathieu'), ('Benoît')")
-                    database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('High school'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
-                    database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
-                    database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('100.000$', 3, '80 sqm', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
-                    database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('250.000$', 8, '150 sqm', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
-                    database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId, soldDate) VALUES ('800.000$', 10, '300 sqm', 'Énorme appartement comprenant une terrasse', '30, rue des bourges', 3, 3, '21/08/2019') ")
-                }
-            }
         }
     }
 
@@ -61,6 +56,9 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     // ----------------------------------------------------------
     suspend fun getAllHousesTypeAgent(): List<HouseTypeAgent>? =
         this.houseDao().getAllHouseAndTypeAndAgent()
+
+     suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
+        this.houseDao().getHouseAndTypeAndAgent(houseId)
 
     fun insertHouse(house: House) {
         launch { insertNewHouse(house) }

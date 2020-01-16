@@ -4,10 +4,11 @@ import android.content.Intent
 import com.example.real_estate_manager.*
 import com.example.real_estate_manager.databinding.FragmentMainItemBinding
 import com.example.real_estate_manager.room.model.HouseTypeAgent
+import com.example.real_estate_manager.viewmodel.HouseItemViewModel
 import com.xwray.groupie.databinding.BindableItem
 
-class HouseItem(private val item: HouseTypeAgent) :
-    BindableItem<FragmentMainItemBinding>(item.house.houseId) {
+class HouseItem(private val item: HouseItemViewModel) :
+    BindableItem<FragmentMainItemBinding>(item.houseTypeAgent.house.houseId) {
 
     override fun getLayout() = R.layout.fragment_main_item
 
@@ -18,7 +19,7 @@ class HouseItem(private val item: HouseTypeAgent) :
                 val intent = Intent(ctx, FormDetailsActivity::class.java).apply {
                     putExtra(
                         Constants.HOUSE_ID,
-                        item.house.houseId
+                        item.houseTypeAgent.house.houseId
                     )
                 }
                 ctx.startActivity(intent)

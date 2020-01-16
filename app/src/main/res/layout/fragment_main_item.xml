@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="androidx.core.content.ContextCompat"/>
         <variable
             name="item"
-            type="com.example.real_estate_manager.room.model.HouseTypeAgent" />
+            type="com.example.real_estate_manager.viewmodel.HouseItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +43,7 @@
             android:textStyle="bold"
             android:textSize="16sp"
             tools:text="House"
-            android:text="@{item.type.type.toString()}" />
+            android:text="@{item.houseTypeAgent.type.type.toString()}" />
 
 
 
@@ -57,7 +58,7 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/dark_grey"
             android:textSize="14sp"
-            android:text="@{item.house.location.toString()}"
+            android:text="@{item.houseTypeAgent.house.location.toString()}"
             tools:text="Manhattan" />
 
         <TextView
@@ -71,7 +72,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
             android:textStyle="italic"
-            android:text="@{item.house.price.toString()}"
+            android:text="@{item.houseTypeAgent.house.price.toString()}"
             tools:text="$21,130,000" />
 
         <TextView
@@ -87,7 +88,7 @@
             android:layout_marginEnd="10dp"
             android:textColor="@color/dark_grey"
             android:textSize="16sp"
-            android:text="@{item.house.surface.toString()}"
+            android:text="@{item.houseTypeAgent.house.surface.toString()}"
             tools:text="320 sqm m" />
 
         <TextView
@@ -101,6 +102,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/surface_tv"
             android:textSize="18sp"
+            android:text="@{item.availability}"
+            android:textColor="@{ContextCompat.getColor(context, item.availabilityColor)}"
             tools:text="Available" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
