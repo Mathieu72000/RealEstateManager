@@ -37,6 +37,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                         override fun onCreate(database: SupportSQLiteDatabase) {
                             super.onCreate(database)                                            //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
                             database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick'), ('Ludovic'), ('Mathieu'), ('Benoît')")
+                            database.execSQL("INSERT into HouseAndInterestPoints(houseId, interestId) VALUES(1, 2), (1, 3)")
                             database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('High school'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
                             database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
                             database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('100.000$', 3, '80 sqm', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")

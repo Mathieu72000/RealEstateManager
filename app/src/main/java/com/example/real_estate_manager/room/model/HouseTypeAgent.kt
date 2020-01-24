@@ -1,6 +1,7 @@
 package com.example.real_estate_manager.room.model
 
 import androidx.room.Embedded
+import androidx.room.Junction
 import androidx.room.Relation
 
 data class HouseTypeAgent(
@@ -10,6 +11,6 @@ data class HouseTypeAgent(
     val type: Type,
     @Relation(entity = RealEstateAgent::class, parentColumn = "houseAgentId", entityColumn = "agentId")
     val realEstateAgent: RealEstateAgent,
-    @Relation(entity = InterestPoints::class, parentColumn = "houseInterestId", entityColumn = "interestId")
+    @Relation(entity = InterestPoints::class, parentColumn = "houseInterestId", entityColumn = "interestId", associateBy = Junction(HouseAndInterestPoints::class))
     val interestPoints: List<InterestPoints>
 )
