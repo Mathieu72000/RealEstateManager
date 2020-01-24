@@ -9,5 +9,7 @@ data class HouseTypeAgent(
     @Relation(entity = Type::class, parentColumn = "houseTypeId", entityColumn = "typeId")
     val type: Type,
     @Relation(entity = RealEstateAgent::class, parentColumn = "houseAgentId", entityColumn = "agentId")
-    val realEstateAgent: RealEstateAgent
+    val realEstateAgent: RealEstateAgent,
+    @Relation(entity = InterestPoints::class, parentColumn = "houseInterestId", entityColumn = "interestId")
+    val interestPoints: List<InterestPoints>
 )

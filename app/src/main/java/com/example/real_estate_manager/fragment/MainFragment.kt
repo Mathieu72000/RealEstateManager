@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.itemAdapter.HouseItem
 import com.example.real_estate_manager.viewmodel.FormItemViewModel

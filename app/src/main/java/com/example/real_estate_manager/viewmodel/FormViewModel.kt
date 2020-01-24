@@ -4,10 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.real_estate_manager.room.database.HouseDatabase
-import com.example.real_estate_manager.room.model.House
-import com.example.real_estate_manager.room.model.InterestPoints
-import com.example.real_estate_manager.room.model.RealEstateAgent
-import com.example.real_estate_manager.room.model.Type
+import com.example.real_estate_manager.room.model.*
 
 class FormViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -31,20 +28,19 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // -----------------------------------------------------------------
-    val surfaceEditText = MutableLiveData<String>()
+    val formSurface = MutableLiveData<String>()
     // -------------------------------------------
-    val roomEditText = MutableLiveData<String>()
+    val formRoomNumber = MutableLiveData<String>()
     // -------------------------------------------
-    val priceEditText = MutableLiveData<String>()
+    val formPrice = MutableLiveData<String>()
     // -------------------------------------------
-    val interestEditText = MutableLiveData<String>()
+    val formInterestPoints = MutableLiveData<String>()
     // -------------------------------------------
-    val descriptionEditText = MutableLiveData<String>()
+    val formDescription = MutableLiveData<String>()
     // -------------------------------------------
-    val entryDateEditText = MutableLiveData<String>()
+    val formEntryDate = MutableLiveData<String>()
     // -------------------------------------------
-    val soldDateEditText = MutableLiveData<String>()
-
+    val formSoldDate = MutableLiveData<String>()
 }
 
 

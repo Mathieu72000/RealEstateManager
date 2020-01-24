@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.ImageViewBindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormBinding
+import com.example.real_estate_manager.room.model.House
 import com.example.real_estate_manager.viewmodel.FormViewModel
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.model.Place
@@ -18,6 +20,7 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.chip.Chip
+import com.myhexaville.smartimagepicker.ImagePicker
 import kotlinx.android.synthetic.main.fragment_form.*
 
 class FormFragment : Fragment() {

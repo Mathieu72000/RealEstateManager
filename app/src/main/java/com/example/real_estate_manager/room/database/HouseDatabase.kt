@@ -14,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 
 @Database(
     entities = [House::class, InterestPoints::class, Pictures::class, RealEstateAgent::class, Type::class],
-    version = 2
+    version = 1
 )
 abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     abstract fun houseDao(): HouseDao
@@ -54,9 +54,6 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
         get() = Dispatchers.Main
 
     // ----------------------------------------------------------
-    suspend fun getAllHousesTypeAgent(): List<HouseTypeAgent>? =
-        this.houseDao().getAllHouseAndTypeAndAgent()
-
      suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
         this.houseDao().getHouseAndTypeAndAgent(houseId)
 

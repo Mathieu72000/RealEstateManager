@@ -9,6 +9,9 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     defaultConfig {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8
+        }
         applicationId "com.example.real_estate_manager"
         minSdkVersion 19
         targetSdkVersion 29
@@ -36,11 +39,11 @@ dependencies {
     // --- DESIGN ---
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.fragment:fragment-ktx:1.1.0'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha03'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
 
 
     // --- TEST ---
@@ -59,7 +62,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     // LIFECYCLE COMPONENTS
-    def lifecycle_version = "2.2.0-rc03"
+    def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
@@ -67,7 +70,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.libraries.places:places:2.1.0'
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
     // GROUPIE
     implementation "com.xwray:groupie:2.7.0"
@@ -80,5 +83,7 @@ dependencies {
     // STETHO
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
+    implementation 'com.myhexaville:smart-image-picker:1.0.4'
 }
 apply plugin: 'com.google.gms.google-services'

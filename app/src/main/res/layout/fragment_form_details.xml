@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.example.real_estate_manager.viewmodel.FormDetailsViewModel" />
@@ -65,8 +66,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/border_recyclerview_item"
-                android:text="@{item.description}"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.description}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="eihf ihjiozef iei hjf efk sflkkljseklfj jskef klsef jskejfkljsjk ejkl sfef sef  sef sef sffjseskejfkljsfj sefj ksefjkl jsekljf sjefj lksefj kesfe" />
@@ -95,7 +96,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/border_recyclerview_item"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.surface}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="80 sq m" />
@@ -124,7 +126,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/border_recyclerview_item"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.roomNumber.toString()}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="4" />
@@ -153,7 +156,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/border_recyclerview_item"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.type.type}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="House" />
@@ -182,7 +186,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/border_recyclerview_item"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.location}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="740 Park Avenue - Apt6/7A New York - NY 10021 United States" />
@@ -211,7 +216,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/border_recyclerview_item"
+                android:padding="5dp"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="School / Trade / Bakerie" />
@@ -240,6 +245,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:padding="5dp"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="Available" />
@@ -269,6 +275,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:padding="5dp"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="07/08/2019" />
@@ -298,6 +305,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.price.toString()}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="320.000$" />
@@ -326,6 +335,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.realEstateAgent.realEstateAgent}"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 tools:text="Thomas Delacroix" />

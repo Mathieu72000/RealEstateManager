@@ -13,7 +13,6 @@ import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormDetailsBinding
 import com.example.real_estate_manager.viewmodel.FormDetailsViewModel
 
-
 class FormDetailsFragment : Fragment() {
 
     private val viewModel by viewModels<FormDetailsViewModel>()
@@ -32,6 +31,7 @@ class FormDetailsFragment : Fragment() {
     ): View? {
         val binding: FragmentFormDetailsBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_form_details, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.item = viewModel
         return binding.root
     }
@@ -40,6 +40,6 @@ class FormDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val houseId = arguments?.getLong(Constants.HOUSE_ID) ?: 0
 
-        viewModel.getHouseTypeAgent(houseId)
+        viewModel.getHouseTypeAgentDetails(houseId)
     }
 }
