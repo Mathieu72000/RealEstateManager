@@ -17,5 +17,5 @@ interface TypeDao {
     fun updateType(type: Type)
 
     @Query("SELECT * FROM type")
-    fun getType(): Type
+    suspend fun getType(): List<Type>
 }

@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity
             android:name=".MainActivity"
             android:label="Real Estate Manager">
@@ -25,10 +24,12 @@
         <activity
             android:name=".FormActivity"
             android:label="New form" />
-        <activity android:name=".SearchActivity"
-            android:label="Search"/>
-        <activity android:name=".FormDetailsActivity"
-            android:label="Description"/>
+        <activity
+            android:name=".SearchActivity"
+            android:label="Search" />
+        <activity
+            android:name=".FormDetailsActivity"
+            android:label="Description" />
     </application>
 
 </manifest>

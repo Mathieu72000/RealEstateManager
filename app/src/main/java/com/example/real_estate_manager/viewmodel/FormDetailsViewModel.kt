@@ -1,13 +1,12 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
-import androidx.annotation.StringRes
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.real_estate_manager.R
-import com.example.real_estate_manager.itemAdapter.HouseItem
 import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.HouseTypeAgent
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,6 @@ class FormDetailsViewModel(application: Application) : AndroidViewModel(applicat
 
     val houseTypeAgent = MutableLiveData<HouseTypeAgent?>().apply {
         postValue(null)
-
     }
 
     fun getHouseTypeAgentDetails(houseId: Long) {
@@ -30,7 +28,7 @@ class FormDetailsViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-//    val availability = Transformations.map(houseTypeAgent) {
-//        if(it?.house?.soldDate == null) R.string.available else R.string.unavailable
-//    }
+    val availability= Transformations.map(houseTypeAgent) {
+        application.getString(if(it?.house?.soldDate == null) R.string.available else R.string.unavailable)
+    }
 }

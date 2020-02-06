@@ -16,6 +16,6 @@ interface InterestPointsDao {
     @Update
     fun updateInterestPoints(interestPoints: InterestPoints)
 
-    @Query("SELECT * FROM interestpoints")
-    fun getAllInterestPoints(): List<InterestPoints>
+    @Query("SELECT * FROM interestPoints")
+    suspend fun getAllInterestPoints(): List<InterestPoints>
 }

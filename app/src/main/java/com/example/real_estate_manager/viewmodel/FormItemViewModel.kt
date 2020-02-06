@@ -10,6 +10,8 @@ import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.HouseTypeAgent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.*
 
 // The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Repository and the UI)
 class FormItemViewModel(application: Application) : AndroidViewModel(application) {
@@ -36,14 +38,4 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
             houseTypeAgentList.postValue(getHouseDatabase?.getHouseTypeAgents())
         }
     }
-    // -----------------------------------------------------------------
-
-    // InterestPoints
-//    private val interestPointsList = MutableLiveData<List<InterestPoints>>()
-//
-//    fun getInterestPoints() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            interestPointsList.postValue(getHouseDatabase?.getAllInterestPoints())
-//        }
-//    }
 }

@@ -21,29 +21,21 @@
                 android:layout_height="wrap_content">
 
                 <!-- LOCATION -->
-                <LinearLayout
-                    android:id="@+id/form_autocomplete_layout"
+                <TextView
+                    android:id="@+id/form_autocomplete_textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="20dp"
-                    style="@style/InputLabel"
+                    android:layout_marginEnd="10dp"
+                    android:padding="15dp"
+                    android:text="@{viewmodel.formLocation}"
+                    android:hint="Location"
                     android:background="@drawable/border_textview"
-                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <fragment
-                        android:id="@+id/form_autocomplete_fragment"
-                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColorHint="@color/grey"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <!-- AREA -->
 
@@ -52,18 +44,19 @@
                     style="@style/LoginTextInputLayoutStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     app:layout_constraintEnd_toStartOf="@id/form_number_of_room_layout"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_autocomplete_layout">
+                    app:layout_constraintTop_toBottomOf="@id/form_autocomplete_textView">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/form_surface_editText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Surface"
+                        android:inputType="number"
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -77,40 +70,16 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/form_surface_layout"
-                    app:layout_constraintTop_toBottomOf="@id/form_autocomplete_layout">
+                    app:layout_constraintTop_toBottomOf="@id/form_autocomplete_textView">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/form_number_of_room_editText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Number of rooms"
-                        android:inputType="number"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- INTEREST POINTS -->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_interest_points"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/form_price_layout"
-                    app:layout_constraintTop_toBottomOf="@id/form_number_of_room_layout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_type_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Interest points"
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -120,12 +89,12 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/form_price_layout"
                     style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    app:layout_constraintEnd_toStartOf="@id/form_interest_points"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/form_surface_layout">
 
@@ -139,21 +108,77 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- TYPE OF PROPERTY -->
+                <!-- INTEREST POINTS -->
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/form_chipGroup"
+                    android:id="@+id/form_interestPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:customChipFormInterest="@{viewmodel.interestPointsList}"
+                    app:layout_constraintTop_toBottomOf="@id/form_price_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <!-- TYPE OF PROPERTY -->
+
+                <LinearLayout
+                    android:id="@+id/form_type"
+                    style="@style/InputLabel"
+                    android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="20dp"
-                    app:chipSpacingVertical="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/border_textview"
+                    android:textColor="@color/light_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_price_layout">
+                    app:layout_constraintTop_toBottomOf="@id/form_interestPoints">
 
-                </com.google.android.material.chip.ChipGroup>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Type of property :"
+                        android:textColor="@color/grey"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/form_type_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:gravity="bottom" />
+
+                </LinearLayout>
+
+                <!-- DESCRIPTION -->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/form_description_layout"
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/form_type">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/form_description_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Description"
+                        android:inputType="textMultiLine"
+                        android:text="@={viewmodel.formDescription}"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- REAL ESTATE AGENT -->
 
@@ -163,14 +188,14 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/border_textview"
                     android:textColor="@color/light_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_chipGroup">
+                    app:layout_constraintTop_toBottomOf="@id/form_description_layout">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,30 +213,6 @@
 
                 </LinearLayout>
 
-                <!-- DESCRIPTION -->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_description_layout"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textview_spinner">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_description_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Description"
-                        android:inputType="textMultiLine"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <!-- ENTRY DATE -->
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -219,12 +220,12 @@
                     style="@style/LoginTextInputLayoutStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     app:layout_constraintEnd_toStartOf="@id/form_sold_date_layout"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_description_layout">
+                    app:layout_constraintTop_toBottomOf="@id/textview_spinner">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/form_entry_date_editText"
@@ -232,6 +233,7 @@
                         android:layout_height="match_parent"
                         android:hint="Entry date"
                         android:inputType="date"
+                        android:text="@={viewmodel.formEntryDate}"
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -245,10 +247,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/form_entry_date_layout"
-                    app:layout_constraintTop_toBottomOf="@id/form_description_layout">
+                    app:layout_constraintTop_toBottomOf="@id/textview_spinner">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/form_sold_date_editText"
@@ -256,6 +258,7 @@
                         android:layout_height="match_parent"
                         android:hint="Sold date"
                         android:inputType="date"
+                        android:text="@={viewmodel.formSoldDate}"
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -309,9 +312,9 @@
                     android:id="@+id/separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

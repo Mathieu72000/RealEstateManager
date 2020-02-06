@@ -84,6 +84,7 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
-    implementation 'com.myhexaville:smart-image-picker:1.0.4'
+    // TIMBER
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 apply plugin: 'com.google.gms.google-services'

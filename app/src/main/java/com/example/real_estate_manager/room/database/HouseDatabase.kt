@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 @Database(
-    entities = [House::class, InterestPoints::class, Pictures::class, RealEstateAgent::class, Type::class],
-    version = 1
+    entities = [House::class, InterestPoints::class, Pictures::class, RealEstateAgent::class, Type::class, HouseAndInterestPoints::class],
+    version = 1, exportSchema = false
 )
 abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     abstract fun houseDao(): HouseDao
@@ -37,12 +37,12 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                         override fun onCreate(database: SupportSQLiteDatabase) {
                             super.onCreate(database)                                            //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
                             database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick'), ('Ludovic'), ('Mathieu'), ('Benoît')")
-                            database.execSQL("INSERT into HouseAndInterestPoints(houseId, interestId) VALUES(1, 2), (1, 3)")
-                            database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('High school'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
+                            database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('Highschool'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
                             database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
-                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('100.000$', 3, '80 sqm', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
-                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES ('250.000$', 8, '150 sqm', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
-                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId, soldDate) VALUES ('800.000$', 10, '300 sqm', 'Énorme appartement comprenant une terrasse', '30, rue des bourges', 3, 3, '21/08/2019') ")
+                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES (100000, 3, '80', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
+                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES (250000, 8, '150', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
+                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId, soldDate) VALUES (800000, 10, '300', 'Énorme appartement comprenant une terrasse', '30, rue des bourges', 3, 3, '21/08/2019') ")
+                            database.execSQL("INSERT into HouseAndInterestPoints(houseId, interestId) VALUES(1, 2), (1, 3)")
                         }
                     }).build()
                 }
@@ -58,11 +58,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
      suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
         this.houseDao().getHouseAndTypeAndAgent(houseId)
 
-    fun insertHouse(house: House) {
-        launch { insertNewHouse(house) }
-    }
-
-    private suspend fun insertNewHouse(house: House) =
+     suspend fun insertNewHouse(house: House) =
         houseDao().insertHouse(house)
 
     // ----------------------------------------------------------
@@ -88,7 +84,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
         realEstateAgentDao().insertAgents(realEstateAgent)
 
     // ---------------------------------------------------------
-    suspend fun getType(): Type = this.typeDao().getType()
+    suspend fun getType(): List<Type> = this.typeDao().getType()
 
     fun insertType(type: Type) {
         launch { newType(type) }

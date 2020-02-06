@@ -7,10 +7,22 @@ import androidx.room.Relation
 data class HouseTypeAgent(
     @Embedded
     val house: House,
-    @Relation(entity = Type::class, parentColumn = "houseTypeId", entityColumn = "typeId")
+    @Relation(
+        entity = Type::class,
+        parentColumn = "houseTypeId",
+        entityColumn = "typeId"
+    )
     val type: Type,
-    @Relation(entity = RealEstateAgent::class, parentColumn = "houseAgentId", entityColumn = "agentId")
+    @Relation(
+        entity = RealEstateAgent::class,
+        parentColumn = "houseAgentId",
+        entityColumn = "agentId"
+    )
     val realEstateAgent: RealEstateAgent,
-    @Relation(entity = InterestPoints::class, parentColumn = "houseInterestId", entityColumn = "interestId", associateBy = Junction(HouseAndInterestPoints::class))
+    @Relation(
+        parentColumn = "houseId",
+        entityColumn = "interestId",
+        associateBy = Junction(HouseAndInterestPoints::class)
+    )
     val interestPoints: List<InterestPoints>
 )

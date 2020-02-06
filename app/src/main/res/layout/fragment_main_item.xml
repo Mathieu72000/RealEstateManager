@@ -72,7 +72,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
             android:textStyle="italic"
-            android:text="@{item.houseTypeAgent.house.price.toString()}"
+            android:text="@{item.formatNumber()}"
             tools:text="$21,130,000" />
 
         <TextView

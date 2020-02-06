@@ -3,7 +3,6 @@ package com.example.real_estate_manager.itemAdapter
 import android.content.Intent
 import com.example.real_estate_manager.*
 import com.example.real_estate_manager.databinding.FragmentMainItemBinding
-import com.example.real_estate_manager.room.model.HouseTypeAgent
 import com.example.real_estate_manager.viewmodel.HouseItemViewModel
 import com.xwray.groupie.databinding.BindableItem
 
