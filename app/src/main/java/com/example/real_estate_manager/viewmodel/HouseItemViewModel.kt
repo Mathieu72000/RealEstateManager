@@ -21,7 +21,7 @@ data class HouseItemViewModel(val houseTypeAgent: HouseTypeAgent) {
     fun formatNumber(): String{
         val format = NumberFormat.getCurrencyInstance().apply {
             currency = Currency.getInstance("EUR")
-            maximumFractionDigits = 2
+            minimumFractionDigits = 0
         }
         return format.format(houseTypeAgent.house.price)
     }

@@ -9,331 +9,355 @@
             type="com.example.real_estate_manager.viewmodel.FormViewModel" />
     </data>
 
-        <ScrollView
-            android:id="@+id/form_scrollView"
+    <ScrollView
+        android:id="@+id/form_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!-- LOCATION -->
+            <TextView
+                android:id="@+id/form_autocomplete_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/border_textview"
+                android:hint="Location"
+                android:textColorHint="@color/grey"
+                android:padding="15dp"
+                android:text="@{viewmodel.formLocation}"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- LOCATION -->
-                <TextView
-                    android:id="@+id/form_autocomplete_textView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:padding="15dp"
-                    android:text="@{viewmodel.formLocation}"
-                    android:hint="Location"
-                    android:background="@drawable/border_textview"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+            <!-- AREA -->
 
-                <!-- AREA -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_surface_layout"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/form_number_of_room_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_autocomplete_textView">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_surface_layout"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    app:layout_constraintEnd_toStartOf="@id/form_number_of_room_layout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_autocomplete_textView">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_surface_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Surface"
-                        android:inputType="number"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- NUMBER OF ROOM -->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_number_of_room_layout"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/form_surface_editText"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/form_surface_layout"
-                    app:layout_constraintTop_toBottomOf="@id/form_autocomplete_textView">
+                    android:hint="Surface"
+                    android:inputType="number"
+                    android:text="@{viewmodel.formSurface.toString()}"
+                    android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_number_of_room_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Number of rooms"
-                        android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+            <!-- NUMBER OF ROOM -->
 
-                <!-- PRICE -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_number_of_room_layout"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/form_surface_layout"
+                app:layout_constraintTop_toBottomOf="@id/form_autocomplete_textView">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_price_layout"
-                    style="@style/LoginTextInputLayoutStyle"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/form_number_of_room_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_surface_layout">
+                    android:layout_height="match_parent"
+                    android:hint="Number of rooms"
+                    android:inputType="number"
+                    android:text="@{viewmodel.formRoomNumber.toString()}"
+                    android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_price_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Price"
-                        android:inputType="number"
-                        android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+            <!-- PRICE -->
 
-                <!-- INTEREST POINTS -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_price_layout"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_surface_layout">
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/form_interestPoints"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/form_price_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    app:customChipFormInterest="@{viewmodel.interestPointsList}"
-                    app:layout_constraintTop_toBottomOf="@id/form_price_layout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:layout_height="match_parent"
+                    android:hint="Price"
+                    android:inputType="number"
+                    android:text="@={viewmodel.formPrice}"
+                    android:textSize="16sp" />
 
-                <!-- TYPE OF PROPERTY -->
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:id="@+id/form_type"
-                    style="@style/InputLabel"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_textview"
-                    android:textColor="@color/light_black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_interestPoints">
+            <!-- INTEREST POINTS -->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Type of property :"
-                        android:textColor="@color/grey"
-                        android:textSize="16sp" />
+            <LinearLayout
+                android:id="@+id/linear_interestPoints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical"
+                android:textColor="@color/light_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_price_layout">
 
-                    <Spinner
-                        android:id="@+id/form_type_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:gravity="bottom" />
+            <TextView
+                android:id="@+id/form_interestPoints_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="center"
+                android:text="Interest Points :"
+                android:textSize="16sp"/>
 
-                </LinearLayout>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/form_interestPoints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                app:customChipFormInterest="@{viewmodel.interestPointsList}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_interestPoints_textView" />
 
-                <!-- DESCRIPTION -->
+            </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_description_layout"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_type">
+            <!-- TYPE OF PROPERTY -->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_description_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Description"
-                        android:inputType="textMultiLine"
-                        android:text="@={viewmodel.formDescription}"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- REAL ESTATE AGENT -->
-
-                <LinearLayout
-                    android:id="@+id/textview_spinner"
-                    style="@style/InputLabel"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_textview"
-                    android:textColor="@color/light_black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_description_layout">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Real estate agent :"
-                        android:textColor="@color/grey"
-                        android:textSize="16sp" />
-
-                    <Spinner
-                        android:id="@+id/form_real_estate_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:gravity="bottom" />
-
-                </LinearLayout>
-
-                <!-- ENTRY DATE -->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_entry_date_layout"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    app:layout_constraintEnd_toStartOf="@id/form_sold_date_layout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textview_spinner">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_entry_date_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Entry date"
-                        android:inputType="date"
-                        android:text="@={viewmodel.formEntryDate}"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- SELL DATE -->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/form_sold_date_layout"
-                    style="@style/LoginTextInputLayoutStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/form_entry_date_layout"
-                    app:layout_constraintTop_toBottomOf="@id/textview_spinner">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/form_sold_date_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Sold date"
-                        android:inputType="date"
-                        android:text="@={viewmodel.formSoldDate}"
-                        android:textSize="16sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <ImageButton
-                    android:id="@+id/form_take_photo_button"
-                    android:layout_width="130dp"
-                    android:layout_height="53dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_button"
-                    android:padding="10dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/baseline_camera_alt_black_36dp"
-                    android:tint="@color/white"
-                    app:layout_constraintEnd_toStartOf="@id/or_separator"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_entry_date_layout" />
+            <LinearLayout
+                android:id="@+id/form_type"
+                style="@style/InputLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/border_textview"
+                android:orientation="vertical"
+                android:textColor="@color/light_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_interestPoints">
 
                 <TextView
-                    android:id="@+id/or_separator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="Or"
-                    android:textSize="17sp"
-                    app:layout_constraintEnd_toStartOf="@id/form_upload_photo_button"
-                    app:layout_constraintStart_toEndOf="@id/form_take_photo_button"
-                    app:layout_constraintTop_toBottomOf="@id/form_entry_date_layout" />
+                    android:text="Type of property :"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp" />
 
-                <ImageButton
-                    android:id="@+id/form_upload_photo_button"
-                    android:layout_width="130dp"
-                    android:layout_height="53dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/border_button"
-                    android:padding="8dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/baseline_add_photo_alternate_black_36dp"
-                    android:tint="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/or_separator"
-                    app:layout_constraintTop_toBottomOf="@id/form_sold_date_layout" />
-
-                <View
-                    android:id="@+id/separator"
+                <Spinner
+                    android:id="@+id/form_type_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/form_upload_photo_button" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    app:entriesType="@{viewmodel.typeList}"
+                    app:newValue="@{viewmodel.formType}" />
 
-                <Button
-                    android:id="@+id/form_submit_button"
-                    android:layout_width="170dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/border_submit_button"
-                    android:text="Submit"
-                    android:textColor="@color/purple"
-                    android:textSize="19sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/separator" />
+            </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+            <!-- DESCRIPTION -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_description_layout"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_type">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/form_description_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:inputType="textMultiLine"
+                    android:text="@={viewmodel.formDescription}"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- REAL ESTATE AGENT -->
+
+            <LinearLayout
+                android:id="@+id/textview_spinner"
+                style="@style/InputLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/border_textview"
+                android:orientation="vertical"
+                android:textColor="@color/light_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_description_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Real estate agent :"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/form_real_estate_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    app:entriesAgents="@{viewmodel.realEstateAgentsList}" />
+
+            </LinearLayout>
+
+            <!-- ENTRY DATE -->
+
+            <TextView
+                android:id="@+id/form_entry_date_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/border_textview"
+                android:hint="Entry Date"
+                android:textColorHint="@color/grey"
+                android:padding="17dp"
+                android:text="@{viewmodel.formEntryDate}"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/form_sold_date_textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_spinner" />
+
+
+            <!-- SOLD DATE -->
+
+            <TextView
+                android:id="@+id/form_sold_date_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/border_textview"
+                android:hint="Sold Date"
+                android:textColorHint="@color/grey"
+                android:padding="17dp"
+                android:text="@{viewmodel.formSoldDate}"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/form_entry_date_textView"
+                app:layout_constraintTop_toBottomOf="@id/textview_spinner" />
+
+
+            <ImageButton
+                android:id="@+id/form_take_photo_button"
+                android:layout_width="130dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/border_button"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_camera_alt_black_36dp"
+                android:tint="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/or_separator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView" />
+
+            <TextView
+                android:id="@+id/or_separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="10dp"
+                android:text="Or"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toStartOf="@id/form_upload_photo_button"
+                app:layout_constraintStart_toEndOf="@id/form_take_photo_button"
+                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView" />
+
+            <ImageButton
+                android:id="@+id/form_upload_photo_button"
+                android:layout_width="130dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="25dp"
+                android:background="@drawable/border_button"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_add_photo_alternate_black_36dp"
+                android:tint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/or_separator"
+                app:layout_constraintTop_toBottomOf="@id/form_sold_date_textView" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_upload_photo_button" />
+
+            <Button
+                android:id="@+id/form_submit_button"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/border_submit_button"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/light_purple"
+                android:textSize="19sp"
+                android:enabled="@{viewmodel.mediatorLiveData}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

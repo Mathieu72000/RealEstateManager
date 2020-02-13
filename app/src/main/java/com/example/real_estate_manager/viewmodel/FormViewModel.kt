@@ -1,10 +1,7 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.House
 import com.example.real_estate_manager.room.model.InterestPoints
@@ -18,6 +15,24 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // Get the database instance
     private val getHouseDatabase = HouseDatabase.getInstance(application)
 
+    suspend fun addHouse(house: House) {
+        getHouseDatabase?.insertNewHouse(house)
+    }
+
+    suspend fun addInterestPoints(interestPoints: InterestPoints) {
+        getHouseDatabase?.insertInterestPoints(interestPoints)
+    }
+
+    suspend fun addRealEstateAgents(realEstateAgent: RealEstateAgent) {
+        getHouseDatabase?.insertEstateAgents(realEstateAgent)
+    }
+
+    suspend fun addType(type: Type) {
+        getHouseDatabase?.insertType(type)
+    }
+
+    // --------------------------------------------------------------------
+
     val interestPointsList = MutableLiveData<List<InterestPoints>>().apply {
         postValue(null)
     }
@@ -26,26 +41,15 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         postValue(null)
     }
 
-    suspend fun addHouse(house: House) {
-        getHouseDatabase?.insertNewHouse(house)
+    val realEstateAgentsList = MutableLiveData<List<RealEstateAgent>>().apply {
+        postValue(null)
     }
 
-    fun addInterestPoints(interestPoints: InterestPoints) {
-        getHouseDatabase?.insertInterestPoints(interestPoints)
-    }
-
-    fun addRealEstateAgents(realEstateAgent: RealEstateAgent) {
-        getHouseDatabase?.insertEstateAgents(realEstateAgent)
-    }
-
-    fun addType(type: Type) {
-        getHouseDatabase?.insertType(type)
-    }
-
-    fun getLoadData(){
+    fun getLoadData() {
         viewModelScope.launch(Dispatchers.IO) {
             interestPointsList.postValue(getHouseDatabase?.getAllInterestPoints())
-        typeList.postValue(getHouseDatabase?.getType())
+            typeList.postValue(getHouseDatabase?.getType())
+            realEstateAgentsList.postValue(getHouseDatabase?.getAllAgents())
         }
     }
 
@@ -55,15 +59,17 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // -------------------------------------------
     var longitude: Double? = null
     // -------------------------------------------
-    val formSurface = MutableLiveData<Int>()
+    val formSurface = MutableLiveData<String>()
     // -------------------------------------------
-    val formRoomNumber = MutableLiveData<Int>()
+    val formRoomNumber = MutableLiveData<String>()
     // -------------------------------------------
-    val formPrice = MutableLiveData<Int>()
+    val formPrice = MutableLiveData<String>()
     // --------------------------------------------
     val formInterestPoints = MutableLiveData<String>()
     // -------------------------------------------
     val formRealEstateAgents = MutableLiveData<String>()
+    // -------------------------------------------
+    val formType = MutableLiveData<String>()
     // -------------------------------------------
     val formDescription = MutableLiveData<String>()
     // -------------------------------------------
@@ -71,42 +77,49 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // -------------------------------------------
     val formSoldDate = MutableLiveData<String>()
     // -------------------------------------------
-    var formLocation = MutableLiveData<String>()
+    val formLocation = MutableLiveData<String>()
     // -------------------------------------------
-    val formLatitude = MutableLiveData<Double>()
-    // -------------------------------------------
-    val formLongitude = MutableLiveData<Double>()
-    // -------------------------------------------
+    val mediatorLiveData = MediatorLiveData<Boolean>().apply {
+        addSource(formPrice) {
+            postValue(isHouseValid())
+        }
+        addSource(formLocation) {
+            postValue(isHouseValid())
+        }
+        addSource(formSurface) {
+            postValue(isHouseValid())
+        }
+        addSource(formRoomNumber){
+            postValue(isHouseValid())
+        }
+        addSource(formDescription){
+            postValue(isHouseValid())
+        }
+    }
 
-    // mediatorlivedata
-    fun saveHouse() {
+    private fun isHouseValid(): Boolean {
+        return (formPrice.value?.toIntOrNull() ?: 0 ) > 0
+    }
+
+    fun saveHouse(typeId: Long, realEstateAgentId: Long, interestPointsId: List<Long>) {
         viewModelScope.launch(Dispatchers.IO) {
             val house = House(
                 0,
                 0,
                 0,
-                formPrice.value,
-                formSurface.value,
-                formRoomNumber.value,
+                formPrice.value?.toIntOrNull() ?: 0,
+                formSurface.value?.toIntOrNull() ?: 0,
+                formRoomNumber.value?.toIntOrNull() ?: 0,
                 formDescription.value,
                 formLocation.value,
-                formLatitude.value,
-                formLongitude.value,
+                latitude,
+                longitude,
                 formEntryDate.value,
                 formSoldDate.value
             )
             addHouse(house)
         }
     }
-
-    fun saveInterestPoints() = InterestPoints(0,
-        formInterestPoints.value)
-
-    fun saveRealEstateAgents() = RealEstateAgent(0,
-        formRealEstateAgents.value)
-
-
-
 }
 
 

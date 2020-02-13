@@ -7,4 +7,8 @@ import androidx.room.PrimaryKey
     @Entity
     data class RealEstateAgent(
         @PrimaryKey(autoGenerate = true) val agentId: Long,
-        @ColumnInfo val realEstateAgent: String?)
+        @ColumnInfo val realEstateAgent: String?){
+        override fun toString(): String {
+            return realEstateAgent.toString()
+        }
+    }

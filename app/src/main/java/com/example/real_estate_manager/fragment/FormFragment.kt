@@ -2,12 +2,12 @@ package com.example.real_estate_manager.fragment
 
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,8 +18,10 @@ import com.example.real_estate_manager.viewmodel.FormViewModel
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_form.*
+import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FormFragment : Fragment() {
 
@@ -46,7 +48,6 @@ class FormFragment : Fragment() {
                 this.lifecycleOwner = this@FormFragment.viewLifecycleOwner
                 this.viewmodel = formViewModel
             }
-
         return binding.root
     }
 
@@ -54,18 +55,21 @@ class FormFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         this.configurePlaceAutoComplete()
+        this.configureEntryDatePicker()
+        this.configureSoldDatePicker()
 
         form_submit_button?.setOnClickListener {
-            formViewModel.saveHouse()
         }
 
         formViewModel.getLoadData()
     }
 
+
     // -------- Place AutoComplete ----------
 
     private fun configurePlaceAutoComplete() {
         form_autocomplete_textView.setOnClickListener {
+            if (form_autocomplete_textView != null) form_autocomplete_textView.text = null
             val fields: List<Place.Field> = listOf(Place.Field.ADDRESS, Place.Field.LAT_LNG)
             val intent: Intent =
                 Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
@@ -84,31 +88,57 @@ class FormFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    // --------- CHIPS TEST -----------
+    private fun configureEntryDatePicker() {
+        val calendar = Calendar.getInstance()
 
-    private fun configureChips() {
-        val listOfType = listOf("House", "Flat", "Penthouse", "Villa", "Duplex")
-        for (type: String in listOfType) {
-            val chip = Chip(context).apply {
-                text = type
-                isCheckable = true
-                isClickable = true
+        val dateListener =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfDay, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfDay)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                val dayFormat = "dd.MM.yyyy"
+                val simpleDateFormat = SimpleDateFormat(dayFormat, Locale.FRANCE)
+                form_entry_date_textView.text = simpleDateFormat.format(calendar.time)
+                formViewModel.formEntryDate.postValue(simpleDateFormat.format(calendar.time))
             }
-            form_type.addView(chip)
+
+        form_entry_date_textView?.setOnClickListener {
+            if (form_entry_date_textView != null) form_entry_date_textView.text = null
+            DatePickerDialog(
+                requireContext(),
+                dateListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 
-    private fun configureChipsinterest() {
-        val listOfType =
-            listOf("School", "Highschool", "Restaurant", "Hospital", "Pharmacy", "Supermarket")
-        for (type: String in listOfType) {
-            val chip = Chip(context).apply {
-                text = type
-            }
-            form_interestPoints.addView(chip)
-        }
-        form_interestPoints.setOnCheckedChangeListener { group, checkedId ->
+    private fun configureSoldDatePicker() {
+        val calendar = Calendar.getInstance()
 
+        val dateListener =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfDay, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfDay)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                val dayFormat = "dd.MM.yyyy"
+                val simpleDateFormat = SimpleDateFormat(dayFormat, Locale.FRANCE)
+                form_sold_date_textView.text = simpleDateFormat.format(calendar.time)
+                formViewModel.formSoldDate.postValue(simpleDateFormat.format(calendar.time))
+            }
+
+        form_sold_date_textView?.setOnClickListener {
+            if (form_sold_date_textView != null) form_sold_date_textView.text = null
+            DatePickerDialog(
+                requireContext(),
+                dateListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 }
