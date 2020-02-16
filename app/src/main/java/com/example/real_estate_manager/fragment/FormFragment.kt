@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,7 +20,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kotlinx.android.synthetic.main.fragment_form.*
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,11 +57,16 @@ class FormFragment : Fragment() {
         this.configurePlaceAutoComplete()
         this.configureEntryDatePicker()
         this.configureSoldDatePicker()
-
-        form_submit_button?.setOnClickListener {
-        }
-
         formViewModel.getLoadData()
+        this.getTypeId()
+        this.getRealEstateAgentsId()
+
+//        form_submit_button?.setOnClickListener {
+//            formViewModel.saveHouse(
+//                formViewModel.formTypeId.value,
+//                formViewModel.formRealEstateAgentsId.value,
+//                )
+//        }
     }
 
 
@@ -92,7 +97,7 @@ class FormFragment : Fragment() {
         val calendar = Calendar.getInstance()
 
         val dateListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfDay, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfDay, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfDay)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -119,7 +124,7 @@ class FormFragment : Fragment() {
         val calendar = Calendar.getInstance()
 
         val dateListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfDay, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfDay, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfDay)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -140,6 +145,46 @@ class FormFragment : Fragment() {
                 calendar.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
+    }
+
+    private fun getTypeId() {
+        form_type_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (parent != null) {
+                    formViewModel.formTypeId.value = parent.getItemIdAtPosition(position)
+                }
+            }
+        }
+    }
+
+    private fun getRealEstateAgentsId() {
+        form_real_estate_spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (parent != null) {
+                        formViewModel.formRealEstateAgentsId.value =
+                            parent.getItemIdAtPosition(position)
+                    }
+                }
+            }
     }
 }
 

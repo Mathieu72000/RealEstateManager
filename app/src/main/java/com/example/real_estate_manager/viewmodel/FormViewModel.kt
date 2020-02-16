@@ -1,6 +1,7 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.House
@@ -65,9 +66,11 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // -------------------------------------------
     val formPrice = MutableLiveData<String>()
     // --------------------------------------------
-    val formInterestPoints = MutableLiveData<String>()
+    val formInterestPointsId = MutableLiveData<List<Long>>()
     // -------------------------------------------
-    val formRealEstateAgents = MutableLiveData<String>()
+    val formTypeId = MutableLiveData<Long>()
+    // -------------------------------------------
+    val formRealEstateAgentsId = MutableLiveData<Long>()
     // -------------------------------------------
     val formType = MutableLiveData<String>()
     // -------------------------------------------
@@ -89,19 +92,27 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         addSource(formSurface) {
             postValue(isHouseValid())
         }
-        addSource(formRoomNumber){
+        addSource(formRoomNumber) {
             postValue(isHouseValid())
         }
-        addSource(formDescription){
+        addSource(formDescription) {
+            postValue(isHouseValid())
+        }
+        addSource(formEntryDate) {
             postValue(isHouseValid())
         }
     }
 
     private fun isHouseValid(): Boolean {
-        return (formPrice.value?.toIntOrNull() ?: 0 ) > 0
+        return formPrice.value?.toIntOrNull() ?: 0 > 0
+                && formSurface.value?.toIntOrNull() ?: 0 > 0
+                && formRoomNumber.value?.toIntOrNull() ?: 0 > 0
+                && formDescription.value != null
+                && formLocation.value != null
+                && formEntryDate.value != null
     }
 
-    fun saveHouse(typeId: Long, realEstateAgentId: Long, interestPointsId: List<Long>) {
+    fun saveHouse(typeId: Long?, realEstateAgentId: Long?, interestPointsId: List<Long>?) {
         viewModelScope.launch(Dispatchers.IO) {
             val house = House(
                 0,

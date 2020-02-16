@@ -63,13 +63,12 @@ fun Spinner.setAgentsEntries(entries: List<RealEstateAgent>?) {
     setSpinnerEntries(entries)
 }
 
-@BindingAdapter("onItemSelected")
-fun Spinner.setOnItemSelectedListener(itemSelectedListener: ItemSelectedListener?) {
-    setSpinnerItemSelectedListener(itemSelectedListener)
-}
-
 @BindingAdapter("newValue")
 fun Spinner.setNewValue(newValue: Any?) {
     setSpinnerValue(newValue)
 }
 
+@BindingAdapter("onItemSelected")
+fun Spinner.setOnItemSelectedListener(itemSelectedListener: ItemSelectedListener?) {
+    setSpinnerItemSelectedListener(itemSelectedListener)
+}
