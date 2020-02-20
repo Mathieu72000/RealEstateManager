@@ -1,8 +1,9 @@
 package com.example.real_estate_manager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.example.real_estate_manager.fragment.SearchFragment
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity() {
@@ -13,9 +14,14 @@ class SearchActivity : AppCompatActivity() {
 
         this.configureToolbar()
 
+        val searchFragment = SearchFragment.newInstance()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.search_fragment_placeHolder, searchFragment)
+            .commitAllowingStateLoss()
     }
 
-    private fun configureToolbar(){
+    private fun configureToolbar() {
         setSupportActionBar(search_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

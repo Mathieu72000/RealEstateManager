@@ -181,8 +181,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:gravity="bottom"
-                    app:entriesType="@{viewmodel.typeList}"
-                    app:newValue="@{viewmodel.formType}" />
+                    app:entriesType="@{viewmodel.typeList}"/>
 
             </LinearLayout>
 

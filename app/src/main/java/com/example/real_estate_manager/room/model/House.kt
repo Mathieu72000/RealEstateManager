@@ -19,8 +19,8 @@ import androidx.room.*
 
 data class House(
     @PrimaryKey(autoGenerate = true) val houseId: Long,
-    @ColumnInfo val houseAgentId: Long,
-    @ColumnInfo val houseTypeId: Long,
+    @ColumnInfo val houseAgentId: Long?,
+    @ColumnInfo val houseTypeId: Long?,
     @ColumnInfo val price: Int?,
     @ColumnInfo val surface: Int?,
     @ColumnInfo val roomNumber: Int?,

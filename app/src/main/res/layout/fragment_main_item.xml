@@ -88,7 +88,7 @@
             android:layout_marginEnd="10dp"
             android:textColor="@color/dark_grey"
             android:textSize="16sp"
-            android:text="@{item.houseTypeAgent.house.surface.toString()}"
+            android:text="@{String.format(@string/sqm, item.houseTypeAgent.house.surface.toString())}"
             tools:text="320 sqm m" />
 
         <TextView

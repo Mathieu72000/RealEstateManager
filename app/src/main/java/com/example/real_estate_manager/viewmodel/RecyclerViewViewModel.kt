@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
 
-// The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Repository and the UI)
-class FormItemViewModel(application: Application) : AndroidViewModel(application) {
+// The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Database and the UI)
+class RecyclerViewViewModel(application: Application) : AndroidViewModel(application) {
 
     // Get the database instance
     private val getHouseDatabase = HouseDatabase.getInstance(application)
@@ -22,7 +22,7 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
     // -----------------------------------------------------------------
 
     // HouseTypeAgent
-    private val houseTypeAgentList = MutableLiveData<List<HouseTypeAgent>>()
+    private var houseTypeAgentList = MutableLiveData<List<HouseTypeAgent>>()
 
     val itemList = Transformations.map(houseTypeAgentList) { house ->
         house.map {

@@ -1,6 +1,7 @@
 package com.example.real_estate_manager.room.database
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -58,7 +59,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
      suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
         this.houseDao().getHouseAndTypeAndAgent(houseId)
 
-     suspend fun insertNewHouse(house: House) =
+     suspend fun insertNewHouse(house: House): Long =
         houseDao().insertHouse(house)
 
     // ----------------------------------------------------------

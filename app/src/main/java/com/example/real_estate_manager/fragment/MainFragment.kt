@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.itemAdapter.HouseItem
-import com.example.real_estate_manager.viewmodel.FormItemViewModel
+import com.example.real_estate_manager.viewmodel.RecyclerViewViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : Fragment() {
 
     private var groupAdapter = GroupAdapter<GroupieViewHolder>()
-    private val viewModel by viewModels<FormItemViewModel>()
+    private val viewModel by viewModels<RecyclerViewViewModel>()
 
     companion object {
     fun newInstance(): MainFragment {

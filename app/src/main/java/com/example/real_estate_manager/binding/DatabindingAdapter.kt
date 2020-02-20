@@ -1,6 +1,7 @@
 package com.example.real_estate_manager.binding
 
 import android.content.res.ColorStateList
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -55,12 +56,28 @@ fun ChipGroup.setCustomChipForm(interestPoints: List<InterestPoints>?) {
 
 @BindingAdapter("entriesType")
 fun Spinner.setTypeEntries(entries: List<Type>?) {
-    setSpinnerEntries(entries)
+    if (entries != null) {
+        val arrayAdapter = object: ArrayAdapter<Type?>(context, android.R.layout.simple_spinner_item, entries){
+            override fun getItemId(position: Int): Long {
+                return entries[position].typeId
+            }
+        }
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter = arrayAdapter
+    }
 }
 
 @BindingAdapter("entriesAgents")
 fun Spinner.setAgentsEntries(entries: List<RealEstateAgent>?) {
-    setSpinnerEntries(entries)
+    if (entries != null) {
+        val arrayAdapter = object: ArrayAdapter<RealEstateAgent?>(context, android.R.layout.simple_spinner_item, entries){
+            override fun getItemId(position: Int): Long {
+                return entries[position].agentId
+            }
+        }
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter = arrayAdapter
+    }
 }
 
 @BindingAdapter("newValue")

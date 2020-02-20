@@ -4,11 +4,13 @@ package com.example.real_estate_manager.fragment
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,6 +21,11 @@ import com.example.real_estate_manager.viewmodel.FormViewModel
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.android.material.chip.Chip
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
+import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.android.synthetic.main.fragment_form.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,15 +67,22 @@ class FormFragment : Fragment() {
         formViewModel.getLoadData()
         this.getTypeId()
         this.getRealEstateAgentsId()
+        this.configureMatisse()
 
-//        form_submit_button?.setOnClickListener {
-//            formViewModel.saveHouse(
-//                formViewModel.formTypeId.value,
-//                formViewModel.formRealEstateAgentsId.value,
-//                )
-//        }
+        form_submit_button?.setOnClickListener {
+
+            form_interestPoints.children.filter { it is Chip && it.isChecked }
+                .map { it.tag as Long }.toList().let {
+                    formViewModel.formInterestPointsId.postValue(it)
+                }
+
+            formViewModel.saveHouse(
+                formViewModel.formTypeId.value,
+                formViewModel.formRealEstateAgentsId.value,
+                formViewModel.formInterestPointsId.value
+            )
+        }
     }
-
 
     // -------- Place AutoComplete ----------
 
@@ -89,6 +103,9 @@ class FormFragment : Fragment() {
             formViewModel.formLocation.postValue(place?.address)
             formViewModel.longitude = place?.latLng?.longitude
             formViewModel.latitude = place?.latLng?.latitude
+        }
+        if (requestCode == Constants.PICTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // PICTURE CODE HERE VIEWMODEL
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -159,9 +176,7 @@ class FormFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (parent != null) {
-                    formViewModel.formTypeId.value = parent.getItemIdAtPosition(position)
-                }
+                formViewModel.formTypeId.postValue(parent?.getItemIdAtPosition(position))
             }
         }
     }
@@ -170,7 +185,6 @@ class FormFragment : Fragment() {
         form_real_estate_spinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-
                 }
 
                 override fun onItemSelected(
@@ -179,12 +193,22 @@ class FormFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    if (parent != null) {
-                        formViewModel.formRealEstateAgentsId.value =
-                            parent.getItemIdAtPosition(position)
-                    }
+                    formViewModel.formRealEstateAgentsId.postValue(
+                        parent?.getItemIdAtPosition(position)
+                    )
                 }
             }
+    }
+
+    private fun configureMatisse() {
+        form_upload_photo_button.setOnClickListener {
+            Matisse.from(this)
+                .choose(MimeType.ofAll())
+                .countable(true)
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .imageEngine(GlideEngine())
+                .forResult(Constants.PICTURE_REQUEST_CODE)
+        }
     }
 }
 

@@ -21,4 +21,6 @@
     <string name="Penthouse">Penthouse</string>
     <string name="Duplex">Duplex</string>
 
+    <string name="sqm">%1$s sqm</string>
+
 </resources>

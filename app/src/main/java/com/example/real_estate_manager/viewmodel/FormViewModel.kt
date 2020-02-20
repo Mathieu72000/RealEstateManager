@@ -16,9 +16,8 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // Get the database instance
     private val getHouseDatabase = HouseDatabase.getInstance(application)
 
-    suspend fun addHouse(house: House) {
-        getHouseDatabase?.insertNewHouse(house)
-    }
+    private suspend fun addHouse(house: House): Long =
+        getHouseDatabase?.insertNewHouse(house) ?: -1
 
     suspend fun addInterestPoints(interestPoints: InterestPoints) {
         getHouseDatabase?.insertInterestPoints(interestPoints)
@@ -116,8 +115,8 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             val house = House(
                 0,
-                0,
-                0,
+                realEstateAgentId,
+                typeId,
                 formPrice.value?.toIntOrNull() ?: 0,
                 formSurface.value?.toIntOrNull() ?: 0,
                 formRoomNumber.value?.toIntOrNull() ?: 0,
@@ -128,7 +127,10 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
                 formEntryDate.value,
                 formSoldDate.value
             )
-            addHouse(house)
+            val houseId = addHouse(house)
+            if(houseId != -1L){
+                // add interest Points
+            }
         }
     }
 }

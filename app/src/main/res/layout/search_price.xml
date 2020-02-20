@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:baselineAligned="false">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/price_min_layout"
@@ -18,7 +20,7 @@
             android:id="@+id/price_min_editText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:textSize="16sp"
             android:hint="Min." />
 
@@ -37,7 +39,7 @@
             android:id="@+id/price_max_editText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:textSize="16sp"
             android:hint="Max." />
 
