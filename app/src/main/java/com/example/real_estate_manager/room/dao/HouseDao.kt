@@ -1,6 +1,5 @@
 package com.example.real_estate_manager.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.real_estate_manager.room.model.House
 import com.example.real_estate_manager.room.model.HouseAndInterestPoints
@@ -11,6 +10,9 @@ interface HouseDao {
 
     @Insert
     suspend fun insertHouse(house: House): Long
+
+    @Insert
+    suspend fun insertHouseInterestPoints(interest: HouseAndInterestPoints)
 
     @Update
     suspend fun updateHouse(house: House)

@@ -1,7 +1,6 @@
 package com.example.real_estate_manager.room.database
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -56,54 +55,27 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
         get() = Dispatchers.Main
 
     // ----------------------------------------------------------
-     suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
+    suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
         this.houseDao().getHouseAndTypeAndAgent(houseId)
 
-     suspend fun insertNewHouse(house: House): Long =
+    suspend fun insertNewHouse(house: House): Long =
         houseDao().insertHouse(house)
 
     // ----------------------------------------------------------
     suspend fun getAllInterestPoints(): List<InterestPoints> =
         this.interestPointsDao().getAllInterestPoints()
 
-    fun insertInterestPoints(interestPoints: InterestPoints) {
-        launch { newInterestPoints(interestPoints) }
-    }
-
-    private suspend fun newInterestPoints(interestPoints: InterestPoints) =
-        interestPointsDao().insertInterestPoints(interestPoints)
+    suspend fun insertInterestPoints(interestPoints: HouseAndInterestPoints) =
+        houseDao().insertHouseInterestPoints(interestPoints)
 
     // ----------------------------------------------------------
     suspend fun getAllAgents(): List<RealEstateAgent> =
         this.realEstateAgentDao().getAllAgents()
 
-    fun insertEstateAgents(realEstateAgent: RealEstateAgent) {
-        launch { newEstateAgents(realEstateAgent) }
-    }
-
-    private suspend fun newEstateAgents(realEstateAgent: RealEstateAgent) =
-        realEstateAgentDao().insertAgents(realEstateAgent)
-
     // ---------------------------------------------------------
     suspend fun getType(): List<Type> = this.typeDao().getType()
 
-    fun insertType(type: Type) {
-        launch { newType(type) }
-    }
-
-    private suspend fun newType(type: Type) =
-        typeDao().insertType(type)
-
     // ---------------------------------------------------------
-    suspend fun getPictures(): List<Pictures> = this.picturesDao().getAllPictures()
-
-    fun insertPictures(pictures: Pictures) {
-        launch { newPictures(pictures) }
-    }
-
-    private suspend fun newPictures(pictures: Pictures) = picturesDao().insertPictures(pictures)
-    // ---------------------------------------------------------
-
     suspend fun getHouseTypeAgents(): List<HouseTypeAgent> =
         this.houseDao().getAllHouseAndTypeAndAgent()
 }

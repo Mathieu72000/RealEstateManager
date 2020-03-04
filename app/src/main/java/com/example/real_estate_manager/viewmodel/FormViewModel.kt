@@ -1,15 +1,18 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
-import android.widget.Toast
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import androidx.lifecycle.*
+import com.example.real_estate_manager.itemAdapter.PictureItem
 import com.example.real_estate_manager.room.database.HouseDatabase
-import com.example.real_estate_manager.room.model.House
-import com.example.real_estate_manager.room.model.InterestPoints
-import com.example.real_estate_manager.room.model.RealEstateAgent
-import com.example.real_estate_manager.room.model.Type
+import com.example.real_estate_manager.room.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.aprilapps.easyphotopicker.MediaFile
+import timber.log.Timber
+import java.io.ByteArrayOutputStream
 
 class FormViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -19,16 +22,8 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     private suspend fun addHouse(house: House): Long =
         getHouseDatabase?.insertNewHouse(house) ?: -1
 
-    suspend fun addInterestPoints(interestPoints: InterestPoints) {
+    suspend fun addInterestPoints(interestPoints: HouseAndInterestPoints) {
         getHouseDatabase?.insertInterestPoints(interestPoints)
-    }
-
-    suspend fun addRealEstateAgents(realEstateAgent: RealEstateAgent) {
-        getHouseDatabase?.insertEstateAgents(realEstateAgent)
-    }
-
-    suspend fun addType(type: Type) {
-        getHouseDatabase?.insertType(type)
     }
 
     // --------------------------------------------------------------------
@@ -71,8 +66,6 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // -------------------------------------------
     val formRealEstateAgentsId = MutableLiveData<Long>()
     // -------------------------------------------
-    val formType = MutableLiveData<String>()
-    // -------------------------------------------
     val formDescription = MutableLiveData<String>()
     // -------------------------------------------
     val formEntryDate = MutableLiveData<String>()
@@ -81,6 +74,11 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // -------------------------------------------
     val formLocation = MutableLiveData<String>()
     // -------------------------------------------
+    val formPictures = MutableLiveData<MutableList<MediaFile>>().apply {
+        postValue(mutableListOf())
+    }
+    // -------------------------------------------
+
     val mediatorLiveData = MediatorLiveData<Boolean>().apply {
         addSource(formPrice) {
             postValue(isHouseValid())
@@ -128,11 +126,28 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
                 formSoldDate.value
             )
             val houseId = addHouse(house)
-            if(houseId != -1L){
-                // add interest Points
+            if (houseId != -1L) {
+//                addInterestPoints(HouseAndInterestPoints(houseId.toInt(), interestPointsId))
+                formPictures.value?.map {
+                    val bitmap = BitmapFactory.decodeFile(it.file.path)
+                    val byteArray = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
+                    val toByteArray = byteArray.toByteArray()
+                    Base64.encodeToString(toByteArray, Base64.DEFAULT)
+                }?.forEach {
+                }
+
             }
         }
     }
+
+    val itemList = Transformations.map(formPictures) { picture ->
+        picture.map {
+            PictureItem(it)
+        }
+    }
+
+    fun addPhoto(photo: List<MediaFile>) {
+        formPictures.postValue(formPictures.value?.union(photo)?.toMutableList())
+    }
 }
-
-

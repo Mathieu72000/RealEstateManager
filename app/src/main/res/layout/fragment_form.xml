@@ -30,9 +30,9 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/border_textview"
                 android:hint="Location"
-                android:textColorHint="@color/grey"
                 android:padding="15dp"
                 android:text="@{viewmodel.formLocation}"
+                android:textColorHint="@color/grey"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,26 +128,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/form_price_layout">
 
-            <TextView
-                android:id="@+id/form_interestPoints_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:gravity="center"
-                android:text="Interest Points :"
-                android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/form_interestPoints_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Interest Points :"
+                    android:textSize="16sp" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/form_interestPoints"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                app:customChipFormInterest="@{viewmodel.interestPointsList}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/form_interestPoints_textView" />
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/form_interestPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
+                    app:customChipFormInterest="@{viewmodel.interestPointsList}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/form_interestPoints_textView" />
 
             </LinearLayout>
 
@@ -181,7 +181,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:gravity="bottom"
-                    app:entriesType="@{viewmodel.typeList}"/>
+                    app:entriesType="@{viewmodel.typeList}" />
 
             </LinearLayout>
 
@@ -255,9 +255,9 @@
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/border_textview"
                 android:hint="Entry Date"
-                android:textColorHint="@color/grey"
                 android:padding="17dp"
                 android:text="@{viewmodel.formEntryDate}"
+                android:textColorHint="@color/grey"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/form_sold_date_textView"
                 app:layout_constraintStart_toStartOf="parent"
@@ -275,14 +275,27 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/border_textview"
                 android:hint="Sold Date"
-                android:textColorHint="@color/grey"
                 android:padding="17dp"
                 android:text="@{viewmodel.formSoldDate}"
+                android:textColorHint="@color/grey"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/form_entry_date_textView"
                 app:layout_constraintTop_toBottomOf="@id/textview_spinner" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/form_picture_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                app:reverseLayout="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView" />
 
             <ImageButton
                 android:id="@+id/form_take_photo_button"
@@ -298,7 +311,7 @@
                 android:tint="@color/white"
                 app:layout_constraintEnd_toStartOf="@id/or_separator"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView" />
+                app:layout_constraintTop_toBottomOf="@id/form_picture_recyclerView" />
 
             <TextView
                 android:id="@+id/or_separator"
@@ -311,7 +324,7 @@
                 android:textSize="17sp"
                 app:layout_constraintEnd_toStartOf="@id/form_upload_photo_button"
                 app:layout_constraintStart_toEndOf="@id/form_take_photo_button"
-                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView" />
+                app:layout_constraintTop_toBottomOf="@id/form_picture_recyclerView" />
 
             <ImageButton
                 android:id="@+id/form_upload_photo_button"
@@ -327,7 +340,7 @@
                 android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/or_separator"
-                app:layout_constraintTop_toBottomOf="@id/form_sold_date_textView" />
+                app:layout_constraintTop_toBottomOf="@id/form_picture_recyclerView" />
 
             <View
                 android:id="@+id/separator"
@@ -348,11 +361,11 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/border_submit_button"
+                android:enabled="@{viewmodel.mediatorLiveData}"
                 android:text="Submit"
                 android:textAllCaps="false"
                 android:textColor="@color/light_purple"
                 android:textSize="19sp"
-                android:enabled="@{viewmodel.mediatorLiveData}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/separator" />

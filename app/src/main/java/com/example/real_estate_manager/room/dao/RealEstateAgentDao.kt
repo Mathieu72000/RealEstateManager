@@ -17,5 +17,5 @@ interface RealEstateAgentDao {
     fun updateAgent(realEstateAgent: RealEstateAgent)
 
     @Query("SELECT * FROM realestateagent")
-    fun getAllAgents(): List<RealEstateAgent>
+    suspend fun getAllAgents(): List<RealEstateAgent>
 }

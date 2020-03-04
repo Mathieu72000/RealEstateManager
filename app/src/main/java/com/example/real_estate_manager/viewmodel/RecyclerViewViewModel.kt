@@ -10,8 +10,7 @@ import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.HouseTypeAgent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
-import java.util.*
+
 
 // The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Database and the UI)
 class RecyclerViewViewModel(application: Application) : AndroidViewModel(application) {

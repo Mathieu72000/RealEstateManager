@@ -11,10 +11,6 @@ import com.example.real_estate_manager.room.model.RealEstateAgent
 import com.example.real_estate_manager.room.model.Type
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import utils.SpinnerExtensions.ItemSelectedListener
-import utils.SpinnerExtensions.setSpinnerEntries
-import utils.SpinnerExtensions.setSpinnerItemSelectedListener
-import utils.SpinnerExtensions.setSpinnerValue
 
 @BindingAdapter("customChipInterest")
 fun ChipGroup.setCustomChip(interestPoints: List<InterestPoints>?) {
@@ -57,11 +53,12 @@ fun ChipGroup.setCustomChipForm(interestPoints: List<InterestPoints>?) {
 @BindingAdapter("entriesType")
 fun Spinner.setTypeEntries(entries: List<Type>?) {
     if (entries != null) {
-        val arrayAdapter = object: ArrayAdapter<Type?>(context, android.R.layout.simple_spinner_item, entries){
-            override fun getItemId(position: Int): Long {
-                return entries[position].typeId
+        val arrayAdapter =
+            object : ArrayAdapter<Type?>(context, android.R.layout.simple_spinner_item, entries) {
+                override fun getItemId(position: Int): Long {
+                    return entries[position].typeId
+                }
             }
-        }
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter = arrayAdapter
     }
@@ -70,7 +67,8 @@ fun Spinner.setTypeEntries(entries: List<Type>?) {
 @BindingAdapter("entriesAgents")
 fun Spinner.setAgentsEntries(entries: List<RealEstateAgent>?) {
     if (entries != null) {
-        val arrayAdapter = object: ArrayAdapter<RealEstateAgent?>(context, android.R.layout.simple_spinner_item, entries){
+        val arrayAdapter = object :
+            ArrayAdapter<RealEstateAgent?>(context, android.R.layout.simple_spinner_item, entries) {
             override fun getItemId(position: Int): Long {
                 return entries[position].agentId
             }
@@ -78,14 +76,4 @@ fun Spinner.setAgentsEntries(entries: List<RealEstateAgent>?) {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter = arrayAdapter
     }
-}
-
-@BindingAdapter("newValue")
-fun Spinner.setNewValue(newValue: Any?) {
-    setSpinnerValue(newValue)
-}
-
-@BindingAdapter("onItemSelected")
-fun Spinner.setOnItemSelectedListener(itemSelectedListener: ItemSelectedListener?) {
-    setSpinnerItemSelectedListener(itemSelectedListener)
 }

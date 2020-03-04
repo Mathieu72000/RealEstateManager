@@ -1,38 +1,50 @@
 package com.example.real_estate_manager.fragment
 
 
+import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormBinding
+import com.example.real_estate_manager.itemAdapter.PictureItem
 import com.example.real_estate_manager.viewmodel.FormViewModel
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.chip.Chip
-import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
-import com.zhihu.matisse.engine.impl.GlideEngine
-import com.zhihu.matisse.internal.entity.CaptureStrategy
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_form.*
+import pl.aprilapps.easyphotopicker.DefaultCallback
+import pl.aprilapps.easyphotopicker.EasyImage
+import pl.aprilapps.easyphotopicker.MediaFile
+import pl.aprilapps.easyphotopicker.MediaSource
 import java.text.SimpleDateFormat
 import java.util.*
 
 class FormFragment : Fragment() {
 
+    private var groupAdapter = GroupAdapter<GroupieViewHolder>()
     private val formViewModel by viewModels<FormViewModel>()
+    private lateinit var easyImage: EasyImage
+
 
     companion object {
         fun newInstance(): FormFragment {
@@ -61,26 +73,52 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            form_take_photo_button.isEnabled = true
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                0
+            )
+        }
+
+        easyImage = EasyImage.Builder(requireContext())
+            .allowMultiple(true)
+            .setFolderName("Real Estate Picture")
+            .setCopyImagesToPublicGalleryFolder(false)
+            .build()
+
         this.configurePlaceAutoComplete()
         this.configureEntryDatePicker()
         this.configureSoldDatePicker()
         formViewModel.getLoadData()
         this.getTypeId()
         this.getRealEstateAgentsId()
-        this.configureMatisse()
+        this.configurePictures()
+        form_picture_recyclerView?.adapter = groupAdapter
+        this.bindUi()
 
         form_submit_button?.setOnClickListener {
 
-            form_interestPoints.children.filter { it is Chip && it.isChecked }
-                .map { it.tag as Long }.toList().let {
-                    formViewModel.formInterestPointsId.postValue(it)
-                }
+            form_interestPoints.children.filter {
+                it is Chip && it.isChecked
+            }.map {
+                it.tag as Long
+            }.toList().let {
+                formViewModel.formInterestPointsId.postValue(it)
+            }
 
             formViewModel.saveHouse(
                 formViewModel.formTypeId.value,
                 formViewModel.formRealEstateAgentsId.value,
                 formViewModel.formInterestPointsId.value
+
             )
+            activity?.finish()
         }
     }
 
@@ -97,17 +135,43 @@ class FormFragment : Fragment() {
         }
     }
 
+    private fun configurePictures() {
+        form_upload_photo_button.setOnClickListener {
+            easyImage.openGallery(this)
+        }
+        form_take_photo_button.setOnClickListener {
+            easyImage.openCameraForImage(this)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.AUTOCOMPLETE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val place: Place? = data?.let { Autocomplete.getPlaceFromIntent(it) }
             formViewModel.formLocation.postValue(place?.address)
             formViewModel.longitude = place?.latLng?.longitude
             formViewModel.latitude = place?.latLng?.latitude
         }
-        if (requestCode == Constants.PICTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // PICTURE CODE HERE VIEWMODEL
-        }
-        super.onActivityResult(requestCode, resultCode, data)
+        easyImage.handleActivityResult(
+            requestCode,
+            resultCode,
+            data,
+            requireActivity(),
+            object : DefaultCallback() {
+                override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
+                    formViewModel.addPhoto(imageFiles.toList())
+                }
+
+                override fun onImagePickerError(error: Throwable, source: MediaSource) {
+                    super.onImagePickerError(error, source)
+                    error.printStackTrace()
+                }
+
+                override fun onCanceled(source: MediaSource) {
+                    super.onCanceled(source)
+                }
+            })
+
     }
 
     private fun configureEntryDatePicker() {
@@ -200,15 +264,16 @@ class FormFragment : Fragment() {
             }
     }
 
-    private fun configureMatisse() {
-        form_upload_photo_button.setOnClickListener {
-            Matisse.from(this)
-                .choose(MimeType.ofAll())
-                .countable(true)
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .imageEngine(GlideEngine())
-                .forResult(Constants.PICTURE_REQUEST_CODE)
-        }
+
+    private fun bindUi() {
+        formViewModel.itemList.observe(viewLifecycleOwner, Observer
+        {
+            updateRecyclerView(it)
+        })
+    }
+
+    private fun updateRecyclerView(items: List<PictureItem>) {
+        groupAdapter.update(items)
     }
 }
 
