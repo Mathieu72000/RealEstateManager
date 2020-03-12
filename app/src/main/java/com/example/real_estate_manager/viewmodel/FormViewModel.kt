@@ -89,11 +89,9 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     val formLocation = MutableLiveData<String>()
 
     // -------------------------------------------
-    val formPictures = MutableLiveData<MutableList<MediaFile>>().apply {
+    val formPictures = MutableLiveData<MutableList<PictureViewModel>>().apply {
         postValue(mutableListOf())
     }
-
-    val formPicturesText = MutableLiveData<String>()
 
     // -------------------------------------------
 
@@ -152,11 +150,11 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 formPictures.value?.map {
-                    val bitmap = BitmapFactory.decodeFile(it.file.path)
+                    val bitmap = BitmapFactory.decodeFile(it.mediaFile.file.path)
                     val byteArray = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
                     val toByteArray = byteArray.toByteArray()
-                    val base64 = Base64.encodeToString(toByteArray, Base64.DEFAULT)
+                    Base64.encodeToString(toByteArray, Base64.DEFAULT)
                 }
             }
         }
@@ -165,11 +163,16 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     val itemList = Transformations.map(formPictures) { picture ->
         picture.map {
             PictureItem(
-                PictureViewModel(it))
+                PictureViewModel(it.mediaFile, it.text))
         }
     }
 
     fun addPhoto(photo: List<MediaFile>) {
-        formPictures.postValue(formPictures.value?.union(photo)?.toMutableList())
+        formPictures.postValue(formPictures.value?.union(photo.map { PictureViewModel(it, MutableLiveData("")) })?.toMutableList())
+    }
+
+    fun removePictures(position: Int){
+        formPictures.value?.removeAt(position)
+        formPictures.postValue(formPictures.value)
     }
 }

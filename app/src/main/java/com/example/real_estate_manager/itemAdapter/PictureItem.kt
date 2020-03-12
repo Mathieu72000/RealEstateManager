@@ -3,6 +3,7 @@ package com.example.real_estate_manager.itemAdapter
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import com.bumptech.glide.Glide
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentPictureItemBinding
@@ -10,12 +11,17 @@ import com.example.real_estate_manager.viewmodel.PictureViewModel
 import com.xwray.groupie.databinding.BindableItem
 import timber.log.Timber
 
-class PictureItem(private val item: PictureViewModel) : BindableItem<FragmentPictureItemBinding>() {
+class PictureItem(private val item: PictureViewModel) : BindableItem<FragmentPictureItemBinding>(item.mediaFile.file.path.hashCode().toLong()) {
 
     override fun getLayout() = R.layout.fragment_picture_item
 
     override fun bind(viewBinding: FragmentPictureItemBinding, position: Int) {
-        Glide.with(viewBinding.root.context).load(item.mediaFile.file).into(viewBinding.pictureItem)
+//        if(item.mediaFile.file.path != viewBinding.pictureItem.tag) { // TAG == NULL
+            Glide.with(viewBinding.root.context).load(item.mediaFile.file)
+                .into(viewBinding.pictureItem)
+//            viewBinding.pictureItem.tag = item.mediaFile.file.path
+//        }
+        viewBinding.item = item
         val broadcast: Intent = Intent().apply {
             action = "pictureClick"
             putExtra("position", position)

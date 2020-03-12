@@ -57,6 +57,13 @@ class FormFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        this.configureOnReceived()
+        intentFilter = IntentFilter("pictureClick")
+        context?.registerReceiver(receiver, intentFilter)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -89,7 +96,6 @@ class FormFragment : Fragment() {
         this.configurePictures()
         form_picture_recyclerView?.adapter = groupAdapter
         this.bindUi()
-        this.configureOnReceived()
 
         form_submit_button?.setOnClickListener {
 
@@ -294,16 +300,10 @@ class FormFragment : Fragment() {
                 val position = intent?.getIntExtra("position", 0)
                 if (position != null) {
                     Timber.tag("BROADCAST").i(position.toString())
-                    formViewModel.formPictures.value?.removeAt(position)
+                    formViewModel.removePictures(position)
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        intentFilter = IntentFilter("pictureClick")
-        context?.registerReceiver(receiver, intentFilter)
     }
 
     override fun onDestroy() {
