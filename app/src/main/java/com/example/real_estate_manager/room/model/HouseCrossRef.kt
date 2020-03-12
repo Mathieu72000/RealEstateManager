@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 
-data class HouseTypeAgent(
+data class HouseCrossRef(
     @Embedded
     val house: House,
     @Relation(
@@ -25,4 +25,10 @@ data class HouseTypeAgent(
         associateBy = Junction(HouseAndInterestPoints::class)
     )
     val interestPoints: List<InterestPoints>
+//    @Relation(
+//        entity = Pictures::class,
+//        parentColumn = "houseId",
+//        entityColumn = "picturesId"
+//    )
+//    val pictures: Pictures
 )

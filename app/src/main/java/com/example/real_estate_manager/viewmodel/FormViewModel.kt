@@ -11,7 +11,6 @@ import com.example.real_estate_manager.room.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.aprilapps.easyphotopicker.MediaFile
-import timber.log.Timber
 import java.io.ByteArrayOutputStream
 
 class FormViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,8 +21,12 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     private suspend fun addHouse(house: House): Long =
         getHouseDatabase?.insertNewHouse(house) ?: -1
 
-    suspend fun addInterestPoints(interestPoints: HouseAndInterestPoints) {
-        getHouseDatabase?.insertInterestPoints(interestPoints)
+    suspend fun addInterestPoints(interestPoints: List<HouseAndInterestPoints>) {
+        getHouseDatabase?.insertListInterestPoints(interestPoints)
+    }
+
+    suspend fun addPictures(pictures: List<Pictures>) {
+        getHouseDatabase?.insertPictures(pictures)
     }
 
     // --------------------------------------------------------------------
@@ -51,32 +54,47 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     // -----------------------------------------------------------------
 
     var latitude: Double? = null
+
     // -------------------------------------------
     var longitude: Double? = null
+
     // -------------------------------------------
     val formSurface = MutableLiveData<String>()
+
     // -------------------------------------------
     val formRoomNumber = MutableLiveData<String>()
+
     // -------------------------------------------
     val formPrice = MutableLiveData<String>()
+
     // --------------------------------------------
     val formInterestPointsId = MutableLiveData<List<Long>>()
+
     // -------------------------------------------
     val formTypeId = MutableLiveData<Long>()
+
     // -------------------------------------------
     val formRealEstateAgentsId = MutableLiveData<Long>()
+
     // -------------------------------------------
     val formDescription = MutableLiveData<String>()
+
     // -------------------------------------------
     val formEntryDate = MutableLiveData<String>()
+
     // -------------------------------------------
     val formSoldDate = MutableLiveData<String>()
+
     // -------------------------------------------
     val formLocation = MutableLiveData<String>()
+
     // -------------------------------------------
     val formPictures = MutableLiveData<MutableList<MediaFile>>().apply {
         postValue(mutableListOf())
     }
+
+    val formPicturesText = MutableLiveData<String>()
+
     // -------------------------------------------
 
     val mediatorLiveData = MediatorLiveData<Boolean>().apply {
@@ -109,12 +127,12 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
                 && formEntryDate.value != null
     }
 
-    fun saveHouse(typeId: Long?, realEstateAgentId: Long?, interestPointsId: List<Long>?) {
+    fun saveHouse() {
         viewModelScope.launch(Dispatchers.IO) {
             val house = House(
                 0,
-                realEstateAgentId,
-                typeId,
+                formRealEstateAgentsId.value,
+                formTypeId.value,
                 formPrice.value?.toIntOrNull() ?: 0,
                 formSurface.value?.toIntOrNull() ?: 0,
                 formRoomNumber.value?.toIntOrNull() ?: 0,
@@ -127,23 +145,27 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
             )
             val houseId = addHouse(house)
             if (houseId != -1L) {
-//                addInterestPoints(HouseAndInterestPoints(houseId.toInt(), interestPointsId))
+                formInterestPointsId.value?.map {
+                    HouseAndInterestPoints(houseId, it)
+                }?.let {
+                    addInterestPoints(it)
+                }
+
                 formPictures.value?.map {
                     val bitmap = BitmapFactory.decodeFile(it.file.path)
                     val byteArray = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
                     val toByteArray = byteArray.toByteArray()
-                    Base64.encodeToString(toByteArray, Base64.DEFAULT)
-                }?.forEach {
+                    val base64 = Base64.encodeToString(toByteArray, Base64.DEFAULT)
                 }
-
             }
         }
     }
 
     val itemList = Transformations.map(formPictures) { picture ->
         picture.map {
-            PictureItem(it)
+            PictureItem(
+                PictureViewModel(it))
         }
     }
 

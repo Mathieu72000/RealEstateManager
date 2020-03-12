@@ -1,14 +1,13 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.room.database.HouseDatabase
-import com.example.real_estate_manager.room.model.HouseTypeAgent
+import com.example.real_estate_manager.room.model.HouseCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,7 +16,7 @@ class FormDetailsViewModel(application: Application) : AndroidViewModel(applicat
     // Get the database instance
     private val getHouseDatabase = HouseDatabase.getInstance(application)
 
-    val houseTypeAgent = MutableLiveData<HouseTypeAgent?>().apply {
+    val houseTypeAgent = MutableLiveData<HouseCrossRef?>().apply {
         postValue(null)
     }
 

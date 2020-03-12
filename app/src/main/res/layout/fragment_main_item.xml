@@ -43,7 +43,7 @@
             android:textStyle="bold"
             android:textSize="16sp"
             tools:text="House"
-            android:text="@{item.houseTypeAgent.type.type.toString()}" />
+            android:text="@{item.houseCrossRef.type.type.toString()}" />
 
 
 
@@ -60,7 +60,7 @@
             android:textSize="14sp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{item.houseTypeAgent.house.location.toString()}"
+            android:text="@{item.houseCrossRef.house.location.toString()}"
             tools:text="Manhattan" />
 
         <TextView
@@ -90,7 +90,7 @@
             android:layout_marginEnd="10dp"
             android:textColor="@color/dark_grey"
             android:textSize="16sp"
-            android:text="@{String.format(@string/sqm, item.houseTypeAgent.house.surface.toString())}"
+            android:text="@{String.format(@string/sqm, item.houseCrossRef.house.surface.toString())}"
             tools:text="320 sqm m" />
 
         <TextView

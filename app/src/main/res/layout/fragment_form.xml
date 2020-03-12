@@ -292,6 +292,7 @@
                 android:layout_marginEnd="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
+                android:scrollbars="horizontal"
                 app:reverseLayout="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

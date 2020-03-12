@@ -4,15 +4,17 @@ package com.example.real_estate_manager.fragment
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -36,6 +38,7 @@ import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
 import pl.aprilapps.easyphotopicker.MediaSource
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,6 +47,8 @@ class FormFragment : Fragment() {
     private var groupAdapter = GroupAdapter<GroupieViewHolder>()
     private val formViewModel by viewModels<FormViewModel>()
     private lateinit var easyImage: EasyImage
+    private lateinit var receiver: BroadcastReceiver
+    private lateinit var intentFilter: IntentFilter
 
 
     companion object {
@@ -58,11 +63,11 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(
-            inflater,
-            R.layout.fragment_form,
-            container,
-            false
-        )
+                inflater,
+                R.layout.fragment_form,
+                container,
+                false
+            )
             .apply {
                 this.lifecycleOwner = this@FormFragment.viewLifecycleOwner
                 this.viewmodel = formViewModel
@@ -73,34 +78,18 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            form_take_photo_button.isEnabled = true
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                0
-            )
-        }
-
-        easyImage = EasyImage.Builder(requireContext())
-            .allowMultiple(true)
-            .setFolderName("Real Estate Picture")
-            .setCopyImagesToPublicGalleryFolder(false)
-            .build()
-
+        this.configurePermissions()
         this.configurePlaceAutoComplete()
         this.configureEntryDatePicker()
         this.configureSoldDatePicker()
         formViewModel.getLoadData()
         this.getTypeId()
         this.getRealEstateAgentsId()
+        this.configureEasyImage()
         this.configurePictures()
         form_picture_recyclerView?.adapter = groupAdapter
         this.bindUi()
+        this.configureOnReceived()
 
         form_submit_button?.setOnClickListener {
 
@@ -109,16 +98,12 @@ class FormFragment : Fragment() {
             }.map {
                 it.tag as Long
             }.toList().let {
-                formViewModel.formInterestPointsId.postValue(it)
+                formViewModel.formInterestPointsId.value = it
             }
 
-            formViewModel.saveHouse(
-                formViewModel.formTypeId.value,
-                formViewModel.formRealEstateAgentsId.value,
-                formViewModel.formInterestPointsId.value
-
-            )
+            formViewModel.saveHouse()
             activity?.finish()
+            Toast.makeText(context, "House has been saved !", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -133,6 +118,32 @@ class FormFragment : Fragment() {
                     .build(requireContext())
             startActivityForResult(intent, Constants.AUTOCOMPLETE_REQUEST_CODE)
         }
+    }
+
+    private fun configurePermissions() {
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            form_take_photo_button.isEnabled = true
+            form_upload_photo_button.isEnabled = true
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                Constants.PICTURE_REQUEST_CODE
+            )
+        }
+    }
+
+
+    private fun configureEasyImage() {
+        easyImage = EasyImage.Builder(requireContext())
+            .allowMultiple(true)
+            .setFolderName("Real Estate Picture")
+            .setCopyImagesToPublicGalleryFolder(false)
+            .build()
     }
 
     private fun configurePictures() {
@@ -274,6 +285,30 @@ class FormFragment : Fragment() {
 
     private fun updateRecyclerView(items: List<PictureItem>) {
         groupAdapter.update(items)
+    }
+
+    private fun configureOnReceived() {
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                Timber.tag("BROADCAST").i("RECEIVED")
+                val position = intent?.getIntExtra("position", 0)
+                if (position != null) {
+                    Timber.tag("BROADCAST").i(position.toString())
+                    formViewModel.formPictures.value?.removeAt(position)
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        intentFilter = IntentFilter("pictureClick")
+        context?.registerReceiver(receiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        context?.unregisterReceiver(receiver)
     }
 }
 

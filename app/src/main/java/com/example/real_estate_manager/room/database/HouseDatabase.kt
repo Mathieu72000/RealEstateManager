@@ -9,7 +9,6 @@ import com.example.real_estate_manager.room.dao.*
 import com.example.real_estate_manager.room.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 @Database(
@@ -55,8 +54,11 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
         get() = Dispatchers.Main
 
     // ----------------------------------------------------------
-    suspend fun getHouseTypeAgent(houseId: Long): HouseTypeAgent? =
+    suspend fun getHouseTypeAgent(houseId: Long): HouseCrossRef? =
         this.houseDao().getHouseAndTypeAndAgent(houseId)
+
+    suspend fun getHouseTypeAgents(): List<HouseCrossRef> =
+        this.houseDao().getAllHouseAndTypeAndAgent()
 
     suspend fun insertNewHouse(house: House): Long =
         houseDao().insertHouse(house)
@@ -65,8 +67,8 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun getAllInterestPoints(): List<InterestPoints> =
         this.interestPointsDao().getAllInterestPoints()
 
-    suspend fun insertInterestPoints(interestPoints: HouseAndInterestPoints) =
-        houseDao().insertHouseInterestPoints(interestPoints)
+    suspend fun insertListInterestPoints(interestPoints: List<HouseAndInterestPoints>) =
+        houseDao().insertListHouseInterestPoints(interestPoints)
 
     // ----------------------------------------------------------
     suspend fun getAllAgents(): List<RealEstateAgent> =
@@ -76,6 +78,6 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun getType(): List<Type> = this.typeDao().getType()
 
     // ---------------------------------------------------------
-    suspend fun getHouseTypeAgents(): List<HouseTypeAgent> =
-        this.houseDao().getAllHouseAndTypeAndAgent()
+    suspend fun insertPictures(pictures: List<Pictures>) = houseDao().insertPictures(pictures)
+
 }

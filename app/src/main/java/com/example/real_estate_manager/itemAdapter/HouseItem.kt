@@ -7,7 +7,7 @@ import com.example.real_estate_manager.viewmodel.HouseItemViewModel
 import com.xwray.groupie.databinding.BindableItem
 
 class HouseItem(private val item: HouseItemViewModel) :
-    BindableItem<FragmentMainItemBinding>(item.houseTypeAgent.house.houseId) {
+    BindableItem<FragmentMainItemBinding>(item.houseCrossRef.house.houseId) {
 
     override fun getLayout() = R.layout.fragment_main_item
 
@@ -18,7 +18,7 @@ class HouseItem(private val item: HouseItemViewModel) :
                 val intent = Intent(ctx, FormDetailsActivity::class.java).apply {
                     putExtra(
                         Constants.HOUSE_ID,
-                        item.houseTypeAgent.house.houseId
+                        item.houseCrossRef.house.houseId
                     )
                 }
                 ctx.startActivity(intent)

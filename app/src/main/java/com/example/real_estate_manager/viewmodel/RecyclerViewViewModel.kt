@@ -7,7 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.real_estate_manager.itemAdapter.HouseItem
 import com.example.real_estate_manager.room.database.HouseDatabase
-import com.example.real_estate_manager.room.model.HouseTypeAgent
+import com.example.real_estate_manager.room.model.HouseCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,7 @@ class RecyclerViewViewModel(application: Application) : AndroidViewModel(applica
     // -----------------------------------------------------------------
 
     // HouseTypeAgent
-    private var houseTypeAgentList = MutableLiveData<List<HouseTypeAgent>>()
+    private var houseTypeAgentList = MutableLiveData<List<HouseCrossRef>>()
 
     val itemList = Transformations.map(houseTypeAgentList) { house ->
         house.map {

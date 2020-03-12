@@ -21,6 +21,6 @@ import androidx.room.Index
     indices = [Index("houseId"), Index("interestId")]
 )
 data class HouseAndInterestPoints(
-    val houseId: Int = 0,
-    val interestId: Int = 0
+    val houseId: Long = 0,
+    val interestId: Long = 0
 )

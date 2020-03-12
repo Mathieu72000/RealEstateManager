@@ -7,6 +7,7 @@ import androidx.room.*
         childColumns = arrayOf("houseId"))], indices = [Index("picturesId"), Index("houseId")]
     )
     data class Pictures(
-        @PrimaryKey(autoGenerate = true) val picturesId: Long,
+        @PrimaryKey(autoGenerate = true) val picturesId: Long = 0,
         @ColumnInfo val pictures: String?,
-        @ColumnInfo val houseId: Int?)
+        @ColumnInfo val pictureText: String?,
+        @ColumnInfo val houseId: Long?)
