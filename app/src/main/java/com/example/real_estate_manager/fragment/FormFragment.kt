@@ -108,6 +108,7 @@ class FormFragment : Fragment() {
             }
 
             formViewModel.saveHouse()
+            activity?.setResult(Activity.RESULT_OK)
             activity?.finish()
             Toast.makeText(context, "House has been saved !", Toast.LENGTH_LONG).show()
         }
@@ -156,6 +157,7 @@ class FormFragment : Fragment() {
         form_upload_photo_button.setOnClickListener {
             easyImage.openGallery(this)
         }
+
         form_take_photo_button.setOnClickListener {
             easyImage.openCameraForImage(this)
         }

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 
 // The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Database and the UI)
-class RecyclerViewViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     // Get the database instance
     private val getHouseDatabase = HouseDatabase.getInstance(application)
@@ -21,9 +21,9 @@ class RecyclerViewViewModel(application: Application) : AndroidViewModel(applica
     // -----------------------------------------------------------------
 
     // HouseTypeAgent
-    private var houseTypeAgentList = MutableLiveData<List<HouseCrossRef>>()
+    private var houseCrossRefList = MutableLiveData<List<HouseCrossRef>>()
 
-    val itemList = Transformations.map(houseTypeAgentList) { house ->
+    val itemList = Transformations.map(houseCrossRefList) { house ->
         house.map {
             HouseItem(
                 HouseItemViewModel(it)
@@ -34,7 +34,7 @@ class RecyclerViewViewModel(application: Application) : AndroidViewModel(applica
     fun getHouseTypeAgent() {
         viewModelScope.launch(Dispatchers.IO)
         {
-            houseTypeAgentList.postValue(getHouseDatabase?.getHouseTypeAgents())
+            houseCrossRefList.postValue(getHouseDatabase?.getHouseTypeAgents())
         }
     }
 }

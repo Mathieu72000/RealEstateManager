@@ -11,11 +11,11 @@ import com.example.real_estate_manager.room.model.Pictures
 interface PicturesDao {
 
     @Insert
-    fun insertPictures(pictures: Pictures)
+    suspend fun insertPictures(pictures: Pictures)
 
     @Update
-    fun updatePictures(pictures: Pictures)
+    suspend fun updatePictures(pictures: Pictures)
 
-    @Query("SELECT * FROM pictures")
-    fun getAllPictures(): List<Pictures>
+    @Query("SELECT * FROM pictures WHERE houseId = :houseId")
+    suspend fun getAllPictures(houseId: Long): List<Pictures>
 }

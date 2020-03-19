@@ -39,12 +39,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/picture_recyclerView"
+                android:id="@+id/details_picture_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                app:reverseLayout="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_media_tv" />
@@ -67,7 +71,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/description_rooms_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/picture_recyclerView" />
+                app:layout_constraintTop_toBottomOf="@id/details_picture_recyclerView" />
 
             <TextView
                 android:id="@+id/description_surface_tv"
@@ -103,7 +107,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/description_surface_title"
-                app:layout_constraintTop_toBottomOf="@id/picture_recyclerView" />
+                app:layout_constraintTop_toBottomOf="@id/details_picture_recyclerView" />
 
             <TextView
                 android:id="@+id/description_rooms_tv"
@@ -296,6 +300,7 @@
                 android:padding="5dp"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
+                android:text="@{item.houseTypeAgent.house.entryDate}"
                 app:layout_constraintEnd_toStartOf="@id/description_sold_date_tv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_entry_date_title"

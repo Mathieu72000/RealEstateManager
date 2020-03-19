@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.real_estate_manager.viewmodel.PictureViewModel" />
+            type="com.example.real_estate_manager.viewmodel.FormPictureViewModel" />
     </data>
 
 

@@ -1,7 +1,10 @@
 package com.example.real_estate_manager.binding
 
 import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -76,4 +79,11 @@ fun Spinner.setAgentsEntries(entries: List<RealEstateAgent>?) {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter = arrayAdapter
     }
+}
+
+@BindingAdapter("srcBase64")
+fun ImageView.setSrcBase64(entries: String?) {
+    val decodeBase64 = Base64.decode(entries, Base64.DEFAULT)
+    val decodeByteArray = BitmapFactory.decodeByteArray(decodeBase64, 0, decodeBase64.size)
+    setImageBitmap(decodeByteArray)
 }

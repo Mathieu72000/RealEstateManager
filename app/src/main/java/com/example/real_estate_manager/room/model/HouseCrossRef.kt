@@ -24,11 +24,11 @@ data class HouseCrossRef(
         entityColumn = "interestId",
         associateBy = Junction(HouseAndInterestPoints::class)
     )
-    val interestPoints: List<InterestPoints>
-//    @Relation(
-//        entity = Pictures::class,
-//        parentColumn = "houseId",
-//        entityColumn = "picturesId"
-//    )
-//    val pictures: Pictures
+    val interestPoints: List<InterestPoints>,
+    @Relation(
+        entity = Pictures::class,
+        parentColumn = "houseId",
+        entityColumn = "picturesId"
+    )
+    val pictures: List<Pictures>
 )

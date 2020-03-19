@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.HouseCrossRef
+import com.example.real_estate_manager.room.model.Pictures
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,10 +21,13 @@ class FormDetailsViewModel(application: Application) : AndroidViewModel(applicat
         postValue(null)
     }
 
-    fun getHouseTypeAgentDetails(houseId: Long) {
+    val housePictures = MutableLiveData<List<Pictures>>().apply { postValue(null) }
+
+    fun getHouseCrossRefDetails(houseId: Long) {
         viewModelScope.launch(Dispatchers.IO)
         {
             houseTypeAgent.postValue(getHouseDatabase?.getHouseTypeAgent(houseId))
+            housePictures.postValue(getHouseDatabase?.getPictures(houseId))
         }
     }
 

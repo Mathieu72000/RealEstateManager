@@ -80,4 +80,6 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     // ---------------------------------------------------------
     suspend fun insertPictures(pictures: List<Pictures>) = houseDao().insertPictures(pictures)
 
+    suspend fun getPictures(houseId: Long) = this.picturesDao().getAllPictures(houseId)
+
 }
