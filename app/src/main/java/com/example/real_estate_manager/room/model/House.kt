@@ -16,7 +16,6 @@ import androidx.room.*
         )],
     indices = [Index("houseAgentId"), Index("houseTypeId")]
 )
-
 data class House(
     @PrimaryKey(autoGenerate = true) val houseId: Long,
     @ColumnInfo val houseAgentId: Long?,

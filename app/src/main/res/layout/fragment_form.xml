@@ -287,17 +287,17 @@
                 android:id="@+id/form_picture_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:descendantFocusability="beforeDescendants"
                 android:orientation="horizontal"
                 android:scrollbars="horizontal"
-                android:descendantFocusability="beforeDescendants"
-                app:reverseLayout="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView" />
+                app:layout_constraintTop_toBottomOf="@id/form_entry_date_textView"
+                app:reverseLayout="false" />
 
             <ImageButton
                 android:id="@+id/form_take_photo_button"
@@ -311,21 +311,8 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_camera_alt_black_36dp"
                 android:tint="@color/white"
-                app:layout_constraintEnd_toStartOf="@id/or_separator"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/form_picture_recyclerView" />
-
-            <TextView
-                android:id="@+id/or_separator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="10dp"
-                android:text="Or"
-                android:textSize="17sp"
                 app:layout_constraintEnd_toStartOf="@id/form_upload_photo_button"
-                app:layout_constraintStart_toEndOf="@id/form_take_photo_button"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/form_picture_recyclerView" />
 
             <ImageButton
@@ -341,7 +328,7 @@
                 android:src="@drawable/baseline_add_photo_alternate_black_36dp"
                 android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/or_separator"
+                app:layout_constraintStart_toEndOf="@id/form_take_photo_button"
                 app:layout_constraintTop_toBottomOf="@id/form_picture_recyclerView" />
 
             <View

@@ -13,8 +13,8 @@
     <color name="chip_purple">#EAE1FD</color>
     <color name="secondary_light_purple">#DDD5EE</color>
     <color name="white">#FFFF</color>
-    <color name="green">#1B5E20</color>
-    <color name="red">#B71C1C</color>
+    <color name="green">#59BA5E</color>
+    <color name="red">#ED4D4A</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/purple</color>
 </resources>

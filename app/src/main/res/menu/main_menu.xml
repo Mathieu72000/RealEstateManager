@@ -8,12 +8,6 @@
         android:icon="@drawable/add"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/modify"
-        android:enabled="true"
-        android:title="Modify"
-        android:icon="@drawable/modify"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/search"
         android:enabled="true"
         android:title="Search"

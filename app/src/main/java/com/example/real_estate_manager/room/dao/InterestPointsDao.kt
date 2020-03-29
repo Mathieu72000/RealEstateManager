@@ -15,4 +15,8 @@ interface InterestPointsDao {
 
     @Query("SELECT * FROM interestPoints")
     suspend fun getAllInterestPoints(): List<InterestPoints>
+
+    @Transaction
+    @Query("DELETE FROM houseandinterestpoints WHERE houseId=:houseId")
+    suspend fun deleteInterestPoints(houseId: Long)
 }

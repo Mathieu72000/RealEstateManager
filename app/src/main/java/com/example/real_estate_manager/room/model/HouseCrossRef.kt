@@ -28,7 +28,7 @@ data class HouseCrossRef(
     @Relation(
         entity = Pictures::class,
         parentColumn = "houseId",
-        entityColumn = "picturesId"
+        entityColumn = "housePictureId"
     )
     val pictures: List<Pictures>
 )

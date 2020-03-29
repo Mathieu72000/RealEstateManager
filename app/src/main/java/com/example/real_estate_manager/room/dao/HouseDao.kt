@@ -23,10 +23,9 @@ interface HouseDao {
     // --------- UPDATE ---------
 
     @Update
-    suspend fun updateHouse(house: House)
+    suspend fun updateHouse(house: House): Int
 
     // ---------- QUERY ---------
-
     @Transaction
     @Query("SELECT * FROM House")
     suspend fun getAllHouseAndTypeAndAgent(): List<HouseCrossRef>

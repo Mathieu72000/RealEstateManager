@@ -16,6 +16,9 @@ interface PicturesDao {
     @Update
     suspend fun updatePictures(pictures: Pictures)
 
-    @Query("SELECT * FROM pictures WHERE houseId = :houseId")
+    @Query("SELECT * FROM pictures WHERE housePictureId = :houseId")
     suspend fun getAllPictures(houseId: Long): List<Pictures>
+
+    @Query("DELETE FROM pictures WHERE housePictureId=:houseId")
+    suspend fun deletePictures(houseId: Long)
 }

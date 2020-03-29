@@ -86,4 +86,5 @@ fun ImageView.setSrcBase64(entries: String?) {
     val decodeBase64 = Base64.decode(entries, Base64.DEFAULT)
     val decodeByteArray = BitmapFactory.decodeByteArray(decodeBase64, 0, decodeBase64.size)
     setImageBitmap(decodeByteArray)
+
 }

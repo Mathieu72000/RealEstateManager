@@ -11,7 +11,6 @@ import com.example.real_estate_manager.room.model.HouseCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 // The ViewModel class role is to provide data to the UI and survive configuration changes (It act as a communication center between the Database and the UI)
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 

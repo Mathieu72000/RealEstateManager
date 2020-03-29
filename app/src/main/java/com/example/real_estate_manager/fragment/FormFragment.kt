@@ -22,6 +22,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormBinding
@@ -34,6 +35,8 @@ import com.google.android.material.chip.Chip
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_form.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
@@ -48,19 +51,23 @@ class FormFragment : Fragment() {
     private val formViewModel by viewModels<FormViewModel>()
     private lateinit var easyImage: EasyImage
     private lateinit var receiver: BroadcastReceiver
-    private lateinit var intentFilter: IntentFilter
-
 
     companion object {
-        fun newInstance(): FormFragment {
-            return FormFragment()
+        fun newInstance(house: Long?): FormFragment {
+            val formFragment = FormFragment()
+            if (house != null) {
+                val bundle = Bundle()
+                bundle.putLong("house", house)
+                formFragment.arguments = bundle
+            }
+            return formFragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.configureOnReceived()
-        intentFilter = IntentFilter("pictureClick")
+        val intentFilter = IntentFilter(Constants.PICTURE_INTENT_FILTER)
         context?.registerReceiver(receiver, intentFilter)
     }
 
@@ -70,11 +77,11 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(
-                inflater,
-                R.layout.fragment_form,
-                container,
-                false
-            )
+            inflater,
+            R.layout.fragment_form,
+            container,
+            false
+        )
             .apply {
                 this.lifecycleOwner = this@FormFragment.viewLifecycleOwner
                 this.viewmodel = formViewModel
@@ -85,36 +92,19 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.getLong("house", 0)?.let { formViewModel.getLoadData(it) }
+
         this.configurePermissions()
         this.configurePlaceAutoComplete()
         this.configureEntryDatePicker()
         this.configureSoldDatePicker()
-        formViewModel.getLoadData()
         this.getTypeId()
         this.getRealEstateAgentsId()
         this.configureEasyImage()
-        this.configurePictures()
         form_picture_recyclerView?.adapter = groupAdapter
         this.bindUi()
-
-        form_submit_button?.setOnClickListener {
-
-            form_interestPoints.children.filter {
-                it is Chip && it.isChecked
-            }.map {
-                it.tag as Long
-            }.toList().let {
-                formViewModel.formInterestPointsId.value = it
-            }
-
-            formViewModel.saveHouse()
-            activity?.setResult(Activity.RESULT_OK)
-            activity?.finish()
-            Toast.makeText(context, "House has been saved !", Toast.LENGTH_LONG).show()
-        }
+        this.saveHouse()
     }
-
-    // -------- Place AutoComplete ----------
 
     private fun configurePlaceAutoComplete() {
         form_autocomplete_textView.setOnClickListener {
@@ -144,16 +134,13 @@ class FormFragment : Fragment() {
         }
     }
 
-
     private fun configureEasyImage() {
         easyImage = EasyImage.Builder(requireContext())
             .allowMultiple(true)
             .setFolderName("Real Estate Picture")
-            .setCopyImagesToPublicGalleryFolder(false)
+            .setCopyImagesToPublicGalleryFolder(true)
             .build()
-    }
 
-    private fun configurePictures() {
         form_upload_photo_button.setOnClickListener {
             easyImage.openGallery(this)
         }
@@ -167,10 +154,12 @@ class FormFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.AUTOCOMPLETE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val place: Place? = data?.let { Autocomplete.getPlaceFromIntent(it) }
+            Timber.i(place?.name)
             formViewModel.formLocation.postValue(place?.address)
             formViewModel.longitude = place?.latLng?.longitude
             formViewModel.latitude = place?.latLng?.latitude
         }
+
         easyImage.handleActivityResult(
             requestCode,
             resultCode,
@@ -283,7 +272,6 @@ class FormFragment : Fragment() {
             }
     }
 
-
     private fun bindUi() {
         formViewModel.itemList.observe(viewLifecycleOwner, Observer
         {
@@ -295,13 +283,31 @@ class FormFragment : Fragment() {
         groupAdapter.update(items)
     }
 
+    private fun saveHouse() {
+        form_submit_button?.setOnClickListener {
+
+            form_interestPoints.children.filter {
+                it is Chip && it.isChecked
+            }.map {
+                it.tag as Long
+            }.toList().let {
+                formViewModel.formInterestPointsId.value = it
+            }
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                formViewModel.saveHouse()
+                activity?.setResult(Activity.RESULT_OK)
+                activity?.finish()
+            }
+            Toast.makeText(context, R.string.house_saved, Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun configureOnReceived() {
         receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                Timber.tag("BROADCAST").i("RECEIVED")
-                val position = intent?.getIntExtra("position", 0)
+                val position = intent?.getIntExtra(Constants.PICTURE_POSITION, 0)
                 if (position != null) {
-                    Timber.tag("BROADCAST").i(position.toString())
                     formViewModel.removePictures(position)
                 }
             }
