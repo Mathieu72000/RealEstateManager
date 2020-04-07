@@ -3,6 +3,7 @@ package com.example.real_estate_manager.itemAdapter
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Base64
 import com.bumptech.glide.Glide
 import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.R
@@ -13,17 +14,17 @@ import com.xwray.groupie.databinding.BindableItem
 
 class PictureItem(private val item: FormPictureViewModel) :
     BindableItem<FragmentPictureItemBinding>(
-        System.identityHashCode(item.mediaFile.file.path).toLong()
+        System.identityHashCode(item.base64).toLong()
     ) {
 
     override fun getLayout() = R.layout.fragment_picture_item
 
     @SuppressLint("PrivateResource")
     override fun bind(viewBinding: FragmentPictureItemBinding, position: Int) {
-        if (item.mediaFile.file.path != viewBinding.pictureItem.tag) { // TAG == NULL
-            Glide.with(viewBinding.root.context).load(item.mediaFile.file)
-                .into(viewBinding.pictureItem)
-            viewBinding.pictureItem.tag = item.mediaFile.file.path
+        if (item.base64 != viewBinding.pictureItem.tag) {
+        Glide.with(viewBinding.root.context).load(Base64.decode(item.base64, Base64.DEFAULT))
+            .into(viewBinding.pictureItem)
+            viewBinding.pictureItem.tag = item.base64
         }
         viewBinding.item = item
         val broadcast: Intent = Intent().apply {

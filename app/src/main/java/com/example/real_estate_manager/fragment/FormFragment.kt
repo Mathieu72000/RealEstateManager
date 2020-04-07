@@ -27,6 +27,9 @@ import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormBinding
 import com.example.real_estate_manager.itemAdapter.PictureItem
+import com.example.real_estate_manager.itemAdapter.SpinnerAdapter
+import com.example.real_estate_manager.room.model.RealEstateAgent
+import com.example.real_estate_manager.room.model.Type
 import com.example.real_estate_manager.viewmodel.FormViewModel
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -41,7 +44,6 @@ import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
 import pl.aprilapps.easyphotopicker.MediaSource
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -92,7 +94,10 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getLong("house", 0)?.let { formViewModel.getLoadData(it) }
+        val houseId = arguments?.getLong("house", 0)
+        if (houseId != null) {
+            formViewModel.getLoadData(houseId)
+        }
 
         this.configurePermissions()
         this.configurePlaceAutoComplete()
@@ -102,7 +107,7 @@ class FormFragment : Fragment() {
         this.getRealEstateAgentsId()
         this.configureEasyImage()
         form_picture_recyclerView?.adapter = groupAdapter
-        this.bindUi()
+        this.bindUi(houseId)
         this.saveHouse()
     }
 
@@ -141,12 +146,18 @@ class FormFragment : Fragment() {
             .setCopyImagesToPublicGalleryFolder(true)
             .build()
 
-        form_upload_photo_button.setOnClickListener {
-            easyImage.openGallery(this)
+        form_upload_photo_button.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                easyImage.openGallery(this@FormFragment)
+                v.clearFocus()
+            }
         }
 
-        form_take_photo_button.setOnClickListener {
-            easyImage.openCameraForImage(this)
+        form_take_photo_button.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                easyImage.openCameraForImage(this@FormFragment)
+                v.clearFocus()
+            }
         }
     }
 
@@ -154,7 +165,6 @@ class FormFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.AUTOCOMPLETE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val place: Place? = data?.let { Autocomplete.getPlaceFromIntent(it) }
-            Timber.i(place?.name)
             formViewModel.formLocation.postValue(place?.address)
             formViewModel.longitude = place?.latLng?.longitude
             formViewModel.latitude = place?.latLng?.latitude
@@ -272,15 +282,58 @@ class FormFragment : Fragment() {
             }
     }
 
-    private fun bindUi() {
+    private fun bindUi(houseId: Long?) {
         formViewModel.itemList.observe(viewLifecycleOwner, Observer
         {
             updateRecyclerView(it)
         })
+        if (houseId != null) {
+            restoreRealEstateAgent()
+            restoreType()
+            restoreInterestPoints()
+        }
     }
 
     private fun updateRecyclerView(items: List<PictureItem>) {
         groupAdapter.update(items)
+    }
+
+    private fun restoreRealEstateAgent() {
+        formViewModel.formRealEstateAgentsId.observe(viewLifecycleOwner, Observer { realEstateId ->
+            (form_real_estate_spinner.adapter as? SpinnerAdapter<RealEstateAgent>)?.let {
+                val indexOfFirst = it.item.indexOfFirst {
+                    it.agentId == realEstateId
+                }
+                if (indexOfFirst != -1) {
+                    form_real_estate_spinner.setSelection(indexOfFirst)
+                }
+            }
+        })
+    }
+
+    private fun restoreType() {
+        formViewModel.formTypeId.observe(viewLifecycleOwner, Observer { typeId ->
+            (form_type_spinner.adapter as? SpinnerAdapter<Type>)?.let {
+                val indexOfFirst = it.item.indexOfFirst {
+                    it.typeId == typeId
+                }
+                if (indexOfFirst != -1) {
+                    form_type_spinner.setSelection(indexOfFirst)
+                }
+            }
+        })
+    }
+
+    private fun restoreInterestPoints() {
+        formViewModel.formInterestPointsId.observe(viewLifecycleOwner, Observer { interestPoints ->
+            form_interestPoints.children.filter {
+                it is Chip
+            }.forEach {
+                if (interestPoints.contains(it.tag as Long)) {
+                    form_interestPoints.check(it.id)
+                }
+            }
+        })
     }
 
     private fun saveHouse() {
@@ -319,4 +372,3 @@ class FormFragment : Fragment() {
         context?.unregisterReceiver(receiver)
     }
 }
-

@@ -23,7 +23,7 @@ interface HouseDao {
     // --------- UPDATE ---------
 
     @Update
-    suspend fun updateHouse(house: House): Int
+    suspend fun updateHouse(house: House)
 
     // ---------- QUERY ---------
     @Transaction

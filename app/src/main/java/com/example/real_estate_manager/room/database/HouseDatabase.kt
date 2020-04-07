@@ -36,7 +36,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                         override fun onCreate(database: SupportSQLiteDatabase) {
                             super.onCreate(database)                                            //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
                             database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick Moulin'), ('Ludovic Roland'), ('Mathieu Corroy'), ('Benoît Hayung')")
-                            database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('Highschool'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument')")
+                            database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('Highschool'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument'),('Church'), ('Mosque'), ('TownHall')")
                             database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
 //                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES (100000, 3, '80', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
 //                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES (250000, 8, '150', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
@@ -58,7 +58,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun insertNewHouse(house: House): Long =
         houseDao().insertHouse(house)
 
-    suspend fun updateHouse(house: House): Int =
+    suspend fun updateHouse(house: House) =
         houseDao().updateHouse(house)
 
     // ----------------------------------------------------------

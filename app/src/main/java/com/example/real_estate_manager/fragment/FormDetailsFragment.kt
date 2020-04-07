@@ -14,15 +14,23 @@ import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormDetailsBinding
 import com.example.real_estate_manager.itemAdapter.PictureDetailsItem
 import com.example.real_estate_manager.viewmodel.FormDetailsViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_form_details.*
+import timber.log.Timber
 
-class FormDetailsFragment : Fragment() {
+class FormDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel by viewModels<FormDetailsViewModel>()
     private var groupAdapter = GroupAdapter<GroupieViewHolder>()
     private var houseId: Long = 0
+    private lateinit var mMap: GoogleMap
 
     companion object {
         fun newInstance(houseId: Long): FormDetailsFragment {
@@ -41,16 +49,31 @@ class FormDetailsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.item = viewModel
         setHasOptionsMenu(true)
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.description_maps) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         houseId = arguments?.getLong(Constants.HOUSE_ID) ?: 0
-
         viewModel.getHouseCrossRefDetails(houseId)
         details_picture_recyclerView?.adapter = groupAdapter
         bindUI()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        val latitude: Double? = viewModel.houseTypeAgent.value?.house?.latitude
+        val longitude: Double? = viewModel.houseTypeAgent.value?.house?.longitude
+        if (googleMap != null) {
+            mMap = googleMap
+            if(latitude != null && longitude != null) {
+                val housePosition = LatLng(latitude, longitude)
+                mMap.addMarker(MarkerOptions().position(housePosition))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(housePosition, 16.0F))
+            }
+        }
     }
 
     private fun bindUI() {
@@ -76,7 +99,7 @@ class FormDetailsFragment : Fragment() {
             else -> null
         }?.let {
             startActivity(Intent(context, it).apply {
-              putExtra("house", viewModel.houseTypeAgent.value?.house?.houseId)
+                putExtra("house", viewModel.houseTypeAgent.value?.house?.houseId)
             })
         }
         return super.onOptionsItemSelected(item)

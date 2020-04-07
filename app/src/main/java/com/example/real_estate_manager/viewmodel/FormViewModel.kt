@@ -21,8 +21,8 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     private suspend fun addHouse(house: House): Long =
         getHouseDatabase?.insertNewHouse(house) ?: -1
 
-    private suspend fun updateHouse(house: House): Int =
-        getHouseDatabase?.updateHouse(house) ?: -1
+    private suspend fun updateHouse(house: House) =
+        getHouseDatabase?.updateHouse(house)
 
     private suspend fun addInterestPoints(interestPoints: List<HouseAndInterestPoints>) {
         getHouseDatabase?.insertListInterestPoints(interestPoints)
@@ -50,6 +50,7 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         postValue(mutableListOf())
     }
 
+
     fun getLoadData(houseId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             interestPointsList.postValue(getHouseDatabase?.getAllInterestPoints())
@@ -57,17 +58,24 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
             realEstateAgentsList.postValue(getHouseDatabase?.getAllAgents())
             val house = getHouseDatabase?.getHouseTypeAgent(houseId)
             if (house != null) {
+                this@FormViewModel.houseId = houseId
+                formPictures.postValue(house.pictures.map {
+                    it.pictures?.let { base64 ->
+                        FormPictureViewModel(base64, MutableLiveData(it.pictureText))
+                    }
+                } as MutableList<FormPictureViewModel>?)
                 formLocation.postValue(house.house.location)
                 formSurface.postValue(house.house.surface.toString())
                 formRoomNumber.postValue(house.house.roomNumber.toString())
                 formPrice.postValue(house.house.price.toString())
-//                formInterestPointsId.postValue(house.interestPoints.map { it.interestId })
-//                formTypeId.postValue(formTypeId.value)
                 formDescription.postValue(house.house.description)
                 formRealEstateAgentsId.postValue(house.realEstateAgent.agentId)
+                formTypeId.postValue(house.type.typeId)
+                formInterestPointsId.postValue(house.interestPoints.map {
+                    it.interestId
+                })
                 formEntryDate.postValue(house.house.entryDate)
                 formSoldDate.postValue(house.house.soldDate)
-//                formPictures.postValue()
                 latitude = house.house.latitude
                 longitude = house.house.longitude
             }
@@ -171,14 +179,8 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
                 }?.let {
                     addInterestPoints(it)
                 }
-
                 formPictures.value?.map {
-                    val bitmap = BitmapFactory.decodeFile(it.mediaFile.file.path)
-                    val byteArray = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
-                    val toByteArray = byteArray.toByteArray()
-                    val base64 = Base64.encodeToString(toByteArray, Base64.DEFAULT)
-                    Pictures(0, base64, it.text.value, houseId)
+                    Pictures(0, it.base64, it.text.value, houseId)
                 }?.let { addPictures(it) }
             }
         } else {
@@ -186,7 +188,7 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun updateHouse() {
+    private suspend fun updateHouse() {
         val house = House(
             houseId ?: 0,
             formRealEstateAgentsId.value,
@@ -210,28 +212,27 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         }
         getHouseDatabase?.deletePictures(houseId ?: 0)
         formPictures.value?.map {
-            val bitmap = BitmapFactory.decodeFile(it.mediaFile.file.path)
-            val byteArray = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
-            val toByteArray = byteArray.toByteArray()
-            val base64 = Base64.encodeToString(toByteArray, Base64.DEFAULT)
-            Pictures(0, base64, it.text.value, houseId ?: 0)
+            Pictures(0, it.base64, it.text.value, houseId ?: 0)
         }?.let { addPictures(it) }
-
     }
 
     val itemList = Transformations.map(formPictures) { picture ->
         picture.map {
             PictureItem(
-                FormPictureViewModel(it.mediaFile, it.text)
+                FormPictureViewModel(it.base64, it.text)
             )
         }
     }
 
     fun addPhoto(photo: List<MediaFile>) {
         formPictures.postValue(formPictures.value?.union(photo.map {
+            val bitmap = BitmapFactory.decodeFile(it.file.path)
+            val byteArray = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
+            val toByteArray = byteArray.toByteArray()
+            val base64 = Base64.encodeToString(toByteArray, Base64.DEFAULT)
             FormPictureViewModel(
-                it,
+                base64,
                 MutableLiveData("")
             )
         })?.toMutableList())

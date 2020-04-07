@@ -18,6 +18,9 @@
     <string name="Pharmacy">Pharmacy</string>
     <string name="Supermarket">Supermarket</string>
     <string name="Monument">Monument</string>
+    <string name="Church">Church</string>
+    <string name="Mosque">Mosque</string>
+    <string name="TownHall">Town Hall</string>
 
     <!-- Type -->
     <string name="House">House</string>

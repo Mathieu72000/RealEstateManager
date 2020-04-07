@@ -232,6 +232,29 @@
                 app:layout_constraintTop_toBottomOf="@id/description_location_title"
                 tools:text="740 Park Avenue - Apt6/7A New York - NY 10021 United States" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="213dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginEnd="9dp"
+                android:background="@drawable/map_border"
+                app:layout_constraintTop_toBottomOf="@id/description_location_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/description_maps"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@id/description_location_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
+
             <!-- INTEREST POINTS-->
 
             <TextView
@@ -250,7 +273,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description_location_tv" />
+                app:layout_constraintTop_toBottomOf="@id/description_maps" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/description_interest_tv"

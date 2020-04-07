@@ -22,30 +22,39 @@
 
             <!-- TYPE -->
 
+            <LinearLayout
+                android:id="@+id/search_type_linear"
+                style="@style/InputLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/border_textview"
+                android:orientation="vertical"
+                android:textColor="@color/light_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
             <TextView
-                android:id="@+id/search_type_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:text="Type of property"
-                android:textColor="@color/light_black"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="2dp"
+                android:text="Type of property :"
+                android:textColor="@color/grey"
+                android:textSize="17sp" />
 
             <Spinner
                 android:id="@+id/search_type_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                app:entriesType="@{item.typeList}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_type_tv" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:gravity="bottom"
+                app:entriesType="@{item.typeList}"/>
+
+            </LinearLayout>
 
             <!-- SURFACE -->
 
@@ -53,53 +62,43 @@
                 android:id="@+id/search_surface_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
                 android:text="Surface"
-                android:textColor="@color/light_black"
+                android:textColor="@color/grey"
                 android:textSize="17sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_type_spinner" />
+                app:layout_constraintTop_toBottomOf="@id/search_type_linear" />
 
             <include
                 android:id="@+id/search_surface_layout"
                 layout="@layout/search_surface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_surface_tv" />
-
-            <include
-                android:id="@+id/separator"
-                layout="@layout/separator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_surface_layout" />
 
             <TextView
                 android:id="@+id/search_interest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:text="Interest points"
-                android:textColor="@color/light_black"
+                android:textColor="@color/grey"
                 android:textSize="17sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/separator" />
+                app:layout_constraintTop_toBottomOf="@id/search_surface_layout" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/search_Type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
                 app:customChipFormInterest="@{item.interestPointsList}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,43 +108,93 @@
                 android:id="@+id/search_room_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:text="Number of rooms"
-                android:textColor="@color/light_black"
+                android:textColor="@color/grey"
                 android:textSize="17sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_Type" />
 
-            <include
-                android:id="@+id/search_toggle"
-                layout="@layout/search_toggle"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/search_room_number_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_room_number" />
+                app:layout_constraintTop_toBottomOf="@id/search_room_number">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/search_chip1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="1"
+                    app:chipBackgroundColor="@color/chip_purple"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/search_chip2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:chipBackgroundColor="@color/chip_purple"
+                    android:text="2"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/search_chip3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:chipBackgroundColor="@color/chip_purple"
+                    android:text="3" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/search_chip4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:chipBackgroundColor="@color/chip_purple"
+                    android:text="4"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/search_chip5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:chipBackgroundColor="@color/chip_purple"
+                    android:text="5+"/>
+
+            </com.google.android.material.chip.ChipGroup>
 
             <TextView
                 android:id="@+id/search_price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="Price"
-                android:textColor="@color/light_black"
+                android:textColor="@color/grey"
                 android:textSize="17sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_toggle" />
+                app:layout_constraintTop_toBottomOf="@id/search_room_number_chip" />
 
             <include
                 android:id="@+id/search_price"
                 layout="@layout/search_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_price_tv" />
@@ -162,12 +211,12 @@
 
             <Button
                 android:id="@+id/search_submit_button"
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/border_submit_button"
-                android:text="Search"
+                android:text="Submit"
                 android:textAllCaps="false"
                 android:textColor="@color/purple"
                 android:textSize="19sp"
