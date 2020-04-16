@@ -21,11 +21,6 @@ class PictureItem(private val item: FormPictureViewModel) :
 
     @SuppressLint("PrivateResource")
     override fun bind(viewBinding: FragmentPictureItemBinding, position: Int) {
-        if (item.base64 != viewBinding.pictureItem.tag) {
-        Glide.with(viewBinding.root.context).load(Base64.decode(item.base64, Base64.DEFAULT))
-            .into(viewBinding.pictureItem)
-            viewBinding.pictureItem.tag = item.base64
-        }
         viewBinding.item = item
         val broadcast: Intent = Intent().apply {
             action = Constants.PICTURE_INTENT_FILTER

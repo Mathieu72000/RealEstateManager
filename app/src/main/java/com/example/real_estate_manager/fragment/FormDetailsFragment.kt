@@ -23,14 +23,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_form_details.*
-import timber.log.Timber
 
 class FormDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel by viewModels<FormDetailsViewModel>()
     private var groupAdapter = GroupAdapter<GroupieViewHolder>()
     private var houseId: Long = 0
-    private lateinit var mMap: GoogleMap
 
     companion object {
         fun newInstance(houseId: Long): FormDetailsFragment {
@@ -49,7 +47,7 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.item = viewModel
         setHasOptionsMenu(true)
-        val mapFragment =
+        val mapFragment: SupportMapFragment? =
             childFragmentManager.findFragmentById(R.id.description_maps) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
         return binding.root
@@ -57,22 +55,22 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
         houseId = arguments?.getLong(Constants.HOUSE_ID) ?: 0
         viewModel.getHouseCrossRefDetails(houseId)
         details_picture_recyclerView?.adapter = groupAdapter
         bindUI()
-    }
-
-    override fun onMapReady(googleMap: GoogleMap?) {
-        val latitude: Double? = viewModel.houseTypeAgent.value?.house?.latitude
-        val longitude: Double? = viewModel.houseTypeAgent.value?.house?.longitude
         if (googleMap != null) {
-            mMap = googleMap
-            if(latitude != null && longitude != null) {
-                val housePosition = LatLng(latitude, longitude)
-                mMap.addMarker(MarkerOptions().position(housePosition))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(housePosition, 16.0F))
-            }
+            viewModel.houseTypeAgent.observe(viewLifecycleOwner, Observer {
+                if (it?.house?.latitude != null && it.house.longitude != null) {
+                    val housePosition = LatLng(it.house.latitude, it.house.longitude)
+                    googleMap.addMarker(MarkerOptions().position(housePosition))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(housePosition, 16.0F))
+                }
+            })
         }
     }
 
@@ -99,7 +97,7 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
             else -> null
         }?.let {
             startActivity(Intent(context, it).apply {
-                putExtra("house", viewModel.houseTypeAgent.value?.house?.houseId)
+                putExtra(Constants.HOUSE, viewModel.houseTypeAgent.value?.house?.houseId)
             })
         }
         return super.onOptionsItemSelected(item)

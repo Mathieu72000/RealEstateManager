@@ -9,6 +9,8 @@ import com.example.real_estate_manager.room.model.InterestPoints
 import com.example.real_estate_manager.room.model.Type
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.lang.StringBuilder
 
 class SearchViewModel(application: Application): AndroidViewModel(application){
 
@@ -28,4 +30,28 @@ class SearchViewModel(application: Application): AndroidViewModel(application){
             typeList.postValue(getHouseDatabase?.getType())
         }
     }
+
+    fun search(){
+        viewModelScope.launch(Dispatchers.IO) {
+            var isWhereOperatorAlreadyUsed = false
+            val stringBuilder = StringBuilder("SELECT House.houseId FROM House INNER JOIN Type ON House.houseTypeId = Type.typeId INNER JOIN HouseAndInterestPoints ON HouseAndInterestPoints.houseId = House.houseId ")
+            if(minPrice.value?.toIntOrNull() != null){
+                stringBuilder.append("WHERE House.price >= ${minPrice.value?.toIntOrNull() ?: 0}")
+                isWhereOperatorAlreadyUsed = true
+            }
+            if(maxPrice.value?.toIntOrNull() != null){
+                stringBuilder.append(if(isWhereOperatorAlreadyUsed == true) {
+                    " AND "
+                    } else {
+                    isWhereOperatorAlreadyUsed = true
+                    " WHERE "
+                })
+                stringBuilder.append("House.price <= ${maxPrice.value?.toIntOrNull() ?: 0} ")
+            }
+            Timber.i(stringBuilder.toString())
+        }
+    }
+
+    val minPrice = MutableLiveData<String>()
+    val maxPrice = MutableLiveData<String>()
 }

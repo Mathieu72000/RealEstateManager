@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.real_estate_manager.room.dao.*
 import com.example.real_estate_manager.room.model.*
@@ -21,6 +22,7 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     abstract fun picturesDao(): PicturesDao
     abstract fun realEstateAgentDao(): RealEstateAgentDao
     abstract fun typeDao(): TypeDao
+    abstract fun searchDao(): SearchDao
 
     companion object {
         var INSTANCE: HouseDatabase? = null
@@ -38,10 +40,6 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                             database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick Moulin'), ('Ludovic Roland'), ('Mathieu Corroy'), ('Benoît Hayung')")
                             database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('Highschool'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument'),('Church'), ('Mosque'), ('TownHall')")
                             database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
-//                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES (100000, 3, '80', 'Petite maison fonctionnelle', '12 allée du manoir', 2, 1) ")
-//                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId) VALUES (250000, 8, '150', 'Superbe villa, très jolie', '8, rue des lilas', 1, 5) ")
-//                            database.execSQL("INSERT into House (price, roomNumber, surface, description, location, houseAgentId, houseTypeId, soldDate) VALUES (800000, 10, '300', 'Énorme appartement comprenant une terrasse', '30, rue des bourges', 3, 3, '21/08/2019') ")
-//                            database.execSQL("INSERT into HouseAndInterestPoints(houseId, interestId) VALUES(1, 2), (1, 3)")
                         }
                     }).build()
                 }
@@ -76,7 +74,8 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun insertListInterestPoints(interestPoints: List<HouseAndInterestPoints>) =
         houseDao().insertListHouseInterestPoints(interestPoints)
 
-    suspend fun deleteInterestPoints(houseId: Long) = interestPointsDao().deleteInterestPoints(houseId)
+    suspend fun deleteInterestPoints(houseId: Long) =
+        interestPointsDao().deleteInterestPoints(houseId)
 
     // ----------------------------------------------------------
     suspend fun getAllAgents(): List<RealEstateAgent> =
@@ -91,5 +90,24 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun deletePictures(houseId: Long) = picturesDao().deletePictures(houseId)
 
     suspend fun getPictures(houseId: Long) = this.picturesDao().getAllPictures(houseId)
+
+    // -------------------------------------------------------
+
+//    suspend fun searchHouses(query: String) {
+//
+//        val houseIdList = mutableListOf<Long>()
+//        val searchSQLiteQuery =
+//            SimpleSQLiteQuery(query)
+//        searchDao().searchHouses(searchSQLiteQuery).use {
+//            it.moveToFirst()
+//
+//            while (!it.isAfterLast) {
+//                houseIdList.add(it.getLong(0))
+//                it.moveToNext()
+//            }
+//            it.close()
+//        }
+//        return
+//    }
 
 }

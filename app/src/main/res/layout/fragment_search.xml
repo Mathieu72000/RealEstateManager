@@ -22,39 +22,29 @@
 
             <!-- TYPE -->
 
-            <LinearLayout
-                android:id="@+id/search_type_linear"
-                style="@style/InputLabel"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/search_type_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/border_textview"
-                android:orientation="vertical"
-                android:textColor="@color/light_black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="2dp"
                 android:text="Type of property :"
                 android:textColor="@color/grey"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <Spinner
-                android:id="@+id/search_type_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:gravity="bottom"
-                app:entriesType="@{item.typeList}"/>
-
-            </LinearLayout>
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/search_Type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    app:customTypeChips="@{item.typeList}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_type_tv"/>
 
             <!-- SURFACE -->
 
@@ -68,17 +58,59 @@
                 android:textColor="@color/grey"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_type_linear" />
+                app:layout_constraintTop_toBottomOf="@id/search_Type" />
 
-            <include
+            <LinearLayout
                 android:id="@+id/search_surface_layout"
-                layout="@layout/search_surface"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_surface_tv" />
+                app:layout_constraintTop_toBottomOf="@id/search_surface_tv"
+                android:baselineAligned="false">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/surface_min_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    style="@style/LoginTextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/surface_min_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:textSize="16sp"
+                        android:text="@={item.minPrice}"
+                        android:hint="Min." />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/surface_max_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    style="@style/LoginTextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/surface_max_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:textSize="16sp"
+                        android:text="@={item.maxPrice}"
+                        android:hint="Max." />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/search_interest"
@@ -93,7 +125,7 @@
                 app:layout_constraintTop_toBottomOf="@id/search_surface_layout" />
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/search_Type"
+                android:id="@+id/search_interestChips"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -114,7 +146,7 @@
                 android:textColor="@color/grey"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_Type" />
+                app:layout_constraintTop_toBottomOf="@id/search_interestChips" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/search_room_number_chip"
@@ -195,6 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                app:item="@{item}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_price_tv" />

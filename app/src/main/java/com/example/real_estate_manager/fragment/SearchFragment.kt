@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentSearchBinding
 import com.example.real_estate_manager.viewmodel.SearchViewModel
+import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class SearchFragment : Fragment() {
@@ -43,7 +44,12 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchViewModel.getLoadData()
+        onClickSearch()
     }
 
-
+    private fun onClickSearch(){
+        search_submit_button.setOnClickListener {
+            searchViewModel.search()
+        }
+    }
 }

@@ -44,13 +44,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
                 android:scrollbars="horizontal"
-                app:reverseLayout="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description_media_tv" />
+                app:layout_constraintTop_toBottomOf="@id/description_media_tv"
+                app:reverseLayout="false" />
 
             <!-- SURFACE -->
 
@@ -188,9 +188,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="10dp"
                 android:padding="5dp"
+                android:text="@{item.houseTypeAgent.type.type}"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                android:text="@{item.houseTypeAgent.type.type}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_type_title"
@@ -235,25 +235,29 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="213dp"
-                android:layout_marginTop="9dp"
                 android:layout_marginStart="9dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginEnd="9dp"
                 android:background="@drawable/map_border"
-                app:layout_constraintTop_toBottomOf="@id/description_location_tv"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/description_location_tv" />
 
-            <androidx.fragment.app.FragmentContainerView
+            <fragment
+                xmlns:map="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/description_maps"
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toBottomOf="@id/description_location_tv"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:name="com.google.android.gms.maps.SupportMapFragment" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_location_tv"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                map:cameraZoom="16"
+                map:liteMode="true"
+                map:mapType="normal" />
 
             <!-- INTEREST POINTS-->
 
@@ -319,9 +323,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="10dp"
                 android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.entryDate}"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                android:text="@{item.houseTypeAgent.house.entryDate}"
                 app:layout_constraintEnd_toStartOf="@id/description_sold_date_tv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_entry_date_title"
@@ -355,9 +359,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="10dp"
                 android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.soldDate}"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                android:text="@{item.houseTypeAgent.house.soldDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/description_entry_date_tv"
                 app:layout_constraintTop_toBottomOf="@id/description_sold_date_title"
@@ -379,9 +383,9 @@
                 android:textColor="@color/light_purple"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/description_entry_date_tv"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/description_entry_date_tv" />
 
             <TextView
                 android:id="@+id/description_price_tv"
@@ -394,10 +398,10 @@
                 android:text="@{item.houseTypeAgent.house.price.toString()}"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                tools:text="320.000$"
-                app:layout_constraintTop_toBottomOf="@id/description_price_title"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/description_price_title"
+                tools:text="320.000$" />
 
             <!-- REAL ESTATE AGENT-->
 
@@ -415,9 +419,9 @@
                 android:textColor="@color/light_purple"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/description_price_tv"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/description_price_tv" />
 
             <TextView
                 android:id="@+id/description_agent_tv"
@@ -431,11 +435,11 @@
                 android:text="@{item.houseTypeAgent.realEstateAgent.realEstateAgent}"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                tools:text="Thomas Delacroix"
-                app:layout_constraintTop_toBottomOf="@id/description_agent_title"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_agent_title"
+                tools:text="Thomas Delacroix" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

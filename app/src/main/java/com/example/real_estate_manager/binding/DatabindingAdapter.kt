@@ -53,6 +53,24 @@ fun ChipGroup.setCustomChipForm(interestPoints: List<InterestPoints>?) {
     }
 }
 
+@BindingAdapter("customTypeChips")
+fun ChipGroup.setCustomTypeChips(type: List<Type>?) {
+    type?.forEach {
+        this.addView(Chip(this.context).apply {
+            chipBackgroundColor =
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.chip_purple))
+            isClickable = true
+            isCheckable = true
+            tag = it.typeId
+            text = context.getString(
+                context.resources.getIdentifier(
+                    it.type, "string", context.packageName
+                )
+            )
+        })
+    }
+}
+
 @BindingAdapter("entriesType")
 fun Spinner.setTypeEntries(entries: List<Type>?) {
     if (entries != null) {

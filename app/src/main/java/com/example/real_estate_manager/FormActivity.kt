@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.real_estate_manager.fragment.FormFragment
-import com.example.real_estate_manager.room.model.HouseCrossRef
 import kotlinx.android.synthetic.main.activity_form.*
 
 class FormActivity : AppCompatActivity() {
@@ -16,7 +15,7 @@ class FormActivity : AppCompatActivity() {
         // ------------- Toolbar ----------------
         this.configureToolbar()
 
-        val formFragment = FormFragment.newInstance(intent.getLongExtra("house", 0))
+        val formFragment = FormFragment.newInstance(intent.getLongExtra(Constants.HOUSE, 0))
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.form_fragment_placeHolder, formFragment)
