@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.FormActivity
+import com.example.real_estate_manager.LoanActivity
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentFormDetailsBinding
 import com.example.real_estate_manager.itemAdapter.PictureDetailsItem
@@ -55,7 +56,7 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        this.launchLoanActivity()
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -101,5 +102,11 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
             })
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun launchLoanActivity(){
+        form_loan_button.setOnClickListener {
+            startActivity(Intent(context, LoanActivity::class.java))
+        }
     }
 }

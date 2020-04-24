@@ -14,12 +14,10 @@ class MainActivity : AppCompatActivity() {
         // Toolbar
         setSupportActionBar(main_activity_Toolbar)
 
-        val mainFragment = MainFragment.newInstance()
+        val mainFragment = MainFragment.newInstance(intent.getSerializableExtra(Constants.SEARCH_RESULT_ID) as? ArrayList<Long>)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_placeHolder, mainFragment)
             .commitAllowingStateLoss()
     }
-
-
 }

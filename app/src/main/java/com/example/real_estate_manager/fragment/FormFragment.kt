@@ -59,7 +59,7 @@ class FormFragment : Fragment() {
             val formFragment = FormFragment()
             if (house != null) {
                 val bundle = Bundle()
-                bundle.putLong("house", house)
+                bundle.putLong(Constants.HOUSE, house)
                 formFragment.arguments = bundle
             }
             return formFragment
@@ -94,7 +94,7 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val houseId = arguments?.getLong("house", 0)
+        val houseId = arguments?.getLong(Constants.HOUSE, 0)
         if (houseId != null) {
             formViewModel.getLoadData(houseId)
         }

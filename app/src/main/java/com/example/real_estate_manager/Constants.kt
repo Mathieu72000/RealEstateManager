@@ -6,6 +6,7 @@ sealed class Constants {
 
         const val HOUSE_ID = "houseId"
         const val HOUSE = "house"
+        const val SEARCH_RESULT_ID = "resultId"
         const val PICTURE_INTENT_FILTER = "pictureClick"
         const val PICTURE_POSITION = "position"
         const val AUTOCOMPLETE_REQUEST_CODE = 1

@@ -60,57 +60,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_Type" />
 
-            <LinearLayout
-                android:id="@+id/search_surface_layout"
-                android:orientation="horizontal"
+            <include
+                android:id="@+id/search_surface"
+                layout="@layout/search_surface"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:item="@{item}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_surface_tv"
-                android:baselineAligned="false">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/surface_min_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    style="@style/LoginTextInputLayoutStyle">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/surface_min_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:textSize="16sp"
-                        android:text="@={item.minPrice}"
-                        android:hint="Min." />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/surface_max_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    style="@style/LoginTextInputLayoutStyle">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/surface_max_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:textSize="16sp"
-                        android:text="@={item.maxPrice}"
-                        android:hint="Max." />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/search_surface_tv" />
 
             <TextView
                 android:id="@+id/search_interest"
@@ -122,7 +81,7 @@
                 android:textColor="@color/grey"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_surface_layout" />
+                app:layout_constraintTop_toBottomOf="@id/search_surface" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/search_interestChips"

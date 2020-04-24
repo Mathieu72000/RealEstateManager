@@ -13,7 +13,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -435,11 +436,35 @@
                 android:text="@{item.houseTypeAgent.realEstateAgent.realEstateAgent}"
                 android:textColor="@color/grey"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_agent_title"
                 tools:text="Thomas Delacroix" />
+
+            <include
+                android:id="@+id/separator"
+                layout="@layout/separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_agent_tv"/>
+
+            <Button
+                android:id="@+id/form_loan_button"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_submit_button"
+                android:text="Loan Calculator"
+                android:textAllCaps="false"
+                android:textColor="@color/light_purple"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

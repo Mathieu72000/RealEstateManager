@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import com.example.real_estate_manager.viewmodel.HomeViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.io.Serializable
 
 class MainFragment : Fragment() {
 
@@ -23,8 +25,14 @@ class MainFragment : Fragment() {
     private val viewModel by viewModels<HomeViewModel>()
 
     companion object {
-    fun newInstance(): MainFragment {
-        return MainFragment()
+    fun newInstance(resultId: ArrayList<Long>?): MainFragment {
+        val mainFragment = MainFragment()
+        if(resultId?.isNotEmpty() != false){
+            val bundle = Bundle()
+            bundle.putSerializable(Constants.SEARCH_RESULT_ID, resultId)
+            mainFragment.arguments = bundle
+        }
+        return mainFragment
     }
 }
 
@@ -40,7 +48,10 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainFragment_RecyclerView?.adapter = groupAdapter
-        bindUI()
+        val resultId = arguments?.getSerializable(Constants.SEARCH_RESULT_ID) as? ArrayList<Long>
+        if (resultId != null) {
+            bindUI(resultId)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -67,12 +78,12 @@ class MainFragment : Fragment() {
     }
 
     // Get all the houses and observe the data changes -> refresh the RecyclerView
-    private fun bindUI() {
-        viewModel.itemList.observe(viewLifecycleOwner, Observer
-        {
-            updateRecyclerView(it)
-        })
-        viewModel.getHouseTypeAgent()
+    private fun bindUI(resultId: ArrayList<Long>?) {
+            viewModel.itemList.observe(viewLifecycleOwner, Observer
+            {
+                updateRecyclerView(it)
+            })
+            viewModel.getHouseTypeAgent()
     }
 
     // Configure RecyclerView and GroupieAdapter and glue it together

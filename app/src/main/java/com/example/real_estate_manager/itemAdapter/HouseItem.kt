@@ -1,7 +1,6 @@
 package com.example.real_estate_manager.itemAdapter
 
 import android.content.Intent
-import com.bumptech.glide.Glide
 import com.example.real_estate_manager.*
 import com.example.real_estate_manager.databinding.FragmentMainItemBinding
 import com.example.real_estate_manager.viewmodel.HouseItemViewModel

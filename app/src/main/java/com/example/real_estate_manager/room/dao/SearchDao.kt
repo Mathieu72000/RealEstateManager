@@ -7,7 +7,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface SearchDao {
-//
-//    @RawQuery
-//    suspend fun searchHouses(query: SupportSQLiteQuery): Cursor
+
+    @RawQuery
+    suspend fun getHouses(query: SupportSQLiteQuery): Cursor
 }

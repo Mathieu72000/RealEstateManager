@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.real_estate_manager.viewmodel.LoanViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragment.LoanFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_initial_price"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/form_surface_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Property price"
+                android:inputType="number"
+                android:text="@={item.loanPrice}"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- NUMBER OF ROOM -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_deposit_tv"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_initial_price">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_deposit_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Deposit"
+                android:inputType="number"
+                android:text="@={item.loanDeposit}"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_interest_rate_tv"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/loan_period_tv"
+            app:layout_constraintTop_toBottomOf="@id/loan_deposit_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_interest_rate_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Interest Rate"
+                android:text="@={item.loanInterestRate}"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_period_tv"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            app:suffixText="Years"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/loan_interest_rate_tv"
+            app:layout_constraintTop_toBottomOf="@id/loan_deposit_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_period_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Period"
+                android:text="@={item.loanPeriod}"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <include
+            android:id="@+id/separator"
+            layout="@layout/separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/loan_interest_rate_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/loan_result_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_submit_button"
+            android:text="Calculate"
+            android:textColor="@color/purple"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/monthly_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Monthly Payments:"
+            android:textSize="22dp"
+            android:textColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_result_button" />
+
+        <TextView
+            android:id="@+id/monthly_payments_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@{item.loanResult.toString()}"
+            android:maxLength="8"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:textColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthly_tv" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

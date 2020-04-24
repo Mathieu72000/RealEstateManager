@@ -1,6 +1,5 @@
 package com.example.real_estate_manager.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.real_estate_manager.room.model.InterestPoints
 

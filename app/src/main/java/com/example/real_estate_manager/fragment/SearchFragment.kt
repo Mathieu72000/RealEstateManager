@@ -1,16 +1,21 @@
 package com.example.real_estate_manager.fragment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.real_estate_manager.Constants
+import com.example.real_estate_manager.MainActivity
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentSearchBinding
 import com.example.real_estate_manager.viewmodel.SearchViewModel
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
@@ -47,8 +52,26 @@ class SearchFragment : Fragment() {
         onClickSearch()
     }
 
-    private fun onClickSearch(){
+    private fun onClickSearch() {
+
         search_submit_button.setOnClickListener {
+
+            search_interestChips.children.filter {
+                it is Chip && it.isChecked
+            }.map {
+                it.tag as Long
+            }.toList().let {
+                searchViewModel.interestPointsId.value = it
+            }
+
+            search_Type.children.filter {
+                it is Chip && it.isChecked
+            }.map {
+              it.tag as Long
+            }.toList().let {
+                searchViewModel.typeId.value = it
+            }
+
             searchViewModel.search()
         }
     }
