@@ -10,6 +10,7 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.MainActivity
 import com.example.real_estate_manager.R
@@ -17,6 +18,8 @@ import com.example.real_estate_manager.databinding.FragmentSearchBinding
 import com.example.real_estate_manager.viewmodel.SearchViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_search.*
+import timber.log.Timber
+import java.io.Serializable
 
 
 class SearchFragment : Fragment() {
@@ -67,12 +70,19 @@ class SearchFragment : Fragment() {
             search_Type.children.filter {
                 it is Chip && it.isChecked
             }.map {
-              it.tag as Long
+                it.tag as Long
             }.toList().let {
                 searchViewModel.typeId.value = it
             }
 
             searchViewModel.search()
+
+            searchViewModel.houseIdList.observe(viewLifecycleOwner, Observer {
+                startActivity(Intent(context, MainActivity::class.java).apply {
+                    putExtra(Constants.SEARCH_RESULT_ID, it as? ArrayList<Long>)
+                    putExtra(Constants.IS_SEARCH_CONTEXT, true)
+                })
+            })
         }
     }
 }

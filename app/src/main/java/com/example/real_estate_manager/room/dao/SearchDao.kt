@@ -1,6 +1,5 @@
 package com.example.real_estate_manager.room.dao
 
-import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
@@ -9,5 +8,5 @@ import androidx.sqlite.db.SupportSQLiteQuery
 interface SearchDao {
 
     @RawQuery
-    suspend fun getHouses(query: SupportSQLiteQuery): Cursor
+    suspend fun getHouses(query: SupportSQLiteQuery): List<Long>
 }

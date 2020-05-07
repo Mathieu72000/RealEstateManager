@@ -92,23 +92,11 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun getPictures(houseId: Long) = this.picturesDao().getAllPictures(houseId)
 
     // -------------------------------------------------------
+    suspend fun getSearchHouses(resultId: List<Long>): List<HouseCrossRef> =
+        this.houseDao().searchHouses(resultId)
 
-    suspend fun getHouses(query: String): ArrayList<Long>? {
-
-        val houseIdList = arrayListOf<Long>()
-
-        val searchSQLiteQuery =
-            SimpleSQLiteQuery(query)
-        searchDao().getHouses(searchSQLiteQuery).use {
-            it.moveToFirst()
-
-            while (!it.isAfterLast) {
-                houseIdList.add(it.getLong(0))
-                it.moveToNext()
-            }
-            it.close()
-        }
-        return houseIdList
+    suspend fun searchHouses(query: String): List<Long> {
+        val searchSQLiteQuery = SimpleSQLiteQuery(query)
+        return searchDao().getHouses(searchSQLiteQuery)
     }
-
 }

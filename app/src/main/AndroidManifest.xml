@@ -16,8 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoanActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDTugJk9MDW3i_-BLQpeokXenKvOdcrxAw" />
@@ -30,7 +28,6 @@
             android:label="Real Estate Manager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,6 +40,12 @@
         <activity
             android:name=".FormDetailsActivity"
             android:label="Description" />
+        <activity
+            android:name=".MapActivity"
+            android:label="Maps" />
+        <activity
+            android:name=".LoanActivity"
+            android:label="Loan Simulator" />
     </application>
 
 </manifest>

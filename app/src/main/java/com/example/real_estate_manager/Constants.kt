@@ -9,6 +9,8 @@ sealed class Constants {
         const val SEARCH_RESULT_ID = "resultId"
         const val PICTURE_INTENT_FILTER = "pictureClick"
         const val PICTURE_POSITION = "position"
+        const val HOUSEID_BROADCAST = "HouseClick"
+        const val IS_SEARCH_CONTEXT = "search"
         const val AUTOCOMPLETE_REQUEST_CODE = 1
         const val PICTURE_REQUEST_CODE = 2
         const val RESULT_REQUEST_CODE = 3

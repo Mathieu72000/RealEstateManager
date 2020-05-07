@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.real_estate_manager.viewmodel.FormDetailsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/description_media_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/media"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/details_picture_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_media_tv"
+                app:reverseLayout="false" />
+
+            <!-- SURFACE -->
+
+            <TextView
+                android:id="@+id/description_surface_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/surface"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/description_rooms_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_picture_recyclerView" />
+
+            <TextView
+                android:id="@+id/description_surface_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{String.format(@string/sqm, item.houseTypeAgent.house.surface.toString())}"
+                android:textColor="@color/grey"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toStartOf="@id/description_rooms_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_surface_title"
+                tools:text="80 sq m" />
+
+            <!-- NUMBER OF ROOMS -->
+
+            <TextView
+                android:id="@+id/description_rooms_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/numberOfRoom"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/description_surface_title"
+                app:layout_constraintTop_toBottomOf="@id/details_picture_recyclerView" />
+
+            <TextView
+                android:id="@+id/description_rooms_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.roomNumber.toString()}"
+                android:textColor="@color/grey"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/description_surface_tv"
+                app:layout_constraintTop_toBottomOf="@id/description_rooms_title"
+                tools:text="4" />
+
+            <!-- DESCRIPTION -->
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/description"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_surface_tv" />
+
+            <TextView
+                android:id="@+id/description_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.description}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_title"
+                tools:text="eihf ihjiozef iei hjf efk sflkkljseklfj jskef klsef jskejfkljsjk ejkl sfef sef  sef sef sffjseskejfkljsfj sefj ksefjkl jsekljf sjefj lksefj kesfe" />
+
+            <!-- TYPE OF PROPERTY -->
+
+            <TextView
+                android:id="@+id/description_type_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/typeofProperty"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/description_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_tv" />
+
+            <TextView
+                android:id="@+id/description_type_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="20dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.type.type}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/description_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_type_title"
+                tools:text="House" />
+
+            <!-- LOCATION -->
+
+            <TextView
+                android:id="@+id/description_location_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/location"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/description_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_type_tv" />
+
+            <TextView
+                android:id="@+id/description_location_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.location}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/description_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_location_title"
+                tools:text="740 Park Avenue - Apt6/7A New York - NY 10021 United States" />
+
+            <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/description_maps"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_tv"
+                map:cameraZoom="16"
+                map:layout_constraintStart_toEndOf="@id/description_location_tv"
+                map:liteMode="true"
+                map:mapType="normal" />
+
+            <!-- INTEREST POINTS-->
+
+            <TextView
+                android:id="@+id/description_interest_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/interestPointsDetails"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/description_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_location_tv" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/description_interest_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="20dp"
+                android:padding="5dp"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:customChipInterest="@{item.houseTypeAgent.interestPoints}"
+                app:layout_constraintEnd_toStartOf="@id/description_maps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_interest_title" />
+
+            <!-- ENTRY DATE -->
+
+            <TextView
+                android:id="@+id/description_entry_date_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/entryDate"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/description_sold_date_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_maps" />
+
+            <TextView
+                android:id="@+id/description_entry_date_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.entryDate}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/description_sold_date_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_entry_date_title"
+                tools:text="07/08/2019" />
+
+            <!-- STATE -->
+
+            <TextView
+                android:id="@+id/description_sold_date_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/soldDate"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/description_entry_date_title"
+                app:layout_constraintTop_toBottomOf="@id/description_maps" />
+
+            <TextView
+                android:id="@+id/description_sold_date_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.soldDate}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/description_entry_date_tv"
+                app:layout_constraintTop_toBottomOf="@id/description_sold_date_title"
+                tools:text="14/10/2020" />
+
+            <!-- PRICE -->
+
+            <TextView
+                android:id="@+id/description_price_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/price"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/description_agent_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_entry_date_tv" />
+
+            <TextView
+                android:id="@+id/description_price_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="@{item.houseTypeAgent.house.price.toString()}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/description_agent_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_price_title"
+                tools:text="320.000$" />
+
+            <!-- REAL ESTATE AGENT-->
+
+            <TextView
+                android:id="@+id/description_agent_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/one_side_border"
+                android:gravity="start"
+                android:padding="4dp"
+                android:text="@string/realEstateAgentDetails"
+                android:textColor="@color/light_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/description_price_title"
+                app:layout_constraintTop_toBottomOf="@id/description_sold_date_tv" />
+
+            <TextView
+                android:id="@+id/description_agent_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:padding="4dp"
+                android:text="@{item.houseTypeAgent.realEstateAgent.realEstateAgent}"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/description_price_tv"
+                app:layout_constraintTop_toBottomOf="@id/description_agent_title"
+                tools:text="Thomas Delacroix" />
+
+            <include
+                android:id="@+id/separator"
+                layout="@layout/separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_agent_tv" />
+
+            <Button
+                android:id="@+id/form_loan_button"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_submit_button"
+                android:text="@string/loanSimulator"
+                android:textAllCaps="false"
+                android:textColor="@color/light_purple"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

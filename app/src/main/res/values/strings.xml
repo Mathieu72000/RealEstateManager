@@ -1,13 +1,36 @@
 <resources>
     <string name="app_name">Real_Estate_Manager</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
-    <string name="photo_unavailable">No photo available</string>
     <string name="delete_picture">Delete this picture ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="house_saved">House has been saved !</string>
+    <string name="location">Location</string>
+    <string name="surface">Surface</string>
+    <string name="numberOfRoom">Number of rooms</string>
+    <string name="price">Price</string>
+    <string name="interestPoints">Interest points :</string>
+    <string name="interestPointsDetails">Interest points</string>
+    <string name="typeofProperty">Type of property :</string>
+    <string name="realEstateAgent">Real estate agent :</string>
+    <string name="realEstateAgentDetails">Real estate agent</string>
+    <string name="description">Description</string>
+    <string name="entryDate">Entry date</string>
+    <string name="soldDate">Sold date</string>
+    <string name="submit">Submit</string>
+    <string name="media">Media</string>
+    <string name="loanSimulator">Loan simulator</string>
+    <string name="propertyPrice">Property price</string>
+    <string name="deposit">Deposit</string>
+    <string name="interestRate">Interest Rate</string>
+    <string name="period">Period</string>
+    <string name="calculate">Calculate</string>
+    <string name="monthlyPayments">Monthly Payments:</string>
+    <string name="min">Min.</string>
+    <string name="max">Max.</string>
+    <string name="dayFormat">dd.MM.yyyy</string>
+    <string name="search">Search result</string>
 
     <!-- Interest Points -->
     <string name="School">School</string>

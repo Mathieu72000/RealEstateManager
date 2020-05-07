@@ -201,7 +201,7 @@ class FormFragment : Fragment() {
                 calendar.set(Calendar.MONTH, monthOfDay)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                val dayFormat = "dd.MM.yyyy"
+                val dayFormat = getString(R.string.dayFormat)
                 val simpleDateFormat = SimpleDateFormat(dayFormat, Locale.FRANCE)
                 form_entry_date_textView.text = simpleDateFormat.format(calendar.time)
                 formViewModel.formEntryDate.postValue(simpleDateFormat.format(calendar.time))
@@ -228,7 +228,7 @@ class FormFragment : Fragment() {
                 calendar.set(Calendar.MONTH, monthOfDay)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                val dayFormat = "dd.MM.yyyy"
+                val dayFormat = getString(R.string.dayFormat)
                 val simpleDateFormat = SimpleDateFormat(dayFormat, Locale.FRANCE)
                 form_sold_date_textView.text = simpleDateFormat.format(calendar.time)
                 formViewModel.formSoldDate.postValue(simpleDateFormat.format(calendar.time))

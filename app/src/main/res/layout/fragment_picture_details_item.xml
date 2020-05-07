@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/picture_item"
             android:layout_width="wrap_content"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             app:srcBase64="@{item.pictures}"
             android:adjustViewBounds="true"
             tools:ignore="MissingConstraints" />

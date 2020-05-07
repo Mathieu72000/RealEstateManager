@@ -26,6 +26,7 @@ interface HouseDao {
     suspend fun updateHouse(house: House)
 
     // ---------- QUERY ---------
+
     @Transaction
     @Query("SELECT * FROM House")
     suspend fun getAllHouseAndTypeAndAgent(): List<HouseCrossRef>
@@ -33,8 +34,8 @@ interface HouseDao {
     @Transaction
     @Query("SELECT * FROM House WHERE houseId = :houseId")
     suspend fun getHouseAndTypeAndAgent(houseId: Long): HouseCrossRef
-//
-//    @Transaction
-//    @Query("SELECT * FROM HouseCrossRef.House WHERE houseId IN (:ids)")
-//    suspend fun searchHouses(ids: List<Long>): List<HouseCrossRef>
+
+    @Transaction
+    @Query("SELECT * FROM House WHERE houseId IN (:ids)")
+    suspend fun searchHouses(ids: List<Long>): List<HouseCrossRef>
 }

@@ -20,7 +20,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     // -----------------------------------------------------------------
 
     // HouseTypeAgent
-    private var houseCrossRefList = MutableLiveData<List<HouseCrossRef>>()
+    var houseCrossRefList = MutableLiveData<List<HouseCrossRef>>()
+
+    val houseIdList = mutableListOf<Long>()
 
     val itemList = Transformations.map(houseCrossRefList) { house ->
         house.map {
@@ -31,8 +33,17 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getHouseTypeAgent() {
-        viewModelScope.launch(Dispatchers.IO)
-        {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (houseIdList.isEmpty() == true) {
+                houseCrossRefList.postValue(getHouseDatabase?.getHouseTypeAgents())
+            } else {
+                houseCrossRefList.postValue(getHouseDatabase?.getSearchHouses(houseIdList))
+            }
+        }
+    }
+
+    fun getDataForMap() {
+        viewModelScope.launch(Dispatchers.IO) {
             houseCrossRefList.postValue(getHouseDatabase?.getHouseTypeAgents())
         }
     }

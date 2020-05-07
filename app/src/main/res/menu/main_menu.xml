@@ -13,4 +13,10 @@
         android:title="Search"
         android:icon="@drawable/search"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/map"
+        android:enabled="true"
+        android:title="Maps"
+        android:icon="@drawable/pin"
+        app:showAsAction="ifRoom" />
 </menu>
