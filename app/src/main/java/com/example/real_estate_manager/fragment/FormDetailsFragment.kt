@@ -29,7 +29,6 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel by viewModels<FormDetailsViewModel>()
     private var groupAdapter = GroupAdapter<GroupieViewHolder>()
-    private var houseId: Long = 0
 
     companion object {
         fun newInstance(houseId: Long): FormDetailsFragment {
@@ -60,8 +59,8 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        houseId = arguments?.getLong(Constants.HOUSE_ID) ?: 0
-        viewModel.getHouseCrossRefDetails(houseId)
+        viewModel.houseId.value = arguments?.getLong(Constants.HOUSE_ID) ?: 0
+        viewModel.getHouseCrossRefDetails(viewModel.houseId.value ?: 0)
         details_picture_recyclerView?.adapter = groupAdapter
         bindUI()
         if (googleMap != null) {

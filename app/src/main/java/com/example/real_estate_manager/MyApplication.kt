@@ -2,6 +2,9 @@ package com.example.real_estate_manager
 
 import android.content.res.Resources
 import androidx.multidex.MultiDexApplication
+import com.batch.android.Batch
+import com.batch.android.BatchActivityLifecycleHelper
+import com.batch.android.Config
 import com.facebook.stetho.Stetho
 import com.google.android.libraries.places.api.Places
 import org.koin.android.ext.koin.androidContext
@@ -27,6 +30,11 @@ class MyApplication : MultiDexApplication() {
         }
         Places.initialize(this, "AIzaSyDTugJk9MDW3i_-BLQpeokXenKvOdcrxAw")
         Stetho.initializeWithDefaults(this)
+
+        Batch.setConfig(Config("DEV5EB6CA9E2BAF5100E03F1F2955C"))
+        registerActivityLifecycleCallbacks(BatchActivityLifecycleHelper())
+        Batch.User.getInstallationID()
+
 
     }
 }

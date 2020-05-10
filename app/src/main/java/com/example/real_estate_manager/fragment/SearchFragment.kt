@@ -18,8 +18,6 @@ import com.example.real_estate_manager.databinding.FragmentSearchBinding
 import com.example.real_estate_manager.viewmodel.SearchViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_search.*
-import timber.log.Timber
-import java.io.Serializable
 
 
 class SearchFragment : Fragment() {
@@ -81,6 +79,7 @@ class SearchFragment : Fragment() {
                 startActivity(Intent(context, MainActivity::class.java).apply {
                     putExtra(Constants.SEARCH_RESULT_ID, it as? ArrayList<Long>)
                     putExtra(Constants.IS_SEARCH_CONTEXT, true)
+
                 })
             })
         }

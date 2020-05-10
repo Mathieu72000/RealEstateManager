@@ -19,6 +19,8 @@ class FormDetailsViewModel(application: Application) : AndroidViewModel(applicat
         postValue(null)
     }
 
+    val houseId = MutableLiveData<Long>()
+
     val housePictures = MutableLiveData<List<Pictures>>().apply { postValue(null) }
 
     fun getHouseCrossRefDetails(houseId: Long) {

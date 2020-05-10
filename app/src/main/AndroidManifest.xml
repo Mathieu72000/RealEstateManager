@@ -46,6 +46,11 @@
         <activity
             android:name=".LoanActivity"
             android:label="Loan Simulator" />
+        
+        <provider
+            android:authorities="com.example.real_estate_manager.provider"
+            android:name=".provider.MyContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
