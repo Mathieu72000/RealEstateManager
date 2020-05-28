@@ -107,66 +107,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_interestChips" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/search_room_number_chip"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/room_number"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/search_room_number"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_room_number">
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/LoginTextInputLayoutStyle">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/search_chip1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="1"
-                    app:chipBackgroundColor="@color/chip_purple"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/price_min_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:text="@={item.numberOfRooms}"/>
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/search_chip2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:chipBackgroundColor="@color/chip_purple"
-                    android:text="2"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/search_chip3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:chipBackgroundColor="@color/chip_purple"
-                    android:text="3" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/search_chip4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:chipBackgroundColor="@color/chip_purple"
-                    android:text="4"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/search_chip5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:chipBackgroundColor="@color/chip_purple"
-                    android:text="5+"/>
-
-            </com.google.android.material.chip.ChipGroup>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/search_price_tv"
@@ -178,7 +140,7 @@
                 android:textColor="@color/grey"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_room_number_chip" />
+                app:layout_constraintTop_toBottomOf="@id/room_number" />
 
             <include
                 android:id="@+id/search_price"

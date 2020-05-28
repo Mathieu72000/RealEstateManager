@@ -18,6 +18,7 @@ import com.example.real_estate_manager.databinding.FragmentSearchBinding
 import com.example.real_estate_manager.viewmodel.SearchViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_search.*
+import timber.log.Timber
 
 
 class SearchFragment : Fragment() {
@@ -51,6 +52,15 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchViewModel.getLoadData()
         onClickSearch()
+
+        searchViewModel.houseIdList.observe(viewLifecycleOwner, Observer {
+            Timber.i("searchFragment")
+            startActivity(Intent(context, MainActivity::class.java).apply {
+                putExtra(Constants.SEARCH_RESULT_ID, it as? ArrayList<Long>)
+                putExtra(Constants.IS_SEARCH_CONTEXT, true)
+
+            })
+        })
     }
 
     private fun onClickSearch() {
@@ -74,14 +84,6 @@ class SearchFragment : Fragment() {
             }
 
             searchViewModel.search()
-
-            searchViewModel.houseIdList.observe(viewLifecycleOwner, Observer {
-                startActivity(Intent(context, MainActivity::class.java).apply {
-                    putExtra(Constants.SEARCH_RESULT_ID, it as? ArrayList<Long>)
-                    putExtra(Constants.IS_SEARCH_CONTEXT, true)
-
-                })
-            })
         }
     }
 }

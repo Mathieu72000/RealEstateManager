@@ -1,6 +1,7 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -21,6 +22,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     // HouseTypeAgent
     var houseCrossRefList = MutableLiveData<List<HouseCrossRef>>()
+    var isSearch: Boolean = true
 
     val houseIdList = mutableListOf<Long>()
 
@@ -34,7 +36,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getHouseTypeAgent() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (houseIdList.isEmpty() == true) {
+            if (isSearch == false) {
                 houseCrossRefList.postValue(getHouseDatabase?.getHouseTypeAgents())
             } else {
                 houseCrossRefList.postValue(getHouseDatabase?.getSearchHouses(houseIdList))

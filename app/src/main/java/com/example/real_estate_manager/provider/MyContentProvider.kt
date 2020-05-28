@@ -4,10 +4,11 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import com.example.real_estate_manager.room.database.HouseDatabase
 
-class MyContentProvider: ContentProvider() {
+class MyContentProvider : ContentProvider() {
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Not yet implemented")
+        throw NotImplementedError()
     }
 
     override fun query(
@@ -17,11 +18,16 @@ class MyContentProvider: ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        TODO("Not yet implemented")
+       return if(context != null) {
+               val getInstance = HouseDatabase.getInstance(context!!)
+               Cursor()
+           } else {
+           null
+       }
     }
 
     override fun onCreate(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun update(
@@ -30,16 +36,14 @@ class MyContentProvider: ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?
     ): Int {
-        TODO("Not yet implemented")
+        throw NotImplementedError()
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        TODO("Not yet implemented")
+        return 0
     }
 
     override fun getType(uri: Uri): String? {
-        TODO("Not yet implemented")
+        throw NotImplementedError()
     }
-
-
 }

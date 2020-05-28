@@ -28,7 +28,7 @@ class MyApplication : MultiDexApplication() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        Places.initialize(this, "AIzaSyDTugJk9MDW3i_-BLQpeokXenKvOdcrxAw")
+        Places.initialize(this, "AIzaSyC9J2Kn_jcqaQ9xnQLvf34Dl8VwlFQWKCs")
         Stetho.initializeWithDefaults(this)
 
         Batch.setConfig(Config("DEV5EB6CA9E2BAF5100E03F1F2955C"))

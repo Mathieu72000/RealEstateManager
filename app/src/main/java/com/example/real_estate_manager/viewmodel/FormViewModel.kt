@@ -46,7 +46,7 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
         postValue(null)
     }
 
-    private val formPictures = MutableLiveData<MutableList<FormPictureViewModel>>().apply {
+    val formPictures = MutableLiveData<MutableList<FormPictureViewModel>>().apply {
         postValue(mutableListOf())
     }
 
