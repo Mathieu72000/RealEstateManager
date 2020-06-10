@@ -1,6 +1,7 @@
 package com.example.real_estate_manager
 
 import android.content.res.Resources
+import android.os.Build
 import androidx.multidex.MultiDexApplication
 import com.batch.android.Batch
 import com.batch.android.BatchActivityLifecycleHelper
@@ -29,12 +30,18 @@ class MyApplication : MultiDexApplication() {
             Timber.plant(Timber.DebugTree())
         }
         Places.initialize(this, "AIzaSyC9J2Kn_jcqaQ9xnQLvf34Dl8VwlFQWKCs")
-        Stetho.initializeWithDefaults(this)
+
+        if(!isRoboUnitTests()) {
+            Stetho.initializeWithDefaults(this)
+        }
 
         Batch.setConfig(Config("DEV5EB6CA9E2BAF5100E03F1F2955C"))
         registerActivityLifecycleCallbacks(BatchActivityLifecycleHelper())
         Batch.User.getInstallationID()
 
+    }
 
+    private fun isRoboUnitTests(): Boolean {
+        return "robolectric" == Build.FINGERPRINT
     }
 }

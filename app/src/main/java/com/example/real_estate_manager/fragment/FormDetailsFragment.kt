@@ -1,5 +1,6 @@
 package com.example.real_estate_manager.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -96,11 +97,18 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
             R.id.modify -> FormActivity::class.java
             else -> null
         }?.let {
-            startActivity(Intent(context, it).apply {
+            startActivityForResult(Intent(context, it).apply {
                 putExtra(Constants.HOUSE, viewModel.houseTypeAgent.value?.house?.houseId)
-            })
+            }, Constants.RESULT_REQUEST_CODE)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.RESULT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            viewModel.getHouseCrossRefDetails(viewModel.houseId.value ?: 0)
+        }
     }
 
     private fun launchLoanActivity(){

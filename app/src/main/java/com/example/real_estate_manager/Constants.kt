@@ -14,5 +14,11 @@ sealed class Constants {
         const val AUTOCOMPLETE_REQUEST_CODE = 1
         const val PICTURE_REQUEST_CODE = 2
         const val RESULT_REQUEST_CODE = 3
+        const val AUTHORITY = "com.example.real_estate_manager.provider"
+        const val ALL_PROPERTIES = 4
+        const val ALL_REAL_ESTATE_AGENTS = 5
+        const val ALL_INTEREST_POINTS = 6
+        const val ALL_TYPE = 7
+        const val ALL_PICTURES = 8
     }
 }

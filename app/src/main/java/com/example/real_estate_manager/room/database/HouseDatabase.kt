@@ -1,6 +1,7 @@
 package com.example.real_estate_manager.room.database
 
 import android.content.Context
+import android.database.Cursor
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -98,5 +99,52 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
     suspend fun searchHouses(query: String): List<Long> {
         val searchSQLiteQuery = SimpleSQLiteQuery(query)
         return searchDao().getHouses(searchSQLiteQuery)
+    }
+
+    // CONTENT PROVIDER
+
+    fun getHouseIdWithCursor(houseId: Long): Cursor {
+        return this.houseDao().getHouseIdWithCursor(houseId)
+    }
+
+    fun getAllHousesWithCursor(): Cursor {
+        return this.houseDao().getAllHousesWithCursor()
+    }
+
+    fun contentProviderQuery(query: String): Cursor {
+        val houseSQLiteQuery = SimpleSQLiteQuery(query)
+        return this.houseDao().contentProviderQuery(houseSQLiteQuery)
+    }
+
+    fun getTypeIdWithCursor(typeId: Long): Cursor {
+        return this.typeDao().getTypeIdWithCursor(typeId)
+    }
+
+    fun getAllTypeWithCursor(): Cursor {
+        return this.typeDao().getAllTypeWithCursor()
+    }
+
+    fun getRealEstateAgentsIdWithCursor(realEstateAgentId: Long): Cursor {
+        return this.realEstateAgentDao().getRealEstateAgentIdWithCursor(realEstateAgentId)
+    }
+
+    fun getAllRealEstateAgentWithCursor(): Cursor {
+        return this.realEstateAgentDao().getAllRealEstateAgentWithCursor()
+    }
+
+    fun getPicturesIdWithCursor(picturesId: Long): Cursor {
+        return this.picturesDao().getPicturesIdWithCursor(picturesId)
+    }
+
+    fun getAllPicturesWithCursor(): Cursor {
+        return this.picturesDao().getAllPicturesWithCursor()
+    }
+
+    fun getInterestPointsIdWithCursor(interestPointsId: Long): Cursor {
+        return this.interestPointsDao().getInterestPointsIdWithCursor(interestPointsId)
+    }
+
+    fun getAllInterestPointsWithCursor(): Cursor {
+        return this.interestPointsDao().getAllInterestPointsWithCursor()
     }
 }

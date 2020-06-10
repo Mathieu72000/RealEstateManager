@@ -5,6 +5,6 @@
         android:id="@+id/modify"
         android:enabled="true"
         android:icon="@drawable/modify"
-        android:title="Modify"
+        android:title="@string/modify"
         app:showAsAction="ifRoom" />
 </menu>

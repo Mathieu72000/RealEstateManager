@@ -1,10 +1,8 @@
 package com.example.real_estate_manager.room.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.real_estate_manager.room.model.RealEstateAgent
 
 @Dao
@@ -18,4 +16,12 @@ interface RealEstateAgentDao {
 
     @Query("SELECT * FROM realestateagent")
     suspend fun getAllAgents(): List<RealEstateAgent>
+
+    @Transaction
+    @Query("SELECT * FROM RealEstateAgent WHERE agentId = :agentId")
+    fun getRealEstateAgentIdWithCursor(agentId: Long): Cursor
+
+    @Transaction
+    @Query("SELECT * FROM RealEstateAgent")
+    fun getAllRealEstateAgentWithCursor(): Cursor
 }

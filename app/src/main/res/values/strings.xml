@@ -54,5 +54,8 @@
 
     <string name="sqm">%1$s sqm</string>
     <string name="rooms">%1$s rooms</string>
+    <string name="add">Add</string>
+    <string name="maps">Maps</string>
+    <string name="modify">Modify</string>
 
 </resources>

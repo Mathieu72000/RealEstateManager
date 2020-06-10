@@ -1,6 +1,8 @@
 package com.example.real_estate_manager.room.dao
 
+import android.database.Cursor
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.real_estate_manager.room.model.House
 import com.example.real_estate_manager.room.model.HouseAndInterestPoints
 import com.example.real_estate_manager.room.model.HouseCrossRef
@@ -38,4 +40,16 @@ interface HouseDao {
     @Transaction
     @Query("SELECT * FROM House WHERE houseId IN (:ids)")
     suspend fun searchHouses(ids: List<Long>): List<HouseCrossRef>
+
+    @Transaction
+    @Query("SELECT * FROM House WHERE houseId = :houseId")
+    fun getHouseIdWithCursor(houseId: Long): Cursor
+
+    @Transaction
+    @Query("SELECT * FROM House")
+    fun getAllHousesWithCursor(): Cursor
+
+    @Transaction
+    @RawQuery
+    fun contentProviderQuery(query: SupportSQLiteQuery): Cursor
 }
