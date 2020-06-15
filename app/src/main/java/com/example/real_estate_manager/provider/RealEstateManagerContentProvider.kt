@@ -10,7 +10,7 @@ import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.room.database.HouseDatabase
 import com.example.real_estate_manager.room.model.*
 
-class MyContentProvider : ContentProvider() {
+class RealEstateManagerContentProvider : ContentProvider() {
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         throw NotImplementedError()
     }
@@ -34,6 +34,29 @@ class MyContentProvider : ContentProvider() {
         val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         const val HOUSE_ID = "houseId"
+        const val HOUSE_PRICE = "price"
+        const val HOUSE_SURFACE = "surface"
+        const val HOUSE_NUMBER_OF_ROOM = "roomNumber"
+        const val HOUSE_DESCRIPTION = "description"
+        const val HOUSE_LOCATION = "location"
+        const val HOUSE_LATITUDE = "latitude"
+        const val HOUSE_LONGITUDE = "longitude"
+        const val HOUSE_ENTRY_DATE = "entryDate"
+        const val HOUSE_SOLD_DATE = "soldDate"
+
+        const val REAL_ESTATE_AGENT_ID = "agentId"
+        const val REAL_ESTATE_AGENT = "realEstateAgent"
+
+        const val PICTURES_ID = "picturesId"
+        const val PICTURES = "pictures"
+        const val PICTURES_TEXT = "pictureText"
+        const val PICTURES_HOUSE_ID = "housePicturesId"
+
+        const val INTEREST_POINTS_ID = "interestId"
+        const val INTEREST_POINTS = "interestPoints"
+
+        const val TYPE_ID = "typeId"
+        const val TYPE_ = "type"
     }
 
 
@@ -74,7 +97,7 @@ class MyContentProvider : ContentProvider() {
             }
             stringBuilder.append(" FROM ${uri.lastPathSegment}")
             if (!selection.isNullOrEmpty()) {
-                stringBuilder.append(" WHERE ${selection.replace("?", selectionArgs?.map {  })}")
+                stringBuilder.append(" WHERE ${selection.replace("?", selectionArgs.toString())}")
             }
             if (!sortOrder.isNullOrEmpty()) {
                 stringBuilder.append(" ORDER BY $sortOrder")

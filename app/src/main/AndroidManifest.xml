@@ -50,7 +50,7 @@
         
         <provider
             android:authorities="com.example.real_estate_manager.provider"
-            android:name=".provider.MyContentProvider"
+            android:name=".provider.RealEstateManagerContentProvider"
             android:exported="true"/>
     </application>
 
