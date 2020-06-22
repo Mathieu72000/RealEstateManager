@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class MyApplication : MultiDexApplication() {
 
-    class Configuration(resources: Resources){
+    class Configuration(resources: Resources) {
 
         val isPhone = resources.getBoolean(R.bool.phone)
         val isPhablet = resources.getBoolean(R.bool.phablet)
@@ -31,7 +31,7 @@ class MyApplication : MultiDexApplication() {
         }
         Places.initialize(this, "AIzaSyC9J2Kn_jcqaQ9xnQLvf34Dl8VwlFQWKCs")
 
-        if(!isRoboUnitTests()) {
+        if (!isRoboUnitTests()) {
             Stetho.initializeWithDefaults(this)
         }
 

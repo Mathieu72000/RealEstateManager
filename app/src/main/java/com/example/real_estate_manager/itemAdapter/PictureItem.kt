@@ -3,8 +3,6 @@ package com.example.real_estate_manager.itemAdapter
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.util.Base64
-import com.bumptech.glide.Glide
 import com.example.real_estate_manager.Constants
 import com.example.real_estate_manager.R
 import com.example.real_estate_manager.databinding.FragmentPictureItemBinding

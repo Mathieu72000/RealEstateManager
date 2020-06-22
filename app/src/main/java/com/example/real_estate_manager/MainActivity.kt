@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
             .registerReceiver(receiver, IntentFilter(Constants.HOUSEID_BROADCAST))
 
         val mainFragment =
-            MainFragment.newInstance(intent.getSerializableExtra(Constants.SEARCH_RESULT_ID) as? ArrayList<Long>?, intent.getBooleanExtra(Constants.IS_SEARCH_CONTEXT, false))
+            MainFragment.newInstance(
+                intent.getSerializableExtra(Constants.SEARCH_RESULT_ID) as? ArrayList<Long>?,
+                intent.getBooleanExtra(Constants.IS_SEARCH_CONTEXT, false)
+            )
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_placeHolder, mainFragment)
@@ -67,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             onBackPressed()
         }
         return super.onOptionsItemSelected(item)

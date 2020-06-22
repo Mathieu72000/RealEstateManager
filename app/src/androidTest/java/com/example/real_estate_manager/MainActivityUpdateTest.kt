@@ -47,10 +47,10 @@ class MainActivityUpdateTest {
         Espresso.onView(ViewMatchers.withId(R.id.form_description_editText))
             .perform(ViewActions.click())
             .perform(
-                ViewActions.replaceText("Absolutely beautiful house in Paris with very good lightning"),
+                ViewActions.replaceText("Practical apartment with nice view of the city church"),
                 ViewActions.closeSoftKeyboard()
             ).check(
-                ViewAssertions.matches(ViewMatchers.withText("Absolutely beautiful house in Paris with very good lightning"))
+                ViewAssertions.matches(ViewMatchers.withText("Practical apartment with nice view of the city church"))
             )
         Espresso.onView(ViewMatchers.withId(R.id.form_submit_button))
             .perform(ViewActions.scrollTo())

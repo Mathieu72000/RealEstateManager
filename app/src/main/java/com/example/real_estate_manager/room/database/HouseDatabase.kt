@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.real_estate_manager.R
 import com.example.real_estate_manager.room.dao.*
 import com.example.real_estate_manager.room.model.*
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +41,10 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                             super.onCreate(database)                                            //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
                             database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick Moulin'), ('Ludovic Roland'), ('Mathieu Corroy'), ('Benoît Hayung')")
                             database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('Highschool'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument'),('Church'), ('Mosque'), ('TownHall')")
-                            database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Penthouse'), ('Duplex'), ('Villa')")
+                            database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Duplex'), ('Villa')")
+                            database.execSQL("INSERT into House(price, roomNumber, surface, description, location, latitude, longitude, entryDate, houseAgentId, houseTypeId) VALUES(100000, 3, 80, 'Beautiful flat, close to the university of Le Mans', '6 Rue du manoir, 72000 Le Mans, France', 48.011084, 0.162892, '24/08/2019' , 2, 1) ")
+                            database.execSQL("INSERT into Pictures(pictures, pictureText, housePictureId)VALUES('${context.getString(R.string.pictureTest)}', 'Living room', 1)")
+                            database.execSQL("INSERT into HouseAndInterestPoints(houseId, interestId) VALUES(1, 1), (1, 2), (1, 3)")
                         }
                     }).build()
                 }
@@ -103,48 +107,8 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
 
     // CONTENT PROVIDER
 
-    fun getHouseIdWithCursor(houseId: Long): Cursor {
-        return this.houseDao().getHouseIdWithCursor(houseId)
-    }
-
-    fun getAllHousesWithCursor(): Cursor {
-        return this.houseDao().getAllHousesWithCursor()
-    }
-
     fun contentProviderQuery(query: String): Cursor {
         val houseSQLiteQuery = SimpleSQLiteQuery(query)
         return this.houseDao().contentProviderQuery(houseSQLiteQuery)
-    }
-
-    fun getTypeIdWithCursor(typeId: Long): Cursor {
-        return this.typeDao().getTypeIdWithCursor(typeId)
-    }
-
-    fun getAllTypeWithCursor(): Cursor {
-        return this.typeDao().getAllTypeWithCursor()
-    }
-
-    fun getRealEstateAgentsIdWithCursor(realEstateAgentId: Long): Cursor {
-        return this.realEstateAgentDao().getRealEstateAgentIdWithCursor(realEstateAgentId)
-    }
-
-    fun getAllRealEstateAgentWithCursor(): Cursor {
-        return this.realEstateAgentDao().getAllRealEstateAgentWithCursor()
-    }
-
-    fun getPicturesIdWithCursor(picturesId: Long): Cursor {
-        return this.picturesDao().getPicturesIdWithCursor(picturesId)
-    }
-
-    fun getAllPicturesWithCursor(): Cursor {
-        return this.picturesDao().getAllPicturesWithCursor()
-    }
-
-    fun getInterestPointsIdWithCursor(interestPointsId: Long): Cursor {
-        return this.interestPointsDao().getInterestPointsIdWithCursor(interestPointsId)
-    }
-
-    fun getAllInterestPointsWithCursor(): Cursor {
-        return this.interestPointsDao().getAllInterestPointsWithCursor()
     }
 }

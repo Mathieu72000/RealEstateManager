@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.real_estate_manager">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -34,24 +34,24 @@
         </activity>
         <activity
             android:name=".FormActivity"
-            android:label="New form" />
+            android:label="@string/newForm" />
         <activity
             android:name=".SearchActivity"
-            android:label="Search" />
+            android:label="@string/search" />
         <activity
             android:name=".FormDetailsActivity"
-            android:label="Description" />
+            android:label="@string/description" />
         <activity
             android:name=".MapActivity"
-            android:label="Maps" />
+            android:label="@string/maps" />
         <activity
             android:name=".LoanActivity"
-            android:label="Loan Simulator" />
-        
+            android:label="@string/loanSimulator" />
+
         <provider
-            android:authorities="com.example.real_estate_manager.provider"
             android:name=".provider.RealEstateManagerContentProvider"
-            android:exported="true"/>
+            android:authorities="com.example.real_estate_manager.provider"
+            android:exported="true" />
     </application>
 
 </manifest>

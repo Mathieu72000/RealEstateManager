@@ -46,10 +46,6 @@ interface HouseDao {
     fun getHouseIdWithCursor(houseId: Long): Cursor
 
     @Transaction
-    @Query("SELECT * FROM House")
-    fun getAllHousesWithCursor(): Cursor
-
-    @Transaction
     @RawQuery
     fun contentProviderQuery(query: SupportSQLiteQuery): Cursor
 }

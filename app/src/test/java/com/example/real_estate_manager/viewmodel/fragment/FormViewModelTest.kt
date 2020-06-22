@@ -36,8 +36,6 @@ class FormViewModelTest {
         )
         Assert.assertEquals(1, formViewModel.itemList.getOrAwaitValue().size)
         Assert.assertEquals("titi", formViewModel.formPictures.value?.get(0)?.base64)
-
-
     }
 
     @Test
@@ -48,5 +46,4 @@ class FormViewModelTest {
         formViewModel.removePictures(0)
         Assert.assertEquals(0, formViewModel.itemList.getOrAwaitValue().size)
     }
-
 }

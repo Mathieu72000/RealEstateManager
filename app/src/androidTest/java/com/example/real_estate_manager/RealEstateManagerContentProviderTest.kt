@@ -2,15 +2,12 @@ package com.example.real_estate_manager
 
 import android.app.Application
 import android.content.ContentResolver
-import android.content.ContentUris.withAppendedId
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.real_estate_manager.provider.RealEstateManagerContentProvider
 import com.example.real_estate_manager.room.database.HouseDatabase
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.notNullValue
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -25,26 +22,575 @@ class RealEstateManagerContentProviderTest {
     private lateinit var contentResolver: ContentResolver
 
     @Before
-    fun setUp(){
-        Room.inMemoryDatabaseBuilder(context, HouseDatabase::class.java).allowMainThreadQueries().build()
+    fun setUp() {
+        Room.inMemoryDatabaseBuilder(context, HouseDatabase::class.java).allowMainThreadQueries()
+            .build()
         contentResolver = InstrumentationRegistry.getInstrumentation().context.contentResolver
     }
 
     @Test
-    fun getItemsWhenNoItemInserted() {
-        val cursor = contentResolver.query(withAppendedId(RealEstateManagerContentProvider.URI_PROPERTY, 8), null, null, null, null)
-        Assert.assertThat(cursor, notNullValue())
-        Assert.assertThat(cursor?.count, `is`(0))
-        cursor?.close()
+    fun testHouseQuery() {
+        val providerTest: Array<String> = arrayOf(
+            RealEstateManagerContentProvider.HOUSE_ID,
+            RealEstateManagerContentProvider.HOUSE_DESCRIPTION,
+            RealEstateManagerContentProvider.HOUSE_ENTRY_DATE,
+            RealEstateManagerContentProvider.HOUSE_SOLD_DATE,
+            RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM,
+            RealEstateManagerContentProvider.HOUSE_PRICE,
+            RealEstateManagerContentProvider.HOUSE_SURFACE,
+            RealEstateManagerContentProvider.HOUSE_LATITUDE,
+            RealEstateManagerContentProvider.HOUSE_LONGITUDE,
+            RealEstateManagerContentProvider.HOUSE_LOCATION
+        )
+
+        val contentResolver = contentResolver.query(
+            RealEstateManagerContentProvider.URI_HOUSE,
+            providerTest,
+            null,
+            null,
+            null
+        )
+        Assert.assertEquals(
+            0,
+            contentResolver?.getColumnIndex(RealEstateManagerContentProvider.HOUSE_ID)
+        )
+        Assert.assertEquals(
+            1,
+            contentResolver?.getColumnIndex(RealEstateManagerContentProvider.HOUSE_DESCRIPTION)
+        )
+        contentResolver?.moveToFirst()
+        Assert.assertEquals(contentResolver?.columnCount, 10)
+        Assert.assertEquals(contentResolver?.count, 3)
+        Assert.assertEquals(
+            contentResolver?.getLong(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_ID
+                )
+            ), 1L
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_DESCRIPTION
+                )
+            ), "Practical apartment with nice view of the city church"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_SURFACE
+                )
+            ), "40"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_LOCATION
+                )
+            ), "8 Place de l'Église, 72380 Sainte-Jamme-sur-Sarthe, France"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_PRICE
+                )
+            ), "70000"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM
+                )
+            ), "2"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getLong(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_ID
+                )
+            ), 2L
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_DESCRIPTION
+                )
+            ), "Absolutely beautiful house in Paris with very good lightning"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_SURFACE
+                )
+            ), "60"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_LOCATION
+                )
+            ), "8 Place de la Madeleine, 75008 Paris, France"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_PRICE
+                )
+            ), "290000"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM
+                )
+            ), "2"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_ID
+                )
+            ), "3"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_DESCRIPTION
+                )
+            ), "Huge house in Dijon with all convenience"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_SURFACE
+                )
+            ), "200"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_LOCATION
+                )
+            ), "Place de la République, 21000 Dijon, France"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_PRICE
+                )
+            ), "380000"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM
+                )
+            ), "5"
+        )
+        contentResolver?.close()
     }
 
     @Test
-    fun getItems(){
-        val cursor = contentResolver.query(withAppendedId(RealEstateManagerContentProvider.URI_PROPERTY, 1), null, null, null, null)
-        Assert.assertThat(cursor, notNullValue())
-        Assert.assertThat(cursor?.count, `is`(1))
-        Assert.assertThat(cursor?.moveToFirst(), `is`(true))
-        Assert.assertEquals(cursor?.getInt(0), 1)
-        cursor?.close()
+    fun testTypeQuery() {
+        val providerTest: Array<String> = arrayOf(
+            RealEstateManagerContentProvider.TYPE_ID,
+            RealEstateManagerContentProvider.TYPE_
+        )
+
+        val contentResolver = contentResolver.query(
+            RealEstateManagerContentProvider.URI_TYPE,
+            providerTest,
+            null,
+            null,
+            null
+        )
+
+        contentResolver?.moveToFirst()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_ID
+                )
+            ), "1"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_
+                )
+            ), "House"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_ID
+                )
+            ), "2"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_
+                )
+            ), "Flat"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_ID
+                )
+            ), "3"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_
+                )
+            ), "Duplex"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_ID
+                )
+            ), "4"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.TYPE_
+                )
+            ), "Villa"
+        )
+
+    }
+
+    @Test
+    fun testInterestPointsQuery() {
+        val providerTest: Array<String> = arrayOf(
+            RealEstateManagerContentProvider.INTEREST_POINTS_ID,
+            RealEstateManagerContentProvider.INTEREST_POINTS
+        )
+
+        val contentResolver = contentResolver.query(
+            RealEstateManagerContentProvider.URI_INTEREST_POINTS,
+            providerTest,
+            null,
+            null,
+            null
+        )
+
+        contentResolver?.moveToFirst()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "1"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "School"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "2"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Highschool"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "3"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Restaurant"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "4"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Hospital"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "5"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "ATM"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "6"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Pharmacy"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "7"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Supermarket"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "8"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Monument"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "9"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Church"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "10"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "Mosque"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS_ID
+                )
+            ), "11"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.INTEREST_POINTS
+                )
+            ), "TownHall"
+        )
+    }
+
+    @Test
+    fun testRealEstateAgentQuery() {
+        val providerTest: Array<String> = arrayOf(
+            RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID,
+            RealEstateManagerContentProvider.REAL_ESTATE_AGENT
+        )
+
+        val contentResolver = contentResolver.query(
+            RealEstateManagerContentProvider.URI_REAL_ESTATE_AGENT,
+            providerTest,
+            null,
+            null,
+            null
+        )
+
+        contentResolver?.moveToFirst()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
+                )
+            ), "1"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT
+                )
+            ), "Patrick Moulin"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
+                )
+            ), "2"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT
+                )
+            ), "Ludovic Roland"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
+                )
+            ), "3"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT
+                )
+            ), "Mathieu Corroy"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
+                )
+            ), "4"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.REAL_ESTATE_AGENT
+                )
+            ), "Benoît Hayung"
+        )
+    }
+
+    @Test
+    fun testPictureQuery() {
+        val providerTest: Array<String> = arrayOf(
+            RealEstateManagerContentProvider.PICTURES_ID,
+            RealEstateManagerContentProvider.PICTURES,
+            RealEstateManagerContentProvider.PICTURES_TEXT
+        )
+
+        val contentResolver = contentResolver.query(
+            RealEstateManagerContentProvider.URI_PICTURES,
+            providerTest,
+            null,
+            null,
+            null
+        )
+
+        contentResolver?.moveToFirst()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.PICTURES_ID
+                )
+            ), "4"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.PICTURES_TEXT
+                )
+            ), "Corridor"
+        )
+        contentResolver?.moveToNext()
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.PICTURES_ID
+                )
+            ), "5"
+        )
+        Assert.assertEquals(
+            contentResolver?.getString(
+                contentResolver.getColumnIndex(
+                    RealEstateManagerContentProvider.PICTURES_TEXT
+                )
+            ), "Kitchen"
+        )
+    }
+
+    @Test
+    fun testWhereQuery(){
+        val providerTest: Array<String> = arrayOf(
+            RealEstateManagerContentProvider.HOUSE_ID
+        )
+
+        val contentResolver = contentResolver.query(
+            RealEstateManagerContentProvider.URI_HOUSE,
+            providerTest,
+            "${RealEstateManagerContentProvider.HOUSE_SURFACE} >= ?",
+            arrayOf("60"),
+            null
+        )
+
+        Assert.assertEquals(contentResolver?.count, 2)
     }
 }

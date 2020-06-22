@@ -1,8 +1,9 @@
 package com.example.real_estate_manager.room.dao
 
-import android.database.Cursor
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import com.example.real_estate_manager.room.model.Type
 
 @Dao
@@ -16,12 +17,4 @@ interface TypeDao {
 
     @Query("SELECT * FROM type")
     suspend fun getType(): List<Type>
-
-    @Transaction
-    @Query("SELECT * FROM Type WHERE typeId = :typeId")
-    fun getTypeIdWithCursor(typeId: Long): Cursor
-
-    @Transaction
-    @Query("SELECT * FROM Type")
-    fun getAllTypeWithCursor(): Cursor
 }

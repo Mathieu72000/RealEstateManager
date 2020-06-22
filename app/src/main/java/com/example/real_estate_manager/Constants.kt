@@ -11,10 +11,10 @@ sealed class Constants {
         const val PICTURE_POSITION = "position"
         const val HOUSEID_BROADCAST = "HouseClick"
         const val IS_SEARCH_CONTEXT = "search"
+        const val AUTHORITY = "com.example.real_estate_manager.provider"
         const val AUTOCOMPLETE_REQUEST_CODE = 1
         const val PICTURE_REQUEST_CODE = 2
         const val RESULT_REQUEST_CODE = 3
-        const val AUTHORITY = "com.example.real_estate_manager.provider"
         const val ALL_PROPERTIES = 4
         const val ALL_REAL_ESTATE_AGENTS = 5
         const val ALL_INTEREST_POINTS = 6

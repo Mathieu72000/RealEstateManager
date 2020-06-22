@@ -111,7 +111,7 @@ class FormDetailsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun launchLoanActivity(){
+    private fun launchLoanActivity() {
         form_loan_button.setOnClickListener {
             startActivity(Intent(context, LoanActivity::class.java))
         }

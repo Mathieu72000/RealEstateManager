@@ -1,7 +1,6 @@
 package com.example.real_estate_manager.viewmodel
 
 import android.app.Application
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations

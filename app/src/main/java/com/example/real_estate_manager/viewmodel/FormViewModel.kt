@@ -181,7 +181,9 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 formPictures.value?.map {
                     Pictures(0, it.base64, it.text.value, houseId)
-                }?.let { addPictures(it) }
+                }?.let {
+                    addPictures(it)
+                }
             }
         } else {
             updateHouse()

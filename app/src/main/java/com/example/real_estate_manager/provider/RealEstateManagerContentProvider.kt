@@ -50,7 +50,6 @@ class RealEstateManagerContentProvider : ContentProvider() {
         const val PICTURES_ID = "picturesId"
         const val PICTURES = "pictures"
         const val PICTURES_TEXT = "pictureText"
-        const val PICTURES_HOUSE_ID = "housePicturesId"
 
         const val INTEREST_POINTS_ID = "interestId"
         const val INTEREST_POINTS = "interestPoints"
@@ -97,7 +96,11 @@ class RealEstateManagerContentProvider : ContentProvider() {
             }
             stringBuilder.append(" FROM ${uri.lastPathSegment}")
             if (!selection.isNullOrEmpty()) {
-                stringBuilder.append(" WHERE ${selection.replace("?", selectionArgs.toString())}")
+                var bindedSelection = selection
+                selectionArgs?.forEach {
+                    bindedSelection = bindedSelection?.replaceFirst("?", it)
+                }
+                stringBuilder.append(" WHERE $bindedSelection")
             }
             if (!sortOrder.isNullOrEmpty()) {
                 stringBuilder.append(" ORDER BY $sortOrder")

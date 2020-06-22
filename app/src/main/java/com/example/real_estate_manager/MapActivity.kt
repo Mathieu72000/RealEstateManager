@@ -1,8 +1,8 @@
 package com.example.real_estate_manager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.real_estate_manager.fragment.MapFragment
 import kotlinx.android.synthetic.main.activity_map.*
 
