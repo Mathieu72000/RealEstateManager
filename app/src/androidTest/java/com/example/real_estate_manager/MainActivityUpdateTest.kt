@@ -31,10 +31,10 @@ class MainActivityUpdateTest {
         Espresso.onView(ViewMatchers.withId(R.id.form_description_editText))
             .perform(ViewActions.click())
             .perform(
-                ViewActions.replaceText("Nice house with all near convenience"),
+                ViewActions.replaceText("Nice apartment with all near convenience"),
                 ViewActions.closeSoftKeyboard()
             ).check(
-                ViewAssertions.matches(ViewMatchers.withText("Nice house with all near convenience"))
+                ViewAssertions.matches(ViewMatchers.withText("Nice apartment with all near convenience"))
             )
         Espresso.onView(ViewMatchers.withId(R.id.form_submit_button))
             .perform(ViewActions.scrollTo())
@@ -47,10 +47,10 @@ class MainActivityUpdateTest {
         Espresso.onView(ViewMatchers.withId(R.id.form_description_editText))
             .perform(ViewActions.click())
             .perform(
-                ViewActions.replaceText("Practical apartment with nice view of the city church"),
+                ViewActions.replaceText("Beautiful flat, close to the university of Le Mans"),
                 ViewActions.closeSoftKeyboard()
             ).check(
-                ViewAssertions.matches(ViewMatchers.withText("Practical apartment with nice view of the city church"))
+                ViewAssertions.matches(ViewMatchers.withText("Beautiful flat, close to the university of Le Mans"))
             )
         Espresso.onView(ViewMatchers.withId(R.id.form_submit_button))
             .perform(ViewActions.scrollTo())
