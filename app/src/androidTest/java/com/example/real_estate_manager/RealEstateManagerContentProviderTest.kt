@@ -60,7 +60,7 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToFirst()
         Assert.assertEquals(contentResolver?.columnCount, 10)
-        Assert.assertEquals(contentResolver?.count, 3)
+        Assert.assertEquals(contentResolver?.count, 1)
         Assert.assertEquals(
             contentResolver?.getLong(
                 contentResolver.getColumnIndex(
@@ -73,121 +73,35 @@ class RealEstateManagerContentProviderTest {
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.HOUSE_DESCRIPTION
                 )
-            ), "Practical apartment with nice view of the city church"
+            ), "Beautiful flat, close to the university of Le Mans"
         )
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getInt(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.HOUSE_SURFACE
                 )
-            ), "40"
+            ), 80
         )
         Assert.assertEquals(
             contentResolver?.getString(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.HOUSE_LOCATION
                 )
-            ), "8 Place de l'Église, 72380 Sainte-Jamme-sur-Sarthe, France"
+            ), "6 Rue du manoir, 72000 Le Mans, France"
         )
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getInt(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.HOUSE_PRICE
                 )
-            ), "70000"
+            ), 100000
         )
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getInt(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM
                 )
-            ), "2"
-        )
-        contentResolver?.moveToNext()
-        Assert.assertEquals(
-            contentResolver?.getLong(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_ID
-                )
-            ), 2L
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_DESCRIPTION
-                )
-            ), "Absolutely beautiful house in Paris with very good lightning"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_SURFACE
-                )
-            ), "60"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_LOCATION
-                )
-            ), "8 Place de la Madeleine, 75008 Paris, France"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_PRICE
-                )
-            ), "290000"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM
-                )
-            ), "2"
-        )
-        contentResolver?.moveToNext()
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_ID
-                )
-            ), "3"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_DESCRIPTION
-                )
-            ), "Huge house in Dijon with all convenience"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_SURFACE
-                )
-            ), "200"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_LOCATION
-                )
-            ), "Place de la République, 21000 Dijon, France"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_PRICE
-                )
-            ), "380000"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.HOUSE_NUMBER_OF_ROOM
-                )
-            ), "5"
+            ), 3
         )
         contentResolver?.close()
     }
@@ -209,11 +123,11 @@ class RealEstateManagerContentProviderTest {
 
         contentResolver?.moveToFirst()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.TYPE_ID
                 )
-            ), "1"
+            ), 1L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -224,11 +138,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.TYPE_ID
                 )
-            ), "2"
+            ), 2L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -239,11 +153,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.TYPE_ID
                 )
-            ), "3"
+            ), 3L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -254,11 +168,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.TYPE_ID
                 )
-            ), "4"
+            ), 4L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -287,11 +201,11 @@ class RealEstateManagerContentProviderTest {
 
         contentResolver?.moveToFirst()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "1"
+            ), 1L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -302,11 +216,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "2"
+            ), 2L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -317,11 +231,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "3"
+            ), 3L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -332,11 +246,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "4"
+            ), 4L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -347,11 +261,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "5"
+            ), 5L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -362,11 +276,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "6"
+            ), 6L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -377,11 +291,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "7"
+            ), 7L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -392,11 +306,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "8"
+            ), 8L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -407,11 +321,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "9"
+            ), 9L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -422,11 +336,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "10"
+            ), 10L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -437,11 +351,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.INTEREST_POINTS_ID
                 )
-            ), "11"
+            ), 11L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -469,11 +383,11 @@ class RealEstateManagerContentProviderTest {
 
         contentResolver?.moveToFirst()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
                 )
-            ), "1"
+            ), 1L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -484,11 +398,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
                 )
-            ), "2"
+            ), 2L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -499,11 +413,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
                 )
-            ), "3"
+            ), 3L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -514,11 +428,11 @@ class RealEstateManagerContentProviderTest {
         )
         contentResolver?.moveToNext()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.REAL_ESTATE_AGENT_ID
                 )
-            ), "4"
+            ), 4L
         )
         Assert.assertEquals(
             contentResolver?.getString(
@@ -547,33 +461,18 @@ class RealEstateManagerContentProviderTest {
 
         contentResolver?.moveToFirst()
         Assert.assertEquals(
-            contentResolver?.getString(
+            contentResolver?.getLong(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.PICTURES_ID
                 )
-            ), "4"
+            ), 1L
         )
         Assert.assertEquals(
             contentResolver?.getString(
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.PICTURES_TEXT
                 )
-            ), "Corridor"
-        )
-        contentResolver?.moveToNext()
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.PICTURES_ID
-                )
-            ), "5"
-        )
-        Assert.assertEquals(
-            contentResolver?.getString(
-                contentResolver.getColumnIndex(
-                    RealEstateManagerContentProvider.PICTURES_TEXT
-                )
-            ), "Kitchen"
+            ), "Living room"
         )
     }
 
@@ -587,10 +486,10 @@ class RealEstateManagerContentProviderTest {
             RealEstateManagerContentProvider.URI_HOUSE,
             providerTest,
             "${RealEstateManagerContentProvider.HOUSE_SURFACE} >= ?",
-            arrayOf("60"),
+            arrayOf("80"),
             null
         )
 
-        Assert.assertEquals(contentResolver?.count, 2)
+        Assert.assertEquals(contentResolver?.count, 1)
     }
 }

@@ -2,6 +2,9 @@ package com.example.real_estate_manager.room.database
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -12,6 +15,7 @@ import com.example.real_estate_manager.room.dao.*
 import com.example.real_estate_manager.room.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import java.io.ByteArrayOutputStream
 import kotlin.coroutines.CoroutineContext
 
 @Database(
@@ -38,12 +42,20 @@ abstract class HouseDatabase : RoomDatabase(), CoroutineScope {
                         "houseDatabase"
                     ).addCallback(object : Callback() {
                         override fun onCreate(database: SupportSQLiteDatabase) {
-                            super.onCreate(database)                                            //Index 1 ↓    Index 2 ↓    Index 3 ↓   etc...
+                            super.onCreate(database)                                                 //Index 1 ↓            Index 2 ↓        Index 3 ↓   etc...
+                            val bitmap = BitmapFactory.decodeResource(
+                                context.resources,
+                                R.drawable.house_interior
+                            )
+                            val byteArray = ByteArrayOutputStream()
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArray)
+                            val toByteArray = byteArray.toByteArray()
+                            val base64 = Base64.encodeToString(toByteArray, Base64.DEFAULT)
                             database.execSQL("INSERT into RealEstateAgent(realEstateAgent) VALUES('Patrick Moulin'), ('Ludovic Roland'), ('Mathieu Corroy'), ('Benoît Hayung')")
                             database.execSQL("INSERT into InterestPoints(interestPoints) VALUES('School'), ('Highschool'), ('Restaurant'), ('Hospital'), ('ATM'), ('Pharmacy'), ('Supermarket'), ('Monument'),('Church'), ('Mosque'), ('TownHall')")
                             database.execSQL("INSERT into Type(type) VALUES('House'), ('Flat'), ('Duplex'), ('Villa')")
-                            database.execSQL("INSERT into House(price, roomNumber, surface, description, location, latitude, longitude, entryDate, houseAgentId, houseTypeId) VALUES(100000, 3, 80, 'Beautiful flat, close to the university of Le Mans', '6 Rue du manoir, 72000 Le Mans, France', 48.011084, 0.162892, '24/08/2019' , 2, 1) ")
-                            database.execSQL("INSERT into Pictures(pictures, pictureText, housePictureId)VALUES('${context.getString(R.string.pictureTest)}', 'Living room', 1)")
+                            database.execSQL("INSERT into House(price, roomNumber, surface, description, location, latitude, longitude, entryDate, houseAgentId, houseTypeId) VALUES(100000, 3, 80, 'Beautiful flat, close to the university of Le Mans', '6 Rue du manoir, 72000 Le Mans, France', 48.011084, 0.162892, '24/08/2019' , 2, 2) ")
+                            database.execSQL("INSERT into Pictures(pictures, pictureText, housePictureId)VALUES('${base64}', 'Living room', 1)")
                             database.execSQL("INSERT into HouseAndInterestPoints(houseId, interestId) VALUES(1, 1), (1, 2), (1, 3)")
                         }
                     }).build()
