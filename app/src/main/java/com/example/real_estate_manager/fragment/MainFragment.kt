@@ -61,6 +61,11 @@ class MainFragment : Fragment() {
         bindUI()
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        bindUI()
+//    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
@@ -82,6 +87,9 @@ class MainFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RESULT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             viewModel.getHouseTypeAgent()
+        }
+        if(requestCode == 42 && resultCode == Activity.RESULT_OK){
+            bindUI()
         }
     }
 

@@ -1,15 +1,22 @@
 package com.example.real_estate_manager.viewmodel.fragment
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.After
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.stopKoin
 import utils.Utils
 import java.text.SimpleDateFormat
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class UtilsTest {
+class UtilsTest{
+
+    @After
+    fun stopContext(){
+        stopKoin()
+    }
 
     @Test
     fun testEuroConversion() {

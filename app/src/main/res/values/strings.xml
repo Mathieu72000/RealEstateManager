@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Real_Estate_Manager</string>
     <string name="available">Available</string>
-    <string name="unavailable">Unavailable</string>
+    <string name="unavailable">SOLD</string>
     <string name="delete_picture">Delete this picture ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

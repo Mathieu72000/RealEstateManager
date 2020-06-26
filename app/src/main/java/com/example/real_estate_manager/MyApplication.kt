@@ -38,7 +38,6 @@ class MyApplication : MultiDexApplication() {
         Batch.setConfig(Config("DEV5EB6CA9E2BAF5100E03F1F2955C"))
         registerActivityLifecycleCallbacks(BatchActivityLifecycleHelper())
         Batch.User.getInstallationID()
-
     }
 
     private fun isRoboUnitTests(): Boolean {

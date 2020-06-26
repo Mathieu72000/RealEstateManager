@@ -20,5 +20,6 @@ sealed class Constants {
         const val ALL_INTEREST_POINTS = 6
         const val ALL_TYPE = 7
         const val ALL_PICTURES = 8
+        const val REQUEST_LOCATION_CODE = 9
     }
 }

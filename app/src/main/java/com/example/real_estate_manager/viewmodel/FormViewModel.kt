@@ -51,37 +51,6 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getLoadData(houseId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            interestPointsList.postValue(getHouseDatabase?.getAllInterestPoints())
-            typeList.postValue(getHouseDatabase?.getType())
-            realEstateAgentsList.postValue(getHouseDatabase?.getAllAgents())
-            val house = getHouseDatabase?.getHouseTypeAgent(houseId)
-            if (house != null) {
-                this@FormViewModel.houseId = houseId
-                formPictures.postValue(house.pictures.map {
-                    it.pictures?.let { base64 ->
-                        FormPictureViewModel(base64, MutableLiveData(it.pictureText))
-                    }
-                } as MutableList<FormPictureViewModel>?)
-                formLocation.postValue(house.house.location)
-                formSurface.postValue(house.house.surface.toString())
-                formRoomNumber.postValue(house.house.roomNumber.toString())
-                formPrice.postValue(house.house.price.toString())
-                formDescription.postValue(house.house.description)
-                formRealEstateAgentsId.postValue(house.realEstateAgent.agentId)
-                formTypeId.postValue(house.type.typeId)
-                formInterestPointsId.postValue(house.interestPoints.map {
-                    it.interestId
-                })
-                formEntryDate.postValue(house.house.entryDate)
-                formSoldDate.postValue(house.house.soldDate)
-                latitude = house.house.latitude
-                longitude = house.house.longitude
-            }
-        }
-    }
-
     var houseId: Long? = null
 
     // -------------------------------------------
@@ -187,6 +156,37 @@ class FormViewModel(application: Application) : AndroidViewModel(application) {
             }
         } else {
             updateHouse()
+        }
+    }
+
+    fun getLoadData(houseId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            interestPointsList.postValue(getHouseDatabase?.getAllInterestPoints())
+            typeList.postValue(getHouseDatabase?.getType())
+            realEstateAgentsList.postValue(getHouseDatabase?.getAllAgents())
+            val house = getHouseDatabase?.getHouseTypeAgent(houseId)
+            if (house != null) {
+                this@FormViewModel.houseId = houseId
+                formPictures.postValue(house.pictures.map {
+                    it.pictures?.let { base64 ->
+                        FormPictureViewModel(base64, MutableLiveData(it.pictureText))
+                    }
+                } as MutableList<FormPictureViewModel>?)
+                formLocation.postValue(house.house.location)
+                formSurface.postValue(house.house.surface.toString())
+                formRoomNumber.postValue(house.house.roomNumber.toString())
+                formPrice.postValue(house.house.price.toString())
+                formDescription.postValue(house.house.description)
+                formRealEstateAgentsId.postValue(house.realEstateAgent.agentId)
+                formTypeId.postValue(house.type.typeId)
+                formInterestPointsId.postValue(house.interestPoints.map {
+                    it.interestId
+                })
+                formEntryDate.postValue(house.house.entryDate)
+                formSoldDate.postValue(house.house.soldDate)
+                latitude = house.house.latitude
+                longitude = house.house.longitude
+            }
         }
     }
 

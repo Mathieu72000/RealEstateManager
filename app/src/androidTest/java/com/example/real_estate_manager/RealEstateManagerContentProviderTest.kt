@@ -465,7 +465,7 @@ class RealEstateManagerContentProviderTest {
                 contentResolver.getColumnIndex(
                     RealEstateManagerContentProvider.PICTURES_ID
                 )
-            ), 1L
+            ), 3L
         )
         Assert.assertEquals(
             contentResolver?.getString(
